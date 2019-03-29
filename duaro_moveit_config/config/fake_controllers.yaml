@@ -1,0 +1,20 @@
+controller_list:
+  - name: fake_lower_arm_controller
+    joints:
+      - lower_joint1
+      - lower_joint2
+      - lower_joint3
+      - lower_joint4
+  - name: fake_upper_arm_controller
+    joints:
+      - upper_joint1
+      - upper_joint2
+      - upper_joint3
+      - upper_joint4
+initial:
+  - group: lower_arm
+    pose:  lower_arm_home
+  - group: upper_arm
+    pose:  upper_arm_home
+  - group: botharms
+    pose:  botharms_home

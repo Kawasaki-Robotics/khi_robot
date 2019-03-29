@@ -1,0 +1,26 @@
+<?xml version="1.0"?> 
+<robot xmlns:xacro="http://ros.org/wiki/xacro"> 
+
+<xacro:macro name="trans" params="number">
+
+  <transmission name="$join${number}_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="joint${number}_motor">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="joint${number}">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+</xacro:macro>
+
+<xacro:trans number="1"/>
+<xacro:trans number="2"/>
+<xacro:trans number="3"/>
+<xacro:trans number="4"/>
+<xacro:trans number="5"/>
+<xacro:trans number="6"/>
+
+</robot>

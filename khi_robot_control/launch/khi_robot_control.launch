@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+  <!-- GDB functionality -->
+  <arg name="debug" default="false" />
+  <arg name="ip" default="192.168.0.2" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
+
+  <arg name="simulation" default="false" />
+  <arg unless="$(arg simulation)" name="ip_args" value="--interface $(arg ip)" />
+  <arg     if="$(arg simulation)" name="ip_args" value="--loopback" />
+
+  <arg name="viewer" default="false" />
+  <arg unless="$(arg viewer)" name="viewer_args" value="" />
+  <arg     if="$(arg viewer)" name="viewer_args" value="--viewer" />
+
+  <arg name="period" default="4" />
+  <arg name="period_args" value="--period $(arg period)" />
+
+  <arg name="robot" default="NONE" />
+  <arg name="robot_args" value="--robot $(arg robot)" />
+
+  <!-- Load hardware interface -->
+  <node name="khi_robot_control" pkg="khi_robot_control"
+        type="main" args="$(arg ip_args) $(arg viewer_args) $(arg period_args) $(arg robot_args)"
+        respawn="false" output="screen" launch-prefix="$(arg launch_prefix)" cwd="node">
+  </node>
+
+</launch>

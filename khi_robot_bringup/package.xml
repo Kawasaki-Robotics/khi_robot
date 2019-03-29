@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <name>khi_robot_bringup</name>
+  <version>1.0.0</version>
+  <description>Package contains bringup scripts/config/tools for KHI Robot</description>
+
+  <author email="nakamichi_d@khi.co.jp">nakamichi_d</author>
+  <maintainer email="nakamichi_d@khi.co.jp">nakamichi_d</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/khi_robot</url>
+  <url type="repository">https://github.com/Kawasaki-Robotics/khi_robot</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>controller_manager</run_depend>
+  <run_depend>joint_state_controller</run_depend>
+  <run_depend>joint_trajectory_controller</run_depend>
+  <run_depend>khi_robot_control</run_depend>
+  <run_depend>position_controllers</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>duaro_description</run_depend>
+  <run_depend>duaro_moveit_config</run_depend>
+
+  <test_depend>roslaunch</test_depend>
+  <test_depend>rostest</test_depend>
+</package>

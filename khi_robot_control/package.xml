@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package>
+  <name>khi_robot_control</name>
+  <version>1.0.0</version>
+  <description>ROS KHI robot controller package based on ros_control</description>
+
+  <author email="nakamichi_d@khi.co.jp">nakamichi_d</author>
+  <maintainer email="nakamichi_d@khi.co.jp">nakamichi_d</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/khi_robot</url>
+  <url type="repository">https://github.com/Kawasaki-Robotics/khi_robot</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>controller_manager</build_depend>
+  <build_depend>realtime_tools</build_depend>
+  <build_depend>controller_manager</build_depend>
+  <build_depend>diagnostic_updater</build_depend>
+  <build_depend>hardware_interface</build_depend>
+  <build_depend>joint_limits_interface</build_depend>
+  <build_depend>trajectory_msgs</build_depend>
+  <build_depend>transmission_interface</build_depend>
+  <build_depend>khi_robot_msgs</build_depend>
+
+  <run_depend>controller_manager</run_depend>
+  <run_depend>joint_state_controller</run_depend>
+  <run_depend>joint_trajectory_controller</run_depend>
+  <run_depend>position_controllers</run_depend>
+  <run_depend>diagnostic_updater</run_depend>
+  <run_depend>hardware_interface</run_depend>
+  <run_depend>joint_limits_interface</run_depend>
+  <run_depend>trajectory_msgs</run_depend>
+  <run_depend>transmission_interface</run_depend>
+  <run_depend>khi_robot_msgs</run_depend>
+</package>

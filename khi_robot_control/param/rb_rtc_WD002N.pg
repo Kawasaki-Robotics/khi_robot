@@ -1,0 +1,34 @@
+.PROGRAM rb_rtc1()
+  FOR .i = 1 TO 8
+    .acc[.i] = 1
+  END
+  L3ACCURACY .acc[1] ALWAYS
+  JMOVE #rtchome1
+  FOR .i = 1 TO 8
+    .acc[.i] = 0
+  END
+  L3ACCURACY .acc[1] ALWAYS
+  RTC_SW 1: ON
+1 JMOVE #rtchome1
+  GOTO 1
+  RTC_SW 1: OFF
+.END
+.PROGRAM rb_rtc2()
+  FOR .i = 1 TO 8
+    .acc[.i] = 1
+  END
+  L3ACCURACY .acc[1] ALWAYS
+  JMOVE #rtchome2
+  FOR .i = 1 TO 8
+    .acc[.i] = 0
+  END
+  L3ACCURACY .acc[1] ALWAYS
+  RTC_SW 2: ON
+1 JMOVE #rtchome2
+  GOTO 1
+  RTC_SW 2: OFF
+.END
+.JOINTS
+#rtchome1 -45.000000 45.000000 90.000000 -0.000000 0.000000 0.000000
+#rtchome2 45.000000 -45.000000 90.000000 -0.000000 0.000000 0.000000
+.END

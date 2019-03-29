@@ -1,0 +1,17 @@
+controller_list:
+  - name: duaro_lower_arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    joints:
+      - lower_joint1
+      - lower_joint2
+      - lower_joint3
+      - lower_joint4
+  - name: duaro_upper_arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    joints:
+      - upper_joint1
+      - upper_joint2
+      - upper_joint3
+      - upper_joint4

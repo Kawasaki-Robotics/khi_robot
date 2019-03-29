@@ -1,0 +1,64 @@
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+  khi_robot_controllers:
+    names:
+      - duaro_lower_arm_controller
+      - duaro_upper_arm_controller
+
+  # Position - Right and Left Joint Position Trajectory Controllers -------------------
+  duaro_lower_arm_controller:
+    type: "position_controllers/JointTrajectoryController"
+    joints:
+      - lower_joint1
+      - lower_joint2
+      - lower_joint3
+      - lower_joint4
+    constraints:
+      goal_time: 2.0                   # Defaults to zero
+      stopped_velocity_tolerance: 0.1 # Defaults to 0.01
+      lower_joint1:
+        trajectory: 0 
+        goal: 0.2       
+      lower_joint2:
+        trajectory: 0 
+        goal: 0.2       
+      lower_joint3:
+        trajectory: 0 
+        goal: 0.2       
+      lower_joint4:
+        trajectory: 0 
+        goal: 0.2       
+
+    state_publish_rate:  50 # Defaults to 50
+    action_monitor_rate: 20 # Defaults to 20
+    #hold_trajectory_duration: 0 # Defaults to 0.5
+
+  duaro_upper_arm_controller:
+    type: "position_controllers/JointTrajectoryController"
+    joints:
+      - upper_joint1
+      - upper_joint2
+      - upper_joint3
+      - upper_joint4
+    constraints:
+      goal_time: 2.0                   # Defaults to zero
+      stopped_velocity_tolerance: 0.1 # Defaults to 0.01
+      upper_joint1:
+        trajectory: 0 
+        goal: 0.2       
+      upper_joint2:
+        trajectory: 0 
+        goal: 0.2       
+      upper_joint3:
+        trajectory: 0 
+        goal: 0.2       
+      upper_joint4:
+        trajectory: 0 
+        goal: 0.2       
+
+    state_publish_rate:  50 # Defaults to 50
+    action_monitor_rate: 20 # Defaults to 20
+    #hold_trajectory_duration: 0 # Defaults to 0.5

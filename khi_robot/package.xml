@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package>
+  <name>khi_robot</name>
+  <version>1.0.0</version>
+  <description>Meta package for khi_robot</description>
+
+  <author email="nakamichi_d@khi.co.jp">nakamichi_d</author>
+  <author email="matsui_hiro@khi.co.jp">matsui_hiro</author>
+  <maintainer email="nakamichi_d@khi.co.jp">nakamichi_d</maintainer>
+  <maintainer email="matsui_hiro@khi.co.jp">matsui_hiro</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/khi_robot</url>
+  <url type="repository">https://github.com/Kawasaki-Robotics/khi_robot</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>duaro_description</run_depend>
+  <run_depend>duaro_gazebo</run_depend>
+  <run_depend>duaro_ikfast_plugin</run_depend>
+  <run_depend>duaro_moveit_config</run_depend>
+  <run_depend>khi_robot_bringup</run_depend>
+  <run_depend>khi_robot_control</run_depend>
+  <run_depend>khi_robot_msgs</run_depend>
+  <run_depend>rs007l_moveit_config</run_depend>
+  <run_depend>rs007n_moveit_config</run_depend>
+  <run_depend>rs080n_moveit_config</run_depend>
+  <run_depend>rs_description</run_depend>
+  <run_depend>rs_gazebo</run_depend>
+  <run_depend>rs_ikfast_plugin</run_depend>
+</package>

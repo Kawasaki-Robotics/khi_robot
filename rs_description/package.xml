@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package>
+  <name>rs_description</name>
+  <version>1.0.0</version>
+  <description>The rs_description package</description>
+
+  <author email="matsui_hiro@khi.co.jp">matsui_hiro</author>
+  <maintainer email="matsui_hiro@khi.co.jp">matsui_hiro</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/khi_robot</url>
+  <url type="repository">https://github.com/Kawasaki-Robotics/khi_robot</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>urdf</run_depend>
+</package>
