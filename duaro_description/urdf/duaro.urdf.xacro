@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
-<robot name="duaro" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="khi_duaro" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find duaro_description)/urdf/duaro_macro.xacro"/>
 
   <!-- instantiate duaro -->
-  <xacro:duaro />
+  <xacro:khi_duaro />
 
   <!-- Fix duaro to world -->
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="rs007n">
+  <xacro:macro name="khi_rs007n">
 
     <xacro:include filename="$(find rs_description)/urdf/rs.transmission.xacro" />
     <xacro:include filename="$(find rs_description)/urdf/common.gazebo.xacro" />

@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
-<robot name="rs007n" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="khi_rs007n" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find rs_description)/urdf/rs007n_macro.xacro"/>
 
   <!-- instantiate rs007n -->
-  <xacro:rs007n />
+  <xacro:khi_rs007n />
 
   <!-- Fix rs007n to world -->
 
