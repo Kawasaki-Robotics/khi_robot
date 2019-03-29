@@ -4,9 +4,6 @@
 
     <xacro:include filename="$(find duaro_description)/urdf/duaro.transmission.xacro" />
 
-    <!-- mathematical value --> 
-    <xacro:property name="pi" value="3.14159265359" />
-
     <!-- DH params -->
     <xacro:property name="dh_j1_j2_transy" value="0.36"/>
     <xacro:property name="dh_j2_j3_transy" value="0.40"/>

@@ -5,9 +5,6 @@
     <xacro:include filename="$(find rs_description)/urdf/rs.transmission.xacro" />
     <xacro:include filename="$(find rs_description)/urdf/common.gazebo.xacro" />
 
-    <!-- mathematics value--> 
-    <xacro:property name="pi" value="3.1415" />
-
     <!-- link rviz colors -->
     <material name="White">
       <color rgba="1 1 1 1"/>
