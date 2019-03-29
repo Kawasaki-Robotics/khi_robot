@@ -3,7 +3,7 @@
   <xacro:include filename="$(find rs_description)/urdf/rs007n_macro.xacro"/>
 
   <!-- instantiate rs007n -->
-  <xacro:khi_rs007n />
+  <xacro:khi_rs007n prefix="" />
 
   <!-- Fix rs007n to world -->
 

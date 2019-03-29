@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="khi_duaro">
+  <xacro:macro name="khi_duaro" params="prefix">
 
     <xacro:include filename="$(find duaro_description)/urdf/duaro.transmission.xacro" />
 
@@ -80,7 +80,7 @@
       </inertial>
     </xacro:macro>
 
-    <link name="base_link">
+    <link name="${prefix}base_link">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/WD002N_A201_Adjuster_pad_Ver2m.stl"/>
@@ -99,9 +99,9 @@
 
 
     <!-- fixed parts xacro-->
-    <xacro:macro name="fixed_parts" params="color name height rot mass">
+    <xacro:macro name="fixed_parts" params="prefix:=^ color name height rot mass">
 
-      <link name="${name}">
+      <link name="${prefix}${name}">
         <visual>
           <geometry>
             <mesh filename="package://duaro_description/meshes/${name}.stl"/>
@@ -118,9 +118,9 @@
         <xacro:default_inertial mass="${mass}"/>
       </link>
 
-      <joint name="${name}_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="${name}"/>
+      <joint name="${prefix}${name}_joint" type="fixed">
+        <parent link="${prefix}base_link"/>
+        <child link="${prefix}${name}"/>
         <origin xyz="0 0 ${height}" rpy="0 0 0" />
       </joint>
 
@@ -132,7 +132,7 @@
     <xacro:fixed_parts color="Black" name="duaro_logo" height="0" rot="${pi/2}" mass="1"/>
     <xacro:fixed_parts color="Light_blue" name="pedestal_obstacle" height="0" rot="0" mass="2"/>
 
-    <link name="duaro_j0">
+    <link name="${prefix}duaro_j0">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/joint0.stl"/>
@@ -150,14 +150,14 @@
     </link>
 
 
-    <joint name="joint0" type="fixed">
+    <joint name="${prefix}joint0" type="fixed">
       <origin xyz="0 0 0.82"/>
-      <parent link="duaro_body"/>
-      <child link="duaro_j0"/>
+      <parent link="${prefix}duaro_body"/>
+      <child link="${prefix}duaro_j0"/>
     </joint>
 
     <!-- lower arm -->
-    <link name="lower_link_j1">
+    <link name="${prefix}lower_link_j1">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/lower_joint1.stl"/>
@@ -175,17 +175,17 @@
       <xacro:link_inertial Izz="${L1_Izz}" length="${L1_length}" mass="${L1_mass}"/>
     </link>
 
-    <joint name="lower_joint1" type="revolute">
+    <joint name="${prefix}lower_joint1" type="revolute">
         <axis xyz="0 0 1" rpy="0 0 0" />
         <limit effort="100.0" lower="${J1_LOWER_lower_limit}" upper="${J1_LOWER_upper_limit}" velocity="${J1_velocity_limit}"/>
         <origin xyz="0 0 0.2515" rpy="0 0 0"/>
-        <parent link="duaro_j0"/>
-        <child link="lower_link_j1"/>
+        <parent link="${prefix}duaro_j0"/>
+        <child link="${prefix}lower_link_j1"/>
         <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
 
-    <link name="lower_link_j2">
+    <link name="${prefix}lower_link_j2">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/WD002N_A202L_J2m.stl"/>
@@ -203,16 +203,16 @@
       <xacro:link_inertial Izz="${L2_Izz}" length="${L2_length}" mass="${L2_mass}"/>
     </link>
 
-    <joint name="lower_joint2" type="revolute">
+    <joint name="${prefix}lower_joint2" type="revolute">
       <axis xyz="0 0 1" rpy="0 0 0" />
       <limit effort="100.0" lower="${J2_LOWER_lower_limit}" upper="${J2_LOWER_upper_limit}" velocity="${J2_velocity_limit}"/>
       <origin xyz="0 ${dh_j1_j2_transy} 0.0905"/>
-      <parent link="lower_link_j1"/>
-      <child link="lower_link_j2"/>
+      <parent link="${prefix}lower_link_j1"/>
+      <child link="${prefix}lower_link_j2"/>
       <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
-    <link name="lower_link_j3">
+    <link name="${prefix}lower_link_j3">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/WD002N_A202L_J3m.stl"/>
@@ -230,15 +230,15 @@
       <xacro:default_inertial mass="${L3_mass}"/>
     </link>
 
-    <joint name="lower_joint3" type="prismatic">
+    <joint name="${prefix}lower_joint3" type="prismatic">
       <axis xyz="0 0 1" rpy="0 0 0" />
       <limit effort="100.0" lower="${J3_LOWER_lower_limit}" upper="${J3_LOWER_upper_limit}" velocity="${J3_velocity_limit}"/>
       <origin xyz="0 ${dh_j2_j3_transy} 0.03850"/>
-      <parent link="lower_link_j2"/>
-      <child link="lower_link_j3"/>
+      <parent link="${prefix}lower_link_j2"/>
+      <child link="${prefix}lower_link_j3"/>
     </joint>
 
-    <link name="lower_link_j3_obst">
+    <link name="${prefix}lower_link_j3_obst">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/WD002N_A202L_J3_obstaclem.stl"/>
@@ -248,13 +248,13 @@
       </visual>
     </link>
 
-    <joint name="lower_j3_obstaclem_joint" type="fixed">
+    <joint name="${prefix}lower_j3_obstaclem_joint" type="fixed">
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <parent link="lower_link_j3"/>
-      <child link="lower_link_j3_obst"/>
+      <parent link="${prefix}lower_link_j3"/>
+      <child link="${prefix}lower_link_j3_obst"/>
     </joint>
 
-    <link name="lower_link_j4">
+    <link name="${prefix}lower_link_j4">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/WD002N_A202L_J4m.stl"/>
@@ -272,17 +272,17 @@
       <xacro:default_inertial mass="0.5"/>
     </link>
 
-    <joint name="lower_joint4" type="revolute">
+    <joint name="${prefix}lower_joint4" type="revolute">
       <axis xyz="0 0 1" rpy="0 0 0" />
       <limit effort="100.0" lower="${J4_LOWER_lower_limit}" upper="${J4_LOWER_upper_limit}" velocity="${J4_velocity_limit}"/>
       <origin xyz="0 0 -0.24"/>
-      <parent link="lower_link_j3"/>
-      <child link="lower_link_j4"/>
+      <parent link="${prefix}lower_link_j3"/>
+      <child link="${prefix}lower_link_j4"/>
       <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
     <!-- upper arm -->
-    <link name="upper_link_j1">
+    <link name="${prefix}upper_link_j1">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/WD002N_A201U_J1_Ver2m.stl"/>
@@ -300,17 +300,17 @@
       <xacro:link_inertial Izz="${U1_Izz}" length="${U1_length}" mass="${U1_mass}"/>
     </link>
 
-    <joint name="upper_joint1" type="revolute">
+    <joint name="${prefix}upper_joint1" type="revolute">
       <origin rpy="0 0 0" xyz="0 0 0.3805"/>
         <axis xyz="0 0 1" rpy="0 0 0" />
         <limit effort="100.0" lower="${J1_UPPER_lower_limit}" upper="${J1_UPPER_upper_limit}" velocity="${J1_velocity_limit}"/>
-        <parent link="duaro_j0"/>
-        <child link="upper_link_j1"/>
+        <parent link="${prefix}duaro_j0"/>
+        <child link="${prefix}upper_link_j1"/>
         <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
 
-    <link name="upper_link_j2">
+    <link name="${prefix}upper_link_j2">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/WD002N_A202U_J2m.stl"/>
@@ -328,16 +328,16 @@
       <xacro:link_inertial Izz="${U2_Izz}" length="${U2_length}" mass="${U2_mass}"/>
     </link>
 
-    <joint name="upper_joint2" type="revolute">
+    <joint name="${prefix}upper_joint2" type="revolute">
       <axis xyz="0 0 1" rpy="0 0 0" />
       <limit effort="100.0" lower="${J2_UPPER_lower_limit}" upper="${J2_UPPER_upper_limit}" velocity="${J2_velocity_limit}"/>
       <origin xyz="0 ${dh_j1_j2_transy} 0"/>
-      <parent link="upper_link_j1"/>
-      <child link="upper_link_j2"/>
+      <parent link="${prefix}upper_link_j1"/>
+      <child link="${prefix}upper_link_j2"/>
       <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
-    <link name="upper_link_j3">
+    <link name="${prefix}upper_link_j3">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/WD002N_A202U_J3m.stl"/>
@@ -355,15 +355,15 @@
       <xacro:default_inertial mass="${U3_mass}"/>
     </link>
 
-    <joint name="upper_joint3" type="prismatic">
+    <joint name="${prefix}upper_joint3" type="prismatic">
       <axis xyz="0 0 1" rpy="0 0 0" />
       <limit effort="100.0" lower="${J3_UPPER_lower_limit}" upper="${J3_UPPER_upper_limit}" velocity="${J3_velocity_limit}"/>
       <origin xyz="0 ${dh_j2_j3_transy} 0"/>
-      <parent link="upper_link_j2"/>
-      <child link="upper_link_j3"/>
+      <parent link="${prefix}upper_link_j2"/>
+      <child link="${prefix}upper_link_j3"/>
     </joint>
 
-    <link name="upper_link_j3_obst">
+    <link name="${prefix}upper_link_j3_obst">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/WD002N_A202U_J3_obstaclem.stl"/>
@@ -373,13 +373,13 @@
       </visual>
     </link>
 
-    <joint name="upper_j3_obstaclem_joint" type="fixed">
+    <joint name="${prefix}upper_j3_obstaclem_joint" type="fixed">
       <origin xyz="0 0 0"/>
-      <parent link="upper_link_j3"/>
-      <child link="upper_link_j3_obst"/>
+      <parent link="${prefix}upper_link_j3"/>
+      <child link="${prefix}upper_link_j3_obst"/>
     </joint>
 
-   <link name="upper_link_j4">
+   <link name="${prefix}upper_link_j4">
       <visual>
         <geometry>
           <mesh filename="package://duaro_description/meshes/WD002N_A202U_J4m.stl"/>
@@ -397,12 +397,12 @@
       <xacro:default_inertial mass="10"/>
     </link>
 
-    <joint name="upper_joint4" type="revolute">
+    <joint name="${prefix}upper_joint4" type="revolute">
       <axis xyz="0 0 1" rpy="0 0 0" />
       <limit effort="100.0" lower="${J4_UPPER_lower_limit}" upper="${J4_UPPER_upper_limit}" velocity="${J3_velocity_limit}"/>
       <origin xyz="0 0 -0.24"/>
-      <parent link="upper_link_j3"/>
-      <child link="upper_link_j4"/>
+      <parent link="${prefix}upper_link_j3"/>
+      <child link="${prefix}upper_link_j4"/>
       <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
@@ -412,23 +412,23 @@
       <material>Gazebo/${colors}</material>
     </gazebo>
     </xacro:macro>
-    <xacro:gazebo_color parts="duaro_body" colors="White"/>
-    <xacro:gazebo_color parts="pedestal_obstacle" colors="Light_blue"/>
-    <xacro:gazebo_color parts="duaro_logo" colors="Black"/>
-    <xacro:gazebo_color parts="base_link" colors="White"/>
-    <xacro:gazebo_color parts="duaro_j0" colors="White"/>
-    <xacro:gazebo_color parts="duaro_j0_cover" colors="Light_blue"/>
-    <xacro:gazebo_color parts="lower_link_j1" colors="White"/>
-    <xacro:gazebo_color parts="lower_link_j2" colors="White"/>
-    <xacro:gazebo_color parts="lower_link_j3" colors="White"/>
-    <xacro:gazebo_color parts="lower_link_j4" colors="White"/>
-    <xacro:gazebo_color parts="lower_link_j3_obst" colors="Black"/>
-    <xacro:gazebo_color parts="upper_link_j1" colors="White"/>
-    <xacro:gazebo_color parts="upper_link_j2" colors="White"/>
-    <xacro:gazebo_color parts="upper_link_j3" colors="White"/>
-    <xacro:gazebo_color parts="upper_link_j4" colors="White"/>
-    <xacro:gazebo_color parts="upper_link_j3_obst" colors="Black"/>
-    <xacro:gazebo_color parts="duaro_body" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}duaro_body" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}pedestal_obstacle" colors="Light_blue"/>
+    <xacro:gazebo_color parts="${prefix}duaro_logo" colors="Black"/>
+    <xacro:gazebo_color parts="${prefix}base_link" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}duaro_j0" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}duaro_j0_cover" colors="Light_blue"/>
+    <xacro:gazebo_color parts="${prefix}lower_link_j1" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}lower_link_j2" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}lower_link_j3" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}lower_link_j4" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}lower_link_j3_obst" colors="Black"/>
+    <xacro:gazebo_color parts="${prefix}upper_link_j1" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}upper_link_j2" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}upper_link_j3" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}upper_link_j4" colors="White"/>
+    <xacro:gazebo_color parts="${prefix}upper_link_j3_obst" colors="Black"/>
+    <xacro:gazebo_color parts="${prefix}duaro_body" colors="White"/>
 
     <!-- duaro end -->
     <gazebo>

@@ -3,7 +3,7 @@
   <xacro:include filename="$(find duaro_description)/urdf/duaro_macro.xacro"/>
 
   <!-- instantiate duaro -->
-  <xacro:khi_duaro />
+  <xacro:khi_duaro prefix="" />
 
   <!-- Fix duaro to world -->
 
