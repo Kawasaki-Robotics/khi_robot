@@ -29,28 +29,29 @@
     <xacro:property name="U2_length" value="0.124648"/>
 
     <!-- joint limits [rad][m] -->
-    <xacro:property name="J1_LOWER_lower_limit" value="${-pi*170/180}"/>
-    <xacro:property name="J1_LOWER_upper_limit" value="${pi*170/180}"/>
-    <xacro:property name="J2_LOWER_lower_limit" value="${-pi*140/180}"/>
-    <xacro:property name="J2_LOWER_upper_limit" value="${pi*140/180}"/>
+    <xacro:property name="J1_LOWER_lower_limit" value="${radians(-170)}"/>
+    <xacro:property name="J1_LOWER_upper_limit" value="${radians( 170)}"/>
+    <xacro:property name="J2_LOWER_lower_limit" value="${radians(-140)}"/>
+    <xacro:property name="J2_LOWER_upper_limit" value="${radians( 140)}"/>
     <xacro:property name="J3_LOWER_lower_limit" value="0"/>
     <xacro:property name="J3_LOWER_upper_limit" value="0.15"/>
-    <xacro:property name="J4_LOWER_lower_limit" value="${-pi*2}"/>
-    <xacro:property name="J4_LOWER_upper_limit" value="${pi*2}"/>
-    <xacro:property name="J1_UPPER_lower_limit" value="${-pi*140/180}"/>
-    <xacro:property name="J1_UPPER_upper_limit" value="${pi*500/180}"/>
-    <xacro:property name="J2_UPPER_lower_limit" value="${-pi*140/180}"/>
-    <xacro:property name="J2_UPPER_upper_limit" value="${pi*140/180}"/>
+    <xacro:property name="J4_LOWER_lower_limit" value="${radians(-360)}"/>
+    <xacro:property name="J4_LOWER_upper_limit" value="${radians( 360)}"/>
+
+    <xacro:property name="J1_UPPER_lower_limit" value="${radians(-140)}"/>
+    <xacro:property name="J1_UPPER_upper_limit" value="${radians( 500)}"/>
+    <xacro:property name="J2_UPPER_lower_limit" value="${radians(-140)}"/>
+    <xacro:property name="J2_UPPER_upper_limit" value="${radians( 140)}"/>
     <xacro:property name="J3_UPPER_lower_limit" value="0"/>
     <xacro:property name="J3_UPPER_upper_limit" value="0.15"/>
-    <xacro:property name="J4_UPPER_lower_limit" value="${-pi*2}"/>
-    <xacro:property name="J4_UPPER_upper_limit" value="${pi*2}"/>
+    <xacro:property name="J4_UPPER_lower_limit" value="${radians(-360)}"/>
+    <xacro:property name="J4_UPPER_upper_limit" value="${radians( 360)}"/>
 
     <!-- joint velocity limits [rad/s][m/s]-->
-    <xacro:property name="J1_velocity_limit" value="${pi*240/180}"/>
-    <xacro:property name="J2_velocity_limit" value="${pi*315/180}"/>
+    <xacro:property name="J1_velocity_limit" value="${radians(240)}"/>
+    <xacro:property name="J2_velocity_limit" value="${radians(315)}"/>
     <xacro:property name="J3_velocity_limit" value="0.3"/>
-    <xacro:property name="J4_velocity_limit" value="${pi*600/180}"/>
+    <xacro:property name="J4_velocity_limit" value="${radians(600)}"/>
 
     <!-- link rviz color-->
     <material name="Light_blue">

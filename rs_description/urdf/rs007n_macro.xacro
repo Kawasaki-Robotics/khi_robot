@@ -15,10 +15,10 @@
     </material>
 
     <!-- DH parameters -->
-    <xacro:property name="dh_j1_j2_roty" value="-${pi/2}"/>
-    <xacro:property name="dh_j3_j4_roty" value="${pi/2}"/>
-    <xacro:property name="dh_j4_j5_roty" value="-${pi/2}"/>
-    <xacro:property name="dh_j5_j6_roty" value="${pi/2}"/>
+    <xacro:property name="dh_j1_j2_roty" value="${radians(-90)}"/>
+    <xacro:property name="dh_j3_j4_roty" value="${radians( 90)}"/>
+    <xacro:property name="dh_j4_j5_roty" value="${radians(-90)}"/>
+    <xacro:property name="dh_j5_j6_roty" value="${radians( 90)}"/>
 
     <!-- link mass [kg] -->
     <xacro:property name="j0_mass" value="11"/>
@@ -38,26 +38,26 @@
     <xacro:property name="j5_length" value="0.078"/>
     
     <!-- joint limits [rad] -->
-    <xacro:property name="j1_lower_limit" value="${-pi}"/>
-    <xacro:property name="j1_upper_limit" value="${pi}"/>
-    <xacro:property name="j2_lower_limit" value="${-pi*135/180}"/>
-    <xacro:property name="j2_upper_limit" value="${pi*135/180}"/>
-    <xacro:property name="j3_lower_limit" value="${-pi*155/180}"/>
-    <xacro:property name="j3_upper_limit" value="${pi*155/180}"/>
-    <xacro:property name="j4_lower_limit" value="${-pi*200/180}"/>
-    <xacro:property name="j4_upper_limit" value="${pi*200/180}"/>
-    <xacro:property name="j5_lower_limit" value="${-pi*125/180}"/>
-    <xacro:property name="j5_upper_limit" value="${pi*125/180}"/>
-    <xacro:property name="j6_lower_limit" value="${-2*pi}"/>
-    <xacro:property name="j6_upper_limit" value="${2*pi}"/>
+    <xacro:property name="j1_lower_limit" value="${radians(-180)}"/>
+    <xacro:property name="j1_upper_limit" value="${radians( 180)}"/>
+    <xacro:property name="j2_lower_limit" value="${radians(-135)}"/>
+    <xacro:property name="j2_upper_limit" value="${radians( 135)}"/>
+    <xacro:property name="j3_lower_limit" value="${radians(-155)}"/>
+    <xacro:property name="j3_upper_limit" value="${radians( 155)}"/>
+    <xacro:property name="j4_lower_limit" value="${radians(-200)}"/>
+    <xacro:property name="j4_upper_limit" value="${radians( 200)}"/>
+    <xacro:property name="j5_lower_limit" value="${radians(-125)}"/>
+    <xacro:property name="j5_upper_limit" value="${radians( 125)}"/>
+    <xacro:property name="j6_lower_limit" value="${radians(-360)}"/>
+    <xacro:property name="j6_upper_limit" value="${radians( 360)}"/>
 
     <!-- joint verocity limits [rad/s] -->
-    <xacro:property name="j1_velocity_limit" value="${pi*470/180}"/>
-    <xacro:property name="j2_velocity_limit" value="${pi*380/180}"/>
-    <xacro:property name="j3_velocity_limit" value="${pi*520/180}"/>
-    <xacro:property name="j4_velocity_limit" value="${pi*550/180}"/>
-    <xacro:property name="j5_velocity_limit" value="${pi*550/180}"/>
-    <xacro:property name="j6_velocity_limit" value="${pi*1000/180}"/>
+    <xacro:property name="j1_velocity_limit" value="${radians( 470)}"/>
+    <xacro:property name="j2_velocity_limit" value="${radians( 380)}"/>
+    <xacro:property name="j3_velocity_limit" value="${radians( 520)}"/>
+    <xacro:property name="j4_velocity_limit" value="${radians( 550)}"/>
+    <xacro:property name="j5_velocity_limit" value="${radians( 550)}"/>
+    <xacro:property name="j6_velocity_limit" value="${radians(1000)}"/>
 
     <!-- link inertial(TODO : set correct link inertial )-->
     <xacro:macro name="default_inertial" params="mass">
