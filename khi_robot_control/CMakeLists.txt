@@ -50,8 +50,5 @@ add_executable(main src/main.cpp src/khi_robot_hardware_interface.cpp)
 target_link_libraries(khi_robot_client ${catkin_LIBRARIES} ${krnx_LIBRARIES})
 target_link_libraries(main ${catkin_LIBRARIES} khi_robot_client)
 
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
-
 install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
