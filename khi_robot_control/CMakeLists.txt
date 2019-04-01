@@ -8,6 +8,7 @@ find_package(catkin REQUIRED
     hardware_interface
     joint_limits_interface
     khi_robot_msgs
+    realtime_tools
     trajectory_msgs
     transmission_interface)
 
