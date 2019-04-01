@@ -1,13 +1,24 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(khi_robot_control)
 
-find_package(catkin REQUIRED COMPONENTS controller_manager diagnostic_updater transmission_interface hardware_interface joint_limits_interface trajectory_msgs khi_robot_msgs)
+find_package(catkin REQUIRED
+  COMPONENTS
+    controller_manager
+    diagnostic_updater
+    hardware_interface
+    joint_limits_interface
+    khi_robot_msgs
+    trajectory_msgs
+    transmission_interface)
 
 ###################################
 ## catkin specific configuration ##
 ###################################
 catkin_package(
-  CATKIN_DEPENDS diagnostic_updater trajectory_msgs khi_robot_msgs)
+  CATKIN_DEPENDS
+    diagnostic_updater
+    khi_robot_msgs
+    trajectory_msgs)
 
 ###########
 ## Build ##
