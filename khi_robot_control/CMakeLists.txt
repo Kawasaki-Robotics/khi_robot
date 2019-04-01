@@ -31,6 +31,7 @@ elseif( ${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*armhf.*" )
 elseif( ${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*armel.*" )
   set(krnx_lib_name krnx-armel)
 else()
+  message(WARNING "\nCould not detect system processor architecture: assuming 'x86_64'. This may result in non-working binaries.")
   set(krnx_lib_name krnx-x86_64)
 endif()
 
