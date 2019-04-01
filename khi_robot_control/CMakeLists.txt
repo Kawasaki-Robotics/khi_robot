@@ -53,7 +53,7 @@ set_target_properties(krnx_lib PROPERTIES
 set(krnx_LIBRARIES krnx_lib)
 
 ## Declare a C++ library
-add_library(khi_robot_client src/khi_robot_krnx_driver.cpp src/khi_robot_client.cpp )
+add_library(khi_robot_client src/khi_robot_client.cpp src/khi_robot_krnx_driver.cpp)
 
 ## Declare a C++ executable for ROS_CONTROL
 add_executable(main src/main.cpp src/khi_robot_hardware_interface.cpp)
