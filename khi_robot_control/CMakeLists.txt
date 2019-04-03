@@ -62,5 +62,10 @@ add_executable(main src/main.cpp src/khi_robot_hardware_interface.cpp)
 target_link_libraries(khi_robot_client ${catkin_LIBRARIES} ${krnx_LIBRARIES})
 target_link_libraries(main ${catkin_LIBRARIES} khi_robot_client)
 
+if (CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
+  add_rostest(tests/test_main.xml)
+endif()
+
 install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
