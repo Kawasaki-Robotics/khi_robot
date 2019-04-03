@@ -2,5 +2,5 @@
   <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager"/>
 
   <!-- The rest of the params are specific to this plugin -->
-  <rosparam file="$(find rs080n_moveit_config)/config/controllers.yaml"/>
+  <rosparam file="$(find khi_rs080n_moveit_config)/config/controllers.yaml"/>
 </launch>

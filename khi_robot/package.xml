@@ -25,7 +25,7 @@
   <run_depend>khi_robot_msgs</run_depend>
   <run_depend>khi_rs007l_moveit_config</run_depend>
   <run_depend>khi_rs007n_moveit_config</run_depend>
-  <run_depend>rs080n_moveit_config</run_depend>
+  <run_depend>khi_rs080n_moveit_config</run_depend>
   <run_depend>khi_rs_description</run_depend>
   <run_depend>khi_rs_gazebo</run_depend>
   <run_depend>khi_rs_ikfast_plugin</run_depend>
