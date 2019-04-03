@@ -47,10 +47,8 @@ else()
   set(krnx_lib_name krnx-x86_64)
 endif()
 
-add_library(krnx_lib SHARED IMPORTED)
-set_target_properties(krnx_lib PROPERTIES
-  IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/lib/lib${krnx_lib_name}.so)
-set(krnx_LIBRARIES krnx_lib)
+find_library(krnx_LIBRARIES lib${krnx_lib_name}.so PATHS ${PROJECT_SOURCE_DIR}/lib)
+message(STATUS "Found KRNX library at: ${krnx_LIBRARIES}")
 
 ## Declare a C++ library
 add_library(khi_robot_client src/khi_robot_client.cpp src/khi_robot_krnx_driver.cpp)
@@ -69,3 +67,11 @@ endif()
 
 install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
+install(FILES ${krnx_LIBRARIES}
+  DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
+
+install(TARGETS main khi_robot_client
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
