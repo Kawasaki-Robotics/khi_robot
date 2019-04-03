@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>rs_gazebo</name>
+  <name>khi_rs_gazebo</name>
   <version>1.0.0</version>
-  <description>The rs_gazebo package</description>
+  <description>The khi_rs_gazebo package</description>
   
   <author email="matsui_hiro@khi.co.jp">matsui_hiro</author>
   <maintainer email="matsui_hiro@khi.co.jp">matsui_hiro</maintainer>

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <robot name="khi_rs007n" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find rs_description)/urdf/rs007n_macro.xacro"/>
+  <xacro:include filename="$(find khi_rs_description)/urdf/rs007n_macro.xacro"/>
 
   <!-- instantiate rs007n -->
   <xacro:khi_rs007n prefix="" />

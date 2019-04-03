@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>rs_description</name>
+  <name>khi_rs_description</name>
   <version>1.0.0</version>
-  <description>The rs_description package</description>
+  <description>The khi_rs_description package</description>
 
   <author email="matsui_hiro@khi.co.jp">matsui_hiro</author>
   <maintainer email="matsui_hiro@khi.co.jp">matsui_hiro</maintainer>

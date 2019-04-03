@@ -26,6 +26,6 @@
   <run_depend>xacro</run_depend>
   <test_depend>roslaunch</test_depend>
   <test_depend>rostest</test_depend>
-  <build_depend>rs_description</build_depend>
-  <run_depend>rs_description</run_depend>
+  <build_depend>khi_rs_description</build_depend>
+  <run_depend>khi_rs_description</run_depend>
 </package>

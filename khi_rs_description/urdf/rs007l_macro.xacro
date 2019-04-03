@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="khi_rs080n" params="prefix">
+  <xacro:macro name="khi_rs007l" params="prefix">
 
-    <xacro:include filename="$(find rs_description)/urdf/rs.transmission.xacro" />
-    <xacro:include filename="$(find rs_description)/urdf/common.gazebo.xacro" />
+    <xacro:include filename="$(find khi_rs_description)/urdf/rs.transmission.xacro" />
+    <xacro:include filename="$(find khi_rs_description)/urdf/common.gazebo.xacro" />
 
     <!-- link rviz colors -->
     <material name="White">
@@ -21,43 +21,43 @@
     <xacro:property name="dh_j5_j6_roty" value="${radians( 90)}"/>
 
     <!-- link mass [kg] -->
-    <xacro:property name="j0_mass" value="200"/> <!-- TO-DO -->
-    <xacro:property name="j1_mass" value="216.150"/>
-    <xacro:property name="j2_mass" value="70.847"/>
-    <xacro:property name="j3_mass" value="51.71"/>
-    <xacro:property name="j4_mass" value="31.6751"/>
-    <xacro:property name="j5_mass" value="6.866"/>
-    <xacro:property name="j6_mass" value="0.625"/> <!-- TO-DO -->
+    <xacro:property name="j0_mass" value="11"/>
+    <xacro:property name="j1_mass" value="8.188"/>
+    <xacro:property name="j2_mass" value="6.826"/>
+    <xacro:property name="j3_mass" value="5.236"/>
+    <xacro:property name="j4_mass" value="5.066"/>
+    <xacro:property name="j5_mass" value="1.625"/>
+    <xacro:property name="j6_mass" value="0.625"/>
 
     <!-- link lengths [m] -->
-    <xacro:property name="j0_length" value="0.68"/>
-    <xacro:property name="j1_length" value="0.15"/>
-    <xacro:property name="j2_length" value="0.87"/>
-    <xacro:property name="j3_length" value="0.267"/>
-    <xacro:property name="j4_length" value="0.813"/>
-    <xacro:property name="j5_length" value="0.165"/>
+    <xacro:property name="j0_length" value="0.36"/>
+    <xacro:property name="j1_length" value="0.0"/>
+    <xacro:property name="j2_length" value="0.455"/>
+    <xacro:property name="j3_length" value="0.0925"/>
+    <xacro:property name="j4_length" value="0.3825"/>
+    <xacro:property name="j5_length" value="0.078"/>
     
     <!-- joint limits [rad] -->
     <xacro:property name="j1_lower_limit" value="${radians(-180)}"/>
     <xacro:property name="j1_upper_limit" value="${radians( 180)}"/>
-    <xacro:property name="j2_lower_limit" value="${radians(-105)}"/>
-    <xacro:property name="j2_upper_limit" value="${radians( 140)}"/>
-    <xacro:property name="j3_lower_limit" value="${radians(-155)}"/>
-    <xacro:property name="j3_upper_limit" value="${radians( 135)}"/>
-    <xacro:property name="j4_lower_limit" value="${radians(-360)}"/>
-    <xacro:property name="j4_upper_limit" value="${radians( 360)}"/>
-    <xacro:property name="j5_lower_limit" value="${radians(-145)}"/>
-    <xacro:property name="j5_upper_limit" value="${radians( 145)}"/>
+    <xacro:property name="j2_lower_limit" value="${radians(-135)}"/>
+    <xacro:property name="j2_upper_limit" value="${radians( 135)}"/>
+    <xacro:property name="j3_lower_limit" value="${radians(-157)}"/>
+    <xacro:property name="j3_upper_limit" value="${radians( 157)}"/>
+    <xacro:property name="j4_lower_limit" value="${radians(-200)}"/>
+    <xacro:property name="j4_upper_limit" value="${radians( 200)}"/>
+    <xacro:property name="j5_lower_limit" value="${radians(-125)}"/>
+    <xacro:property name="j5_upper_limit" value="${radians( 125)}"/>
     <xacro:property name="j6_lower_limit" value="${radians(-360)}"/>
     <xacro:property name="j6_upper_limit" value="${radians( 360)}"/>
 
-    <!-- joint velocity limits [rad/s] -->
-    <xacro:property name="j1_velocity_limit" value="${radians(180)}"/>
-    <xacro:property name="j2_velocity_limit" value="${radians(180)}"/>
-    <xacro:property name="j3_velocity_limit" value="${radians(160)}"/>
-    <xacro:property name="j4_velocity_limit" value="${radians(185)}"/>
-    <xacro:property name="j5_velocity_limit" value="${radians(165)}"/>
-    <xacro:property name="j6_velocity_limit" value="${radians(280)}"/>
+    <!-- joint verocity limits [rad/s] -->
+    <xacro:property name="j1_velocity_limit" value="${radians( 370)}"/>
+    <xacro:property name="j2_velocity_limit" value="${radians( 310)}"/>
+    <xacro:property name="j3_velocity_limit" value="${radians( 410)}"/>
+    <xacro:property name="j4_velocity_limit" value="${radians( 550)}"/>
+    <xacro:property name="j5_velocity_limit" value="${radians( 550)}"/>
+    <xacro:property name="j6_velocity_limit" value="${radians(1000)}"/>
 
     <!-- link inertial(TODO : set correct link inertial )-->
     <xacro:macro name="default_inertial" params="mass">
@@ -67,20 +67,20 @@
       </inertial>
     </xacro:macro>
 
-    <!-- rs080n start -->
+    <!-- rs007l start -->
 
     <!-- Link 0 -->
     <link name="${prefix}base_link">
       <visual>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J0.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J0.stl"/>
         </geometry>
         <material name="White"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J0.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J0.stl"/>
         </geometry>
         <material name="White"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -102,14 +102,14 @@
     <link name="${prefix}link1">
       <visual>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J1.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J1.stl"/>
         </geometry>
         <material name="White"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J1.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J1.stl"/>
         </geometry>
         <material name="White"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -121,7 +121,7 @@
     <joint name="${prefix}joint2" type="revolute">
       <axis xyz="0 0 1" rpy="0 0 0" />
       <limit effort="1000.0" lower="${j2_lower_limit}" upper="${j2_upper_limit}" velocity="${j2_velocity_limit}"/>
-      <origin xyz="0 ${j1_length} 0" rpy="0 ${dh_j1_j2_roty} 0" />
+      <origin xyz="0 0 ${j1_length}" rpy="0 ${dh_j1_j2_roty} 0" />
       <parent link="${prefix}link1"/>
       <child link="${prefix}link2"/>
       <dynamics damping="0.0" friction="0.0"/>
@@ -130,19 +130,19 @@
     <link name="${prefix}link2">
       <visual>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J2.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J2.stl"/>
         </geometry>
         <material name="White"/>
         <origin xyz="0 0 0" rpy="0 ${dh_j1_j2_roty*-1} 0"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J2.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J2.stl"/>
         </geometry>
         <material name="White"/>
         <origin xyz="0 0 0" rpy="0 ${dh_j1_j2_roty*-1} 0"/>
       </collision>
-      <xacro:default_inertial mass="${j2_mass}"/>
+      <xacro:default_inertial mass="0${j2_mass}"/>
     </link>
 
     <!-- Link 3 -->
@@ -158,14 +158,14 @@
     <link name="${prefix}link3">
       <visual>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J3.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J3.stl"/>
         </geometry>
         <material name="White"/>
         <origin xyz="0 0 0" rpy="0 ${dh_j1_j2_roty*-1} 0"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J3.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J3.stl"/>
         </geometry>
         <material name="White"/>
         <origin xyz="0 0 0" rpy="0 ${dh_j1_j2_roty*-1} 0"/>
@@ -186,14 +186,14 @@
     <link name="${prefix}link4">
       <visual>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J4.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J4.stl"/>
         </geometry>
         <material name="White"/>
         <origin xyz="0 0 ${j4_length}" rpy="0 0 0"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J4.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J4.stl"/>
         </geometry>
         <material name="White"/>
         <origin xyz="0 0 ${j4_length}" rpy="0 0 0"/>
@@ -214,14 +214,14 @@
     <link name="${prefix}link5">
       <visual>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J5.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J5.stl"/>
         </geometry>
         <material name="White"/>
         <origin xyz="0 0 0" rpy="0 ${dh_j4_j5_roty*-1} 0"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J5.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J5.stl"/>
         </geometry>
         <material name="White"/>
         <origin xyz="0 0 0" rpy="0 ${dh_j4_j5_roty*-1} 0"/>
@@ -242,14 +242,14 @@
     <link name="${prefix}link6">
       <visual>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J6.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J6.stl"/>
         </geometry>
         <material name="Black"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://rs_description/meshes/RS080N_J6.stl"/>
+          <mesh filename="package://khi_rs_description/meshes/RS007L_J6.stl"/>
         </geometry>
         <material name="Black"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>

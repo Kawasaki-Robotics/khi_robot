@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(rs_description)
+project(khi_rs_description)
 
 find_package(catkin REQUIRED)
 
