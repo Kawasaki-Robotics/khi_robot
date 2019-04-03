@@ -16,10 +16,10 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>duaro_description</run_depend>
-  <run_depend>duaro_gazebo</run_depend>
-  <run_depend>duaro_ikfast_plugin</run_depend>
-  <run_depend>duaro_moveit_config</run_depend>
+  <run_depend>khi_duaro_description</run_depend>
+  <run_depend>khi_duaro_gazebo</run_depend>
+  <run_depend>khi_duaro_ikfast_plugin</run_depend>
+  <run_depend>khi_duaro_moveit_config</run_depend>
   <run_depend>khi_robot_bringup</run_depend>
   <run_depend>khi_robot_control</run_depend>
   <run_depend>khi_robot_msgs</run_depend>

@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: khi_duaro_description
+    relative_path: urdf/duaro.urdf.xacro
+  SRDF:
+    relative_path: config/khi_duaro.srdf
+  CONFIG:
+    author_name: matsui hiroki
+    author_email: matsui_hiro@khi.co.jp
+    generated_timestamp: 1520553887
