@@ -56,12 +56,14 @@ add_library(khi_robot_client src/khi_robot_client.cpp src/khi_robot_krnx_driver.
 ## Declare a C++ executable for ROS_CONTROL
 add_executable(main src/main.cpp src/khi_robot_hardware_interface.cpp)
 
-## Specify that we depend on msgs package
-add_dependencies(khi_robot_client ${catkin_EXPORTED_TARGETS})
-
 ## Specify libraries to link a library or executable target against
 target_link_libraries(khi_robot_client ${catkin_LIBRARIES} ${krnx_LIBRARIES})
 target_link_libraries(main ${catkin_LIBRARIES} khi_robot_client)
+
+if (CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
+  add_rostest(tests/test_main.xml)
+endif()
 
 install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

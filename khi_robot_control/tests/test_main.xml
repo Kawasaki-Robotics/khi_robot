@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+  <!-- Load hardware interface -->
+  <node name="khi_robot_control" pkg="khi_robot_control"
+        type="main" args="--loopback --period 4 --robot WD002N"
+        respawn="false" output="screen" cwd="node">
+  </node>
+  <rosparam>
+khi_robot_controllers:
+  names:
+    - arm_controller
+arm_controller:
+  joints:
+    - joint1
+  </rosparam>
+
+  <param name="diagnostics_test/topic" value="diagnostics" />
+  <test test-name="diagnostics_test" pkg="rostest" type="hztest" name="diagnostics_test" >
+    <param name="hz" value="1" />
+    <param name="hzerror" value="1" />
+    <param name="test_duration" value="5.0" />
+  </test>
+
+</launch>
