@@ -37,7 +37,7 @@ roslaunch ***_gazebo ***_world.launch
 Start a MoveIt! script as:
 
 ```
-roslaunch ***_moveit_config ***_moveit.launch
+roslaunch ***_moveit_config moveit_planning_execution.launch
 ```
 
 Now you can see the rviz screen of MoveIt! and interact the robot with the GUI.
