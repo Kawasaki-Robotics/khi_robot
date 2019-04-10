@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="khi_rs007n" params="prefix">
+
+    <xacro:include filename="$(find khi_rs_description)/urdf/rs.transmission.xacro" />
+    <xacro:include filename="$(find khi_rs_description)/urdf/common.gazebo.xacro" />
+
+    <!-- link rviz colors -->
+    <material name="White">
+      <color rgba="1 1 1 1"/>
+    </material>
+
+    <material name="Black">
+      <color rgba="0 0 0 1"/>
+    </material>
+
+    <!-- DH parameters -->
+    <xacro:property name="dh_j1_j2_roty" value="${radians(-90)}"/>
+    <xacro:property name="dh_j3_j4_roty" value="${radians( 90)}"/>
+    <xacro:property name="dh_j4_j5_roty" value="${radians(-90)}"/>
+    <xacro:property name="dh_j5_j6_roty" value="${radians( 90)}"/>
+
+    <!-- link mass [kg] -->
+    <xacro:property name="j0_mass" value="11"/>
+    <xacro:property name="j1_mass" value="8.188"/>
+    <xacro:property name="j2_mass" value="5.842"/>
+    <xacro:property name="j3_mass" value="5.236"/>
+    <xacro:property name="j4_mass" value="4.461"/>
+    <xacro:property name="j5_mass" value="1.625"/>
+    <xacro:property name="j6_mass" value="0.625"/>
+
+    <!-- link lengths [m] -->
+    <xacro:property name="j0_length" value="0.36"/>
+    <xacro:property name="j1_length" value="0.0"/>
+    <xacro:property name="j2_length" value="0.355"/>
+    <xacro:property name="j3_length" value="0.0925"/>
+    <xacro:property name="j4_length" value="0.2825"/>
+    <xacro:property name="j5_length" value="0.078"/>
+    
+    <!-- joint limits [rad] -->
+    <xacro:property name="j1_lower_limit" value="${radians(-180)}"/>
+    <xacro:property name="j1_upper_limit" value="${radians( 180)}"/>
+    <xacro:property name="j2_lower_limit" value="${radians(-135)}"/>
+    <xacro:property name="j2_upper_limit" value="${radians( 135)}"/>
+    <xacro:property name="j3_lower_limit" value="${radians(-155)}"/>
+    <xacro:property name="j3_upper_limit" value="${radians( 155)}"/>
+    <xacro:property name="j4_lower_limit" value="${radians(-200)}"/>
+    <xacro:property name="j4_upper_limit" value="${radians( 200)}"/>
+    <xacro:property name="j5_lower_limit" value="${radians(-125)}"/>
+    <xacro:property name="j5_upper_limit" value="${radians( 125)}"/>
+    <xacro:property name="j6_lower_limit" value="${radians(-360)}"/>
+    <xacro:property name="j6_upper_limit" value="${radians( 360)}"/>
+
+    <!-- joint verocity limits [rad/s] -->
+    <xacro:property name="j1_velocity_limit" value="${radians( 470)}"/>
+    <xacro:property name="j2_velocity_limit" value="${radians( 380)}"/>
+    <xacro:property name="j3_velocity_limit" value="${radians( 520)}"/>
+    <xacro:property name="j4_velocity_limit" value="${radians( 550)}"/>
+    <xacro:property name="j5_velocity_limit" value="${radians( 550)}"/>
+    <xacro:property name="j6_velocity_limit" value="${radians(1000)}"/>
+
+    <!-- link inertial(TODO : set correct link inertial )-->
+    <xacro:macro name="default_inertial" params="mass">
+      <inertial>
+        <mass value="${mass}" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+      </inertial>
+    </xacro:macro>
+
+    <!-- rs007n start -->
+
+    <!-- Link 0 -->
+    <link name="${prefix}base_link">
+      <visual>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J0.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J0.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </collision>
+      <xacro:default_inertial mass="${j0_mass}"/>
+    </link>
+
+    <!-- Link 1 -->
+    <joint name="${prefix}joint1" type="revolute">
+      <axis xyz="0 0 -1" rpy="0 0 0" />
+      <limit effort="1000.0" lower="${j1_lower_limit}" upper="${j1_upper_limit}" velocity="${j1_velocity_limit}"/>
+      <origin xyz="0 0 ${j0_length}" rpy="0 0 0" />
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}link1"/>
+      <dynamics damping="0.0" friction="0.0"/>
+    </joint>
+
+
+    <link name="${prefix}link1">
+      <visual>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J1.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J1.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </collision>
+      <xacro:default_inertial mass="${j1_mass}"/>
+    </link>
+
+    <!-- Link 2 -->
+    <joint name="${prefix}joint2" type="revolute">
+      <axis xyz="0 0 1" rpy="0 0 0" />
+      <limit effort="1000.0" lower="${j2_lower_limit}" upper="${j2_upper_limit}" velocity="${j2_velocity_limit}"/>
+      <origin xyz="0 0 ${j1_length}" rpy="0 ${dh_j1_j2_roty} 0" />
+      <parent link="${prefix}link1"/>
+      <child link="${prefix}link2"/>
+      <dynamics damping="0.0" friction="0.0"/>
+    </joint>
+
+    <link name="${prefix}link2">
+      <visual>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J2.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin xyz="0 0 0" rpy="0 ${dh_j1_j2_roty*-1} 0"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J2.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin xyz="0 0 0" rpy="0 ${dh_j1_j2_roty*-1} 0"/>
+      </collision>
+      <xacro:default_inertial mass="0${j2_mass}"/>
+    </link>
+
+    <!-- Link 3 -->
+    <joint name="${prefix}joint3" type="revolute">
+      <axis xyz="0 0 -1" rpy="0 0 0" />
+      <limit effort="1000.0" lower="${j3_lower_limit}" upper="${j3_upper_limit}" velocity="${j3_velocity_limit}"/>
+      <origin xyz="${j2_length} 0 0" rpy="0 0 0" />
+      <parent link="${prefix}link2"/>
+      <child link="${prefix}link3"/>
+      <dynamics damping="0.0" friction="0.0"/>
+    </joint>
+
+    <link name="${prefix}link3">
+      <visual>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J3.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin xyz="0 0 0" rpy="0 ${dh_j1_j2_roty*-1} 0"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J3.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin xyz="0 0 0" rpy="0 ${dh_j1_j2_roty*-1} 0"/>
+      </collision>
+      <xacro:default_inertial mass="${j3_mass}"/>
+    </link>
+
+    <!-- Link 4 -->
+    <joint name="${prefix}joint4" type="revolute">
+      <axis xyz="0 0 1" rpy="0 0 0" />
+      <limit effort="1000.0" lower="${j4_lower_limit}" upper="${j4_upper_limit}" velocity="${j4_velocity_limit}"/>
+      <origin xyz="${j3_length} 0 0" rpy="0 ${dh_j3_j4_roty} 0" />
+      <parent link="${prefix}link3"/>
+      <child link="${prefix}link4"/>
+      <dynamics damping="0.0" friction="0.0"/>
+    </joint>
+
+    <link name="${prefix}link4">
+      <visual>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J4.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin xyz="0 0 ${j4_length}" rpy="0 0 0"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J4.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin xyz="0 0 ${j4_length}" rpy="0 0 0"/>
+      </collision>
+      <xacro:default_inertial mass="${j4_mass}"/>
+    </link>
+
+    <!-- Link 5 -->
+    <joint name="${prefix}joint5" type="revolute">
+      <axis xyz="0 0 -1" rpy="0 0 0" />
+      <limit effort="1000.0" lower="${j5_lower_limit}" upper="${j5_upper_limit}" velocity="${j5_velocity_limit}"/>
+      <origin xyz="0 0 ${j4_length}" rpy="0 ${dh_j4_j5_roty} 0" />
+      <parent link="${prefix}link4"/>
+      <child link="${prefix}link5"/>
+      <dynamics damping="0.0" friction="0.0"/>
+    </joint>
+
+    <link name="${prefix}link5">
+      <visual>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J5.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin xyz="0 0 0" rpy="0 ${dh_j4_j5_roty*-1} 0"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J5.stl"/>
+        </geometry>
+        <material name="White"/>
+        <origin xyz="0 0 0" rpy="0 ${dh_j4_j5_roty*-1} 0"/>
+      </collision>
+      <xacro:default_inertial mass="${j5_mass}"/>
+    </link>
+
+    <!-- Link 6 -->
+    <joint name="${prefix}joint6" type="revolute">
+      <axis xyz="0 0 1" rpy="0 0 0" />
+      <limit effort="1000.0" lower="${j6_lower_limit}" upper="${j6_upper_limit}" velocity="${j6_velocity_limit}"/>
+      <origin xyz="${j5_length} 0 0" rpy="0 ${dh_j5_j6_roty} 0" />
+      <parent link="${prefix}link5"/>
+      <child link="${prefix}link6"/>
+      <dynamics damping="0.0" friction="0.0"/>
+    </joint>
+
+    <link name="${prefix}link6">
+      <visual>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J6.stl"/>
+        </geometry>
+        <material name="Black"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://khi_rs_description/meshes/RS007N_J6.stl"/>
+        </geometry>
+        <material name="Black"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+      </collision>
+      <xacro:default_inertial mass="${j6_mass}"/>
+    </link>
+  </xacro:macro>
+</robot>

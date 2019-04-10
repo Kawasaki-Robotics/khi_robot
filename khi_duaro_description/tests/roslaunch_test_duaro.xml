@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+  <group ns="load_duaro__">
+    <param name="robot_description" command="$(find xacro)/xacro '$(find khi_duaro_description)/urdf/duaro.urdf.xacro'" />
+  </group>
+</launch>

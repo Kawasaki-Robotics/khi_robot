@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <group ns="demo">
+    <include file="$(find khi_rs007l_moveit_config)/launch/demo.launch" />
+  </group>
+
+  <group ns="real">
+    <include file="$(find khi_rs007l_moveit_config)/launch/moveit_planning_execution.launch" />
+  </group>
+</launch>

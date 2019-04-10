@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="limited" default="false"/>
+  <arg name="paused" default="false"/>
+  <arg name="gui" default="true"/>
+   <arg name="gzpose" default="-x 0.0 -y 0.0 -z 0.0" />
+  
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="worlds/empty.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find khi_rs_description)/urdf/rs007n.urdf.xacro'" />
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="$(arg gzpose) -urdf -param robot_description -model robot " respawn="false" output="screen" />
+
+  <!-- Robot state publisher -->
+  <include file="$(find khi_rs_gazebo)/launch/controller.launch"/>
+
+  <!-- load the rs007 controllers -->
+  <include file="$(find khi_rs_gazebo)/launch/rs007n_gazebo_control.launch"/>
+
+  <!-- Set initial joint positions(only duaro) -->
+  <!-- <node name="go_initial" pkg="khi_rs_gazebo"  type="go_initial.sh" /> -->
+</launch>

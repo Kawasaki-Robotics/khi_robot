@@ -1,0 +1,1 @@
+rosrun moveit_kinematics create_ikfast_moveit_plugin.py rs080n manipulator khi_rs_ikfast_plugin /home/rbuser/ROS/tmp/src/khi_robot/khi_rs_ikfast_plugin/src/rs080n_manipulator_ikfast_solver.cpp

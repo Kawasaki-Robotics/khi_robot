@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+  <group ns="load_rs007l__">
+    <param name="robot_description" command="$(find xacro)/xacro '$(find khi_rs_description)/urdf/rs007l.urdf.xacro'" />
+  </group>
+</launch>

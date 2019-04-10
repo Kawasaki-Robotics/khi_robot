@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<robot name="khi_rs007l" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find khi_rs_description)/urdf/rs007l_macro.xacro"/>
+
+  <!-- instantiate rs007l -->
+  <xacro:khi_rs007l prefix="" />
+
+  <!-- Fix rs007l to world -->
+
+  <link name="world"/>
+
+  <joint name="world2base" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+</robot>

@@ -16,17 +16,17 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>duaro_description</run_depend>
-  <run_depend>duaro_gazebo</run_depend>
-  <run_depend>duaro_ikfast_plugin</run_depend>
-  <run_depend>duaro_moveit_config</run_depend>
+  <run_depend>khi_duaro_description</run_depend>
+  <run_depend>khi_duaro_gazebo</run_depend>
+  <run_depend>khi_duaro_ikfast_plugin</run_depend>
+  <run_depend>khi_duaro_moveit_config</run_depend>
   <run_depend>khi_robot_bringup</run_depend>
   <run_depend>khi_robot_control</run_depend>
   <run_depend>khi_robot_msgs</run_depend>
-  <run_depend>rs007l_moveit_config</run_depend>
-  <run_depend>rs007n_moveit_config</run_depend>
-  <run_depend>rs080n_moveit_config</run_depend>
-  <run_depend>rs_description</run_depend>
-  <run_depend>rs_gazebo</run_depend>
-  <run_depend>rs_ikfast_plugin</run_depend>
+  <run_depend>khi_rs007l_moveit_config</run_depend>
+  <run_depend>khi_rs007n_moveit_config</run_depend>
+  <run_depend>khi_rs080n_moveit_config</run_depend>
+  <run_depend>khi_rs_description</run_depend>
+  <run_depend>khi_rs_gazebo</run_depend>
+  <run_depend>khi_rs_ikfast_plugin</run_depend>
 </package>
