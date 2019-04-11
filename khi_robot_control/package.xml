@@ -34,4 +34,6 @@
   <run_depend>trajectory_msgs</run_depend>
   <run_depend>transmission_interface</run_depend>
   <run_depend>khi_robot_msgs</run_depend>
+
+  <test_depend>rostest</test_depend>
 </package>
