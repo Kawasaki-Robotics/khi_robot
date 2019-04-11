@@ -2,8 +2,8 @@
 Changelog for package khi_duaro_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.1.0 (2019-04-11)
+------------------
 * Merge pull request `#10 <https://github.com/Kawasaki-Robotics/khi_robot/issues/10>`_ from d-nakamichi/khi_prefix
   Prefix all pkgs with 'khi\_'
 * Convert duaro\_* to khi_duaro\_*

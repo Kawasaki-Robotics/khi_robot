@@ -2,8 +2,8 @@
 Changelog for package rs_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.1.0 (2019-04-11)
+------------------
 * Merge pull request `#10 <https://github.com/Kawasaki-Robotics/khi_robot/issues/10>`_ from d-nakamichi/khi_prefix
   Prefix all pkgs with 'khi\_'
 * Convert rs\_* to khi_rs\_*

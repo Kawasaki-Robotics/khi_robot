@@ -2,8 +2,8 @@
 Changelog for package khi_robot_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.1.0 (2019-04-11)
+------------------
 * robot_control: fix msg deps of main. (`#9 <https://github.com/Kawasaki-Robotics/khi_robot/issues/9>`_)
   Seems to have been remove in `#6 <https://github.com/Kawasaki-Robotics/khi_robot/issues/6>`_.
 * update travis.yml (`#6 <https://github.com/Kawasaki-Robotics/khi_robot/issues/6>`_)
