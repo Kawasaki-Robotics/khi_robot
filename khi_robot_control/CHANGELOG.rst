@@ -2,6 +2,71 @@
 Changelog for package khi_robot_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* robot_control: fix msg deps of main. (`#9 <https://github.com/Kawasaki-Robotics/khi_robot/issues/9>`_)
+  Seems to have been remove in `#6 <https://github.com/Kawasaki-Robotics/khi_robot/issues/6>`_.
+* update travis.yml (`#6 <https://github.com/Kawasaki-Robotics/khi_robot/issues/6>`_)
+  * update travis.yml
+  * rs_desc: add missing install targets.
+  * duaro_desc: add missing install targets.
+  * rs_gazebo: add missing install targets.
+  * duaro_gazebo: add missing install targets.
+  * description: pkgs do not run depend on urdf.
+  * duaro_desc: add roslaunch testing.
+  Tries to load xacro as parameter.
+  * rs_desc: add roslaunch testing.
+  Tries to load xacros as parameters.
+  * robot_control: use imported target for KRNX binary blob.
+  Avoid setting link directories.
+  * robot_control: warn user if CPU arch could not be detected.
+  * robot_control: remove redundant dep declaration.
+  'khi_robot_msgs' is already a build_depend and is another package, so build ordering will already take the dependencies into account.
+  * robot_control: don't install headers.
+  The main library is not exported (by catkin_package(..)), so the headers also don't need to be installed.
+  This also resolves an installation issue: the install(..) statement expects a sub dir called 'khi_robot_control' in the 'include' directory, but that doesn't exist.
+  * robot_control: sort components alphabetically.
+  Make catkin_lint happ(ier).
+  * robot_control: fix realtime_tools unconfigured build dep.
+  * robot_control: sort source files for robot_client target.
+  Make catkin_lint happ(ier).
+  * moveit_cfgs: install scripts dir.
+  * rs080n_moveit_config does not have script directory
+  * set indigo as allow_failures
+  * add test for khi_robot_control/main and libkrnx
+  * robot_control: work-around for KRNX lib blob linking issues.
+  Based on suggestion from @k-okada.
+  Not sure whether this is an actual proper solution, or just a work-around.
+  Systems with stricter ld library path security might not like this.
+* Updates to build scripts and manifests (packaging) (`#5 <https://github.com/Kawasaki-Robotics/khi_robot/issues/5>`_)
+  * rs_desc: add missing install targets.
+  * duaro_desc: add missing install targets.
+  * rs_gazebo: add missing install targets.
+  * duaro_gazebo: add missing install targets.
+  * description: pkgs do not run depend on urdf.
+  * duaro_desc: add roslaunch testing.
+  Tries to load xacro as parameter.
+  * rs_desc: add roslaunch testing.
+  Tries to load xacros as parameters.
+  * robot_control: use imported target for KRNX binary blob.
+  Avoid setting link directories.
+  * robot_control: warn user if CPU arch could not be detected.
+  * robot_control: don't install headers.
+  The main library is not exported (by catkin_package()), so the headers also don't need to be installed.
+  This also resolves an installation issue: the install(..) statement expects a sub dir called 'khi_robot_control' in the 'include' directory, but that doesn't exist.
+  * robot_control: sort components alphabetically.
+  Make catkin_lint happ(ier).
+  * robot_control: fix realtime_tools unconfigured build dep.
+  * robot_control: sort source files for robot_client target.
+  Make catkin_lint happ(ier).
+  * moveit_cfgs: install scripts dir.
+  Except RS080N.
+  * robot_control: work-around for KRNX lib blob linking issues.
+  Based on suggestion from @k-okada.
+  Not sure whether this is an actual proper solution, or just a work-around.
+  Systems with stricter ld library path security might not like this.
+* Contributors: G.A. vd. Hoorn, Kei Okada
+
 1.0.0 (2019-03-28)
 ------------------
 * Refactoring
