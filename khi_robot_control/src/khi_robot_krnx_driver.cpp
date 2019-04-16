@@ -334,58 +334,16 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
     }
 
     /* Load RTC param */
-    snprintf( param, sizeof(param), "%s/param/rb_rtc_%s.pg", KHI_ROBOT_CONTROL_DIR, p_rb_tbl[cont_no]->robot_name.c_str() );
-    return_code = krnx_Load( cont_no, param );
-    retKrnxRes( cont_no, "krnx_Load", return_code );
-
-    /* Load HOME param */
-    snprintf( param, sizeof(param), "%s/param/rb_rtc_home.pg", KHI_ROBOT_CONTROL_DIR );
-    if ( ( fp = fopen( param, "w" ) ) != NULL) {
-        /* Update HOME position */
-        for ( int ano = 0; ano < robot_info[cont_no].arm_num; ano++ )
-        {
-            if ( !getCurMotionData( cont_no, ano, &motion_data ) ) { return false; }
-
-            for ( int jt = 0; jt < joint->joint_num; jt++ )
-            {
-                memcpy( &p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home, &motion_data.ang_ref[jt], sizeof(motion_data.ang_ref[jt]) );
-                if ( p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].type == TYPE_LINE )
-                {
-                    p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home /= KHI_KRNX_M2MM;
-                }
-            }
-        }
-
-        fprintf( fp, ".JOINTS\n" );
-        for ( int ano = 0; ano < robot_info[cont_no].arm_num; ano++ )
-        {
-            fprintf( fp, "#rtchome%d", ano+1 );
-            for ( int jt = 0; jt < p_rb_tbl[cont_no]->arm_tbl[ano].jt_num; jt++ )
-            {
-                if ( p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].type == TYPE_LINE )
-                {
-                    fprintf( fp, " %.6f", p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home*KHI_KRNX_M2MM );
-                }
-                else
-                {
-                    fprintf( fp, " %.6f", p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home*180/M_PI );
-                }
-            }
-            fprintf( fp, "\n" );
-        }
-        fprintf( fp, ".END\n" );
-        fclose( fp );
-    }
-    else
+    if ( !makeRtcParam( cont_no, p_rb_tbl[cont_no]->robot_name.c_str(), param, sizeof(param), joint ) )
     {
-        setState( cont_no, ERROR );
-        errorPrint( "cannot open param file" );
+        errorPrint( "Failed to make rtc param.");
         return false;
     }
     return_code = krnx_Load( cont_no, param );
+    unlink(param);
     if ( !retKrnxRes( cont_no, "krnx_Load", return_code ) )
     {
-        errorPrint( "cannot load param file" );
+        errorPrint( "Failed to load rtc param." );
         return false;
     }
 
@@ -799,6 +757,110 @@ std::vector<std::string> KhiRobotKrnxDriver::splitString( const std::string str,
     }
 
     return list;
+}
+
+bool KhiRobotKrnxDriver::makeRtcParam( const int cont_no, const std::string name, char* p_path, size_t p_path_siz, JointData *joint )
+{
+    FILE *fp;
+    int fd;
+    char tmplt[] = "/tmp/khi_robot-rtc_param-XXXXXX";
+    char fdpath[128] = { 0 };
+    ssize_t rsize;
+    TKrnxCurMotionData motion_data = { 0 };
+
+    fd = mkstemp(tmplt);
+
+    if ( ( fp = fdopen( fd, "w" ) ) != NULL)
+    {
+        /* retrieve path */
+        snprintf( fdpath, sizeof(fdpath), "/proc/%d/fd/%d", getpid(), fd );
+        rsize = readlink( fdpath, p_path, p_path_siz );
+        if ( rsize < 0 )
+        {
+            return false;
+        }
+
+        /* RTC program */
+        if ( name == KHI_ROBOT_WD002N )
+        {
+            fprintf( fp, ".PROGRAM rb_rtc1()\n" );
+            fprintf( fp, "  FOR .i = 1 TO 8\n" );
+            fprintf( fp, "    .acc[.i] = 1\n" );
+            fprintf( fp, "  END\n" );
+            fprintf( fp, "  L3ACCURACY .acc[1] ALWAYS\n" );
+            fprintf( fp, "  FOR .i = 1 TO 8\n" );
+            fprintf( fp, "    .acc[.i] = 0\n" );
+            fprintf( fp, "  END\n" );
+            fprintf( fp, "  RTC_SW 1: ON\n" );
+            fprintf( fp, "1 JMOVE #rtchome1\n" );
+            fprintf( fp, "  GOTO 1\n" );
+            fprintf( fp, "  RTC_SW 1: OFF\n" );
+            fprintf( fp, ".END\n" );
+            fprintf( fp, ".PROGRAM rb_rtc2()\n" );
+            fprintf( fp, "  FOR .i = 1 TO 8\n" );
+            fprintf( fp, "    .acc[.i] = 1\n" );
+            fprintf( fp, "  END\n" );
+            fprintf( fp, "  L3ACCURACY .acc[1] ALWAYS\n" );
+            fprintf( fp, "  FOR .i = 1 TO 8\n" );
+            fprintf( fp, "    .acc[.i] = 0\n" );
+            fprintf( fp, "  END\n" );
+            fprintf( fp, "  RTC_SW 2: ON\n" );
+            fprintf( fp, "1 JMOVE #rtchome2\n" );
+            fprintf( fp, "  GOTO 1\n" );
+            fprintf( fp, "  RTC_SW 2: OFF\n" );
+            fprintf( fp, ".END\n" );
+        }
+        else
+        {
+            fprintf( fp, ".PROGRAM rb_rtc1()\n" );
+            fprintf( fp, "  ACCURACY 1 FINE\n" );
+            fprintf( fp, "  JMOVE #rtchome1\n" );
+            fprintf( fp, "  ACCURACY 0 ALWAYS\n" );
+            fprintf( fp, "  RTC_SW 1: ON\n" );
+            fprintf( fp, "1 JMOVE #rtchome1\n" );
+            fprintf( fp, "  GOTO 1\n" );
+            fprintf( fp, "  RTC_SW 1: OFF\n" );
+            fprintf( fp, ".END\n" );
+        }
+
+        /* HOME position */
+        fprintf( fp, ".JOINTS\n" );
+        for ( int ano = 0; ano < robot_info[cont_no].arm_num; ano++ )
+        {
+            if ( !getCurMotionData( cont_no, ano, &motion_data ) ) { return false; }
+
+            for ( int jt = 0; jt < joint->joint_num; jt++ )
+            {
+                memcpy( &p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home, &motion_data.ang_ref[jt], sizeof(motion_data.ang_ref[jt]) );
+                if ( p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].type == TYPE_LINE )
+                {
+                    p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home /= KHI_KRNX_M2MM;
+                }
+            }
+
+            fprintf( fp, "#rtchome%d", ano+1 );
+            for ( int jt = 0; jt < p_rb_tbl[cont_no]->arm_tbl[ano].jt_num; jt++ )
+            {
+                if ( p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].type == TYPE_LINE )
+                {
+                    fprintf( fp, " %.6f", p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home*KHI_KRNX_M2MM );
+                }
+                else
+                {
+                    fprintf( fp, " %.6f", p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home*180/M_PI );
+                }
+            }
+            fprintf( fp, "\n" );
+        }
+        fprintf( fp, ".END\n" );
+        fclose( fp );
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
 }
 
 bool KhiRobotKrnxDriver::commandHandler( khi_robot_msgs::KhiRobotCmd::Request &req, khi_robot_msgs::KhiRobotCmd::Response &res)

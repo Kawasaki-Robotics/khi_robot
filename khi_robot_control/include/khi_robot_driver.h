@@ -42,7 +42,6 @@ namespace khi_robot_control
 {
 #define KHI_MAX_CONTROLLER 8
 #define KHI_MAX_JOINT 18
-#define KHI_ROBOT_CONTROL_DIR "../../../src/khi_robot/khi_robot_control"
 #define KHI_MAX_SIG_SIZE 512
 
 struct JointData
