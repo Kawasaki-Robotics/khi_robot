@@ -784,18 +784,13 @@ std::vector<std::string> KhiRobotKrnxDriver::splitString( const std::string str,
     int last = str.find_first_of( del );
     std::vector<std::string> list;
 
-    while ( first < str.size() )
+    if ( first < str.size() )
     {
-        std::string sub_str( str, first, last - first );
-        list.push_back( sub_str );
-
+        std::string sub_str1( str, first, last - first );
+        list.push_back( sub_str1 );
         first = last + 1;
-        last = str.find_first_of( del, first );
-
-        if ( last == std::string::npos )
-        {
-            last = str.size();
-        }
+        std::string sub_str2( str, first, std::string::npos );
+        list.push_back( sub_str2 );
     }
 
     return list;
@@ -847,21 +842,10 @@ bool KhiRobotKrnxDriver::commandHandler( khi_robot_msgs::KhiRobotCmd::Request &r
         else
         {
             vlist = splitString( req.cmd, del );
-            if ( vlist.size() < 2 )
+            if ( vlist.size() == 2 )
             {
-                res.driver_ret = KRNX_E_BADARGS;
-                res.cmd_ret = "INVALID ARGS";
-            }
-
-            api_cmd = vlist[0];
-            if ( api_cmd == "get_signal" )
-            {
-                if ( vlist.size() != 2 )
-                {
-                    res.driver_ret = KRNX_E_BADARGS;
-                    res.cmd_ret = "INVALID ARGS";
-                }
-                else
+                api_cmd = vlist[0];
+                if ( api_cmd == "get_signal" )
                 {
                     dcode = krnx_GetCurIoInfo( cont_no, &io );
                     res.driver_ret = dcode;
@@ -888,21 +872,13 @@ bool KhiRobotKrnxDriver::commandHandler( khi_robot_msgs::KhiRobotCmd::Request &r
                         res.driver_ret = KRNX_E_BADARGS;
                         res.cmd_ret = "INVALID ARGS";
                     }
-
                     if ( res.driver_ret == KRNX_NOERROR )
                     {
                         if ( onoff ) { res.cmd_ret = "-1"; }
                         else         { res.cmd_ret = "0";}
                     }
                 }
-            }
-            else if ( api_cmd == "set_signal" )
-            {
-                if ( vlist.size() > 2 )
-                {
-                    res.driver_ret = KRNX_E_BADARGS;
-                }
-                else
+                else if ( api_cmd == "set_signal" )
                 {
                     std::string as_cmd = req.cmd;
                     as_cmd.replace( 0, strlen("set_signal"), "SIGNAL" );
@@ -910,13 +886,17 @@ bool KhiRobotKrnxDriver::commandHandler( khi_robot_msgs::KhiRobotCmd::Request &r
                     res.driver_ret = dcode;
                     res.as_ret = acode;
                 }
+                else
+                {
+                    res.driver_ret = KRNX_E_BADARGS;
+                    res.cmd_ret = "INVALID CMD";
+                }
             }
             else
             {
                 res.driver_ret = KRNX_E_BADARGS;
-                res.cmd_ret = "INVALID CMD";
+                res.cmd_ret = "INVALID ARGS";
             }
-
         }
     }
     else
