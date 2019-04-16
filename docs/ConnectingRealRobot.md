@@ -24,14 +24,19 @@ Make sure that the robot controller used for real-time control satisfies the fol
 
 ## 2-2. Start real-time control
 
-Execute the following command on the ROS running PC to start the real-time control at an administrate level of root.  
+Execute the following command on the ROS running PC as `root` to start the real-time control.  
 
 (e.g.)RS007N:
 ```
 roslaunch khi_robot_bringup rs007n_bringup.launch ip:=[Controller’s IP address]
 ```
 
-When the real-time control process is started, all axes of the robot moves to 0 positions. (Figure 4)
+When the real-time control process is started, the following message will be displayed by the process.  
+
+```
+KHI robot control started. [NOT REALTIME]/[REALTIME]
+```
+If the message includes `[REALTIME]`, the process is using `SCHED_FIFO` scheduling.
 
 When the real-time control process is ready to go, the following messages will be displayed by the process.
 ```
@@ -169,16 +174,30 @@ Frequent error messages and troubleshooting are as shown in the table below.
 |Error message|Troubleshooting|
 |---|---|
 |ROS:%s does not match AS:%s|Match the robot model on ROS and robot controller.|
+|Invalid robot size|Select correct robot type.|
+|Failed to make rtc param|Check the filesystem is correct.|
+|Failed to load rtc param|Check AS system.|
+|Failed to activate: timeout|Check AS's robot program.|
 |Please change Robot Controller's TEACH/REPEAT to REPEAT|Switch the TEACH/REPEAT mode of the robot controller to REPEAT.|
 |Please change Robot Controller's RUN/HOLD to RUN|Switch the RUN/HOLD of the robot controller to RUN.|
 |Please change Robot Controller's TEACH LOCK to OFF|Set the TEACH LOCK on the robot controller to OFF.|
 |Please change Robot Controller's EMERGENCY to OFF|Release the EMERGENCY button.|
-|ERROR [cont_no]: rno:[robot_no] code:[as_error_code]|Error occurred during the real-time control.<br>Check the error code “as_error_code” of the robot controller and release the error by refering to the [AS Language Reference Manual].|
-|RTC terminated %d: rno:%d|Real-time control of the robot controller is terminated. Restart the “khi_robot_control”.|
-|[KhiKrnxDriver] %s returned -0x%X|API %s of KRNX returned the error code -0x%X. Refer to the error code of the KRNX API and release the error.|
+|AS ERROR [cont_no]: ano:[arm_no] code:[as_error_code]|Error occurred during the real-time control.<br>Check the error code “as_error_code” of the robot controller and release the error by referring to the [AS Language Reference Manual].|
+|RTC SWITCH turned OFF [cont_no]: ano:[arm_no]|Real-time control of the robot controller turned OFF. It needs to restart to control again.|
+|[krnx_api] returned -[krnx_error_code]|API %s of KRNX returned the error code -0x%X. Refer to the error code of the KRNX API and release the error.|
 
+If an error is about "krnx_PrimeRtcCompData", the detail information is shown as below:  
+`[KhiRobotKrnxDriver] [krnx_PrimeRtcCompData] ano:[arm_no] [jt]pos:diff:status [JT1]%.4f:%.4f:%d ~ [JT6]%.4f:%.4f:%d`
 
-Error code of KRNX API is defined in “khi_robot/khi_robot_control/include/khi_robot_control/krnx.h”. Description and Value of the error codes are shown in the table below. (Table 2)
+|Name|Value|Description|
+|---|---|---|
+|pos|float|joint command value[deg or mm]|
+|diff|float|joint command difference value[deg or mm] between period|
+|status|0x0001|Operational area upper limit over|
+||0x0002|Operational area lower limit over|
+||0x0004|RTC joint command velocity(diff) limit over|
+
+Error code of KRNX API is defined in “khi_robot/khi_robot_control/include/krnx.h”. Description and Value of the error codes are shown in the table below.
 
 |Macro Definition|Description|Value|
 |---|---|---|

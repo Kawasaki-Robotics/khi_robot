@@ -337,7 +337,7 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
     /* Load RTC param */
     if ( !makeRtcParam( cont_no, p_rb_tbl[cont_no]->robot_name.c_str(), param, sizeof(param), joint ) )
     {
-        errorPrint( "Failed to make rtc param.");
+        errorPrint( "Failed to make rtc param");
         setState( cont_no, ERROR );
         return false;
     }
@@ -345,7 +345,7 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
     unlink(param);
     if ( !retKrnxRes( cont_no, "krnx_Load", return_code ) )
     {
-        errorPrint( "Failed to load rtc param." );
+        errorPrint( "Failed to load rtc param" );
         return false;
     }
 
@@ -388,7 +388,7 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
                 timeout_cnt++;
                 if ( timeout_cnt > timeout_cnt_th )
                 {
-                    errorPrint( "activation failed: timeout" );
+                    errorPrint( "Failed to activate: timeout" );
                     setState( cont_no, ERROR );
                     return false;
                 }
@@ -557,8 +557,10 @@ bool KhiRobotKrnxDriver::writeData( const int cont_no, JointData joint )
     static int sim_cnt = 0;
     int idx, ano, jt;
     char msg[1024] = { 0 };
-    char status[16] = { 0 };
-    float diff = 0;
+    char status[128] = { 0 };
+    TKrnxCurMotionData data;
+    float jt_pos = 0.0F;
+    float rtc_diff = 0.0F;
     bool is_primed = true;
 
     if ( !contLimitCheck( cont_no, KRNX_MAX_CONTROLLER ) ) { return false; }
@@ -607,19 +609,19 @@ bool KhiRobotKrnxDriver::writeData( const int cont_no, JointData joint )
         /* ERROR log */
         for ( int ano = 0; ano < robot_info[cont_no].arm_num; ano++ )
         {
-            snprintf( msg, sizeof(msg), "[krnx_PrimeRtcCompData] ano:%d [jt]status:diff ", ano+1 );
+            snprintf( msg, sizeof(msg), "[krnx_PrimeRtcCompData] ano:%d [jt]pos:diff:status ", ano+1 );
             krnx_GetRtcCompData( cont_no, ano, &rtc_old_comp[cont_no][ano][0] );
-            for ( int cnt = 0; cnt < p_rb_tbl[cont_no]->arm_tbl[ano].jt_num; cnt++ )
+            getCurMotionData( cont_no, ano, &data );
+            for ( int jt = 0; jt < p_rb_tbl[cont_no]->arm_tbl[ano].jt_num; jt++ )
             {
-                if ( p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[cnt].type == TYPE_LINE )
+                jt_pos = data.ang_ref[jt];
+                rtc_diff = ( rtc_comp[cont_no][ano][jt] - rtc_old_comp[cont_no][ano][jt] )*(1e+9/robot_info[cont_no].period);
+                if ( p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].type == TYPE_RAD )
                 {
-                    diff = ( rtc_comp[cont_no][ano][cnt] - rtc_old_comp[cont_no][ano][cnt] )/KHI_KRNX_M2MM*(1e+9/robot_info[cont_no].period);
+                    jt_pos  *= 180/M_PI;
+                    rtc_diff *= 180/M_PI;
                 }
-                else
-                {
-                    diff = ( rtc_comp[cont_no][ano][cnt] - rtc_old_comp[cont_no][ano][cnt] )*(1e+9/robot_info[cont_no].period);
-                }
-                snprintf( status, sizeof(status), "[%d]%d:%f ", cnt+1, rtc_status[cont_no][ano][cnt], diff );
+                snprintf( status, sizeof(status), "[%d]%.4f:%.4f:%d ", jt+1, jt_pos, rtc_diff, rtc_status[cont_no][ano][jt] );
                 strcat( msg, status );
             }
             errorPrint( msg );
