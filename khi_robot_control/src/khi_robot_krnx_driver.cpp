@@ -324,6 +324,7 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
             {
                 return_code = krnx_ExecMon( cont_no, "SW ZDBLREFFLT_MODSTABLE=OFF", msg_buf, sizeof(msg_buf), &error_code );
             }
+            krnx_SetRtcCompMask( cont_no, ano, pow( 2, p_rb_tbl[cont_no]->arm_tbl[ano].jt_num ) - 1 );
         }
         /* Motor Power ON */
         return_code = krnx_ExecMon( cont_no, "ZPOW ON", msg_buf, sizeof(msg_buf), &error_code );
