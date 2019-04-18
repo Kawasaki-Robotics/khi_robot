@@ -337,6 +337,7 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
     if ( !makeRtcParam( cont_no, p_rb_tbl[cont_no]->robot_name.c_str(), param, sizeof(param), joint ) )
     {
         errorPrint( "Failed to make rtc param.");
+        setState( cont_no, ERROR );
         return false;
     }
     return_code = krnx_Load( cont_no, param );
