@@ -772,10 +772,7 @@ bool KhiRobotKrnxDriver::makeRtcParam( const int cont_no, const std::string name
         /* retrieve path */
         snprintf( fdpath, sizeof(fdpath), "/proc/%d/fd/%d", getpid(), fd );
         rsize = readlink( fdpath, p_path, p_path_siz );
-        if ( rsize < 0 )
-        {
-            return false;
-        }
+        if ( rsize < 0 ) { return false; }
 
         /* RTC program */
         if ( name == KHI_ROBOT_WD002N )
@@ -819,13 +816,17 @@ bool KhiRobotKrnxDriver::makeRtcParam( const int cont_no, const std::string name
             fprintf( fp, "  RTC_SW 1: OFF\n" );
             fprintf( fp, ".END\n" );
         }
+        fclose( fp );
 
         /* HOME position */
-        fprintf( fp, ".JOINTS\n" );
         for ( int ano = 0; ano < robot_info[cont_no].arm_num; ano++ )
         {
-            if ( !getCurMotionData( cont_no, ano, &motion_data ) ) { return false; }
+            /* AS */
+            snprintf( cmd_buf, sizeof(cmd_buf), "HERE/N %d: #rtchome%d", ano+1, ano+1 );
+            return_code = krnx_ExecMon( cont_no, cmd_buf, msg_buf, sizeof(msg_buf), &error_code );
 
+            /* driver */
+            if ( !getCurMotionData( cont_no, ano, &motion_data ) ) { return false; }
             for ( int jt = 0; jt < joint->joint_num; jt++ )
             {
                 memcpy( &p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home, &motion_data.ang_ref[jt], sizeof(motion_data.ang_ref[jt]) );
@@ -834,23 +835,7 @@ bool KhiRobotKrnxDriver::makeRtcParam( const int cont_no, const std::string name
                     p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home /= KHI_KRNX_M2MM;
                 }
             }
-
-            fprintf( fp, "#rtchome%d", ano+1 );
-            for ( int jt = 0; jt < p_rb_tbl[cont_no]->arm_tbl[ano].jt_num; jt++ )
-            {
-                if ( p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].type == TYPE_LINE )
-                {
-                    fprintf( fp, " %.6f", p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home*KHI_KRNX_M2MM );
-                }
-                else
-                {
-                    fprintf( fp, " %.6f", p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home*180/M_PI );
-                }
-            }
-            fprintf( fp, "\n" );
         }
-        fprintf( fp, ".END\n" );
-        fclose( fp );
     }
     else
     {
