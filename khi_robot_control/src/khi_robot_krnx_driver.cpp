@@ -618,7 +618,7 @@ bool KhiRobotKrnxDriver::writeData( const int cont_no, JointData joint )
                 jt_vel = ( rtc_comp[cont_no][ano][jt] - rtc_old_comp[cont_no][ano][jt] )*(1e+9/robot_info[cont_no].period);
                 if ( p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].type == TYPE_LINE )
                 {
-                    jt_pos   /= KHI_KRNX_M2MM;
+                    jt_pos /= KHI_KRNX_M2MM;
                     jt_vel /= KHI_KRNX_M2MM;
                 }
                 snprintf( status, sizeof(status), "[%d]%.4f:%.4f:%d ", jt+1, jt_pos, jt_vel, rtc_status[cont_no][ano][jt] );

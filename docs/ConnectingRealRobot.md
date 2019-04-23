@@ -227,12 +227,12 @@ Frequent error messages and troubleshooting are as shown in the table below.
 |[krnx_api] returned -[krnx_error_code]|API %s of KRNX returned the error code -0x%X. Refer to the error code of the KRNX API and release the error.|
 
 If an error is about "krnx_PrimeRtcCompData", the detail information is shown as below:  
-`[KhiRobotKrnxDriver] [krnx_PrimeRtcCompData] ano:[arm_no] [jt]pos:diff:status [JT1]%.4f:%.4f:%d ~ [JT6]%.4f:%.4f:%d`
+`[KhiRobotKrnxDriver] [krnx_PrimeRtcCompData] ano:[arm_no] [jt]pos:vel:status [JT1]%.4f:%.4f:%d ~ [JT6]%.4f:%.4f:%d`
 
 |Name|Value|Description|
 |---|---|---|
-|pos|float|joint command value[rad or m]|
-|diff|float|joint command difference value[rad or m] between period|
+|pos|float|joint command position [rad or m]|
+|vel|float|joint command velocity [rad or m]|
 |status|0x0001|Operational area upper limit over|
 ||0x0002|Operational area lower limit over|
 ||0x0004|RTC joint command velocity(diff) limit over|
