@@ -1,67 +1,97 @@
-# 1. Supported AS system
+# Connecting real robot
 
-## F Series
+## 1. Supported AS system
+
+### F Series
 
 Handling: Higher than ASF_01000000W
 
-## OpenAS Series
+### OpenAS Series
 
 Handling: Higher than ASE401010XX3S
 
-# 2. How to operate on real robot 
+## 2. Preparation
 
-## 2-1. Preparation
+### 2-1. Robot controller
 
 Make sure that the robot controller used for real-time control satisfies the following conditions.
 
 * The controller is connected with a robot and ready to operate.
-* Nobody is inside the safety fence. 
-* The controller is in [REPEAT] mode. 
+* Nobody is inside the safety fence.
+* The controller is in [REPEAT] mode.
 * TEACH LOCK on the Teach pendant is switched to OFF.
 * Robot is not on Hold status.
 * No error.
 * The controller is connected to an Ubuntu PC with Ethernet cable and both are within the same network subnet.
 
-## 2-2. Start real-time control
+### 2-2. Ubuntu PC
 
-Execute the following command on the ROS running PC as `root` to start the real-time control.  
+Make sure that the Ubuntu PC used for real-time control satisfies the following conditions.
+
+* The PC is using realtime kernel for Ubuntu 16.04.
+* The user has real-time permissions.
+  * (e.g.)Making a real-time group named `realtime`
+    1. Make a group and add a user
+
+       ```bash
+       sudo addgroup realtime
+       sudo usermod -aG $(whoami)
+       ```
+
+    2. Add the following limits in `/etc/security/limits.conf`  
+       (`memlock` depends on your system)
+
+       ```bash
+       @realtime - rtprio 99
+       @realtime - priority 99
+       @realtime - memlock 512000
+       ```
+
+## 3. How to operate on real robot
+
+### 3-1. Start the real-time control
+
+Execute the following command on the ROS running PC to start the real-time control.  
 
 (e.g.)RS007N:
-```
+
+```bash
 roslaunch khi_robot_bringup rs007n_bringup.launch ip:=[Controller’s IP address]
 ```
 
 When the real-time control process is started, the following message will be displayed by the process.  
 
-```
+```bash
 KHI robot control started. [NOT REALTIME]/[REALTIME]
 ```
+
 If the message includes `[REALTIME]`, the process is using `SCHED_FIFO` scheduling.
 
 When the real-time control process is ready to go, the following messages will be displayed by the process.
-```
+
+```bash
 [KhiRobotKrnxDriver] State 0: ACTIVATING -> ACTIVE
 ```
 
-Once the above messages is confirmed, you are able to start real-time control of the robot from the operation interface of “rviz” or the python’s MoveIt! Commander. 
+Once the above messages is confirmed, you are able to start real-time control of the robot from the operation interface of “rviz” or the python’s MoveIt! Commander.  
 During the real-time control, the display on the Teach pendant will show the figure below.
 
 ![START Display on TP](start-display-on-tp.png)]
 
-## 2-3. Terminate the real-time control
+### 3-2. Terminate the real-time control
 
-Press “Ctrl+C” to end the real-time control. 
+Press “Ctrl+C” to end the real-time control.  
 Ending process stops the robot controller and turns it to HOLD state. The display on the Teach pendant will show the figure below.
 
 ![END Display on TP](end-display-on-tp.png)]
 
-# 3. Driver State
+## 4. Driver State
 
 To control robot controller on ROS, the drivere has control states.
 
 ![Driver State](driver-state.png)
 
-```
+```text
 0:  "INIT"            - Driver init state.
 1:  "CONNECTING"      - Driver is now connecting to Robot Controller.
 2:  "CONNECTED"       - Driver is connected to Robot Controller, but cannot control Robot Arm.
@@ -77,13 +107,13 @@ To control robot controller on ROS, the drivere has control states.
 
 You can get this status by Command Service "get_status".
 
-
-# 4. Command Service
+## 5. Command Service
 
 Service "khi_robot_command_service" is available.
 
 Service format is below...
-```
+
+```text
 string type
 string cmd
 ---
@@ -94,8 +124,9 @@ string cmd_ret
 
 Command format is below...
 
-## Execute AS Language Command
-```
+### Execute AS Language Command
+
+```text
 string type -> "as"
 string cmd -> AS Language Command
 ---
@@ -104,8 +135,9 @@ int32 as_ret -> AS return code. Refer AS manual.
 string cmd_ret -> Response of AS Language Command
 ```
 
-## Get Signal Status of [NUM]
-```
+### Get Signal Status of [NUM]
+
+```text
 string type-> "driver"
 string cmd -> "get_signal [NUM]"
 ---
@@ -113,15 +145,18 @@ int32 driver_ret -> driver's return code. Refer KRNX_E_*** in krnx.h
 int32 as_ret -> AS return code. Refer AS manual.
 string cmd_ret -> "-1"(ON) or "0"(OFF)
 ```
+
 [NUM] range (depended on AS system setting)
-```
+
+```text
 Output: 1~512
 Input: 1001~1512
 Internal: 2001~2512
 ```
 
-## Set Output Signal Status of [NUM]
-```
+### Set Output Signal Status of [NUM]
+
+```text
 string type -> "driver"
 string cmd -> "set_signal [NUM], ..."
 ---
@@ -129,15 +164,18 @@ int32 driver_ret -> driver's return code. Refer KRNX_E_*** in krnx.h
 int32 as_ret -> AS return code. Refer AS manual.
 string cmd_ret -> NOT USED
 ```
+
 [NUM] range (depended on AS system setting)
-```
+
+```text
 Output: -1~-512, 1~512
 Internal: -2001~-2512, 2001~2512
 (Positive value indicates ON state, and negative value does OFF state.)
 ```
 
-## Get Driver Status
-```
+### Get Driver Status
+
+```text
 string type -> "driver"
 string cmd -> "get_status"
 ---
@@ -146,8 +184,9 @@ int32 as_ret -> AS return code. Refer AS manual.
 string cmd_ret -> Driver Status
 ```
 
-## Restart Driver when its status is ERROR
-```
+### Restart Driver when its status is ERROR
+
+```text
 string type -> "driver"
 string cmd -> "restart"
 ---
@@ -156,8 +195,9 @@ int32 as_ret -> AS return code. Refer AS manual.
 string cmd_ret -> NOT USED
 ```
 
-## Quit Driver
-```
+### Quit Driver
+
+```text
 string type -> "driver"
 string cmd -> "quit"
 ---
@@ -166,10 +206,10 @@ int32 as_ret -> AS return code. Refer AS manual.
 string cmd_ret -> NOT USED
 ```
 
-# 5. Error and Troubleshooting
+## 6. Error and Troubleshooting
 
-All of the errors happened during ROS control process will be sent as a message in Error level.
-Frequent error messages and troubleshooting are as shown in the table below. 
+All of the errors happened during ROS control process will be sent as a message in Error level.  
+Frequent error messages and troubleshooting are as shown in the table below.  
 
 |Error message|Troubleshooting|
 |---|---|
@@ -248,9 +288,9 @@ Error code of KRNX API is defined in “khi_robot/khi_robot_control/include/krnx
 |KRNX_E_ILLCONTNO|Invalid Controller Number|(-0x2203)|
 |KRNX_E_UNDEFF|Undefined Error|(-0xFFFF)|
 
-# 6. Precausions
+## 7. Precausions
 
 * Make sure to use realtime kernel for Ubuntu 16.04.
-* When a robot controller is in the real-time control mode, its state is same as the REPEAT mode. Therefore make sure to the safety issues when the robot controller is in real-time control mode.    
+* When a robot controller is in the real-time control mode, its state is same as the REPEAT mode. Therefore make sure to the safety issues when the robot controller is in real-time control mode.
 * Never make any changes on the sources of the “khi_robot” package.
-* Refer to the Documents and community of the MoveIt! for more details on motion/path planning and how to calculate command value.   
+* Refer to the Documents and community of the MoveIt! for more details on motion/path planning and how to calculate command value.

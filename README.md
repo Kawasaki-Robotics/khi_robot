@@ -44,7 +44,7 @@ Now you can see the rviz screen of MoveIt! and interact the robot with the GUI.
 
 ## Connecting Real Robot
 
-Refer to `docs/ConnectingRealRobot.md`
+Refer to [docs/ConnectingRealRobot.md](docs/ConnectingRealRobot.md)
 
 ## Supported Robot
 
