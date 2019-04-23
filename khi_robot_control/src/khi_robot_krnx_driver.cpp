@@ -560,7 +560,7 @@ bool KhiRobotKrnxDriver::writeData( const int cont_no, JointData joint )
     char status[128] = { 0 };
     TKrnxCurMotionData data;
     float jt_pos = 0.0F;
-    float rtc_diff = 0.0F;
+    float jt_vel = 0.0F;
     bool is_primed = true;
 
     if ( !contLimitCheck( cont_no, KRNX_MAX_CONTROLLER ) ) { return false; }
@@ -609,19 +609,19 @@ bool KhiRobotKrnxDriver::writeData( const int cont_no, JointData joint )
         /* ERROR log */
         for ( int ano = 0; ano < robot_info[cont_no].arm_num; ano++ )
         {
-            snprintf( msg, sizeof(msg), "[krnx_PrimeRtcCompData] ano:%d [jt]pos:diff:status ", ano+1 );
+            snprintf( msg, sizeof(msg), "[krnx_PrimeRtcCompData] ano:%d [jt]pos:vel:status ", ano+1 );
             krnx_GetRtcCompData( cont_no, ano, &rtc_old_comp[cont_no][ano][0] );
             getCurMotionData( cont_no, ano, &data );
             for ( int jt = 0; jt < p_rb_tbl[cont_no]->arm_tbl[ano].jt_num; jt++ )
             {
                 jt_pos = data.ang_ref[jt];
-                rtc_diff = ( rtc_comp[cont_no][ano][jt] - rtc_old_comp[cont_no][ano][jt] )*(1e+9/robot_info[cont_no].period);
-                if ( p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].type == TYPE_RAD )
+                jt_vel = ( rtc_comp[cont_no][ano][jt] - rtc_old_comp[cont_no][ano][jt] )*(1e+9/robot_info[cont_no].period);
+                if ( p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].type == TYPE_LINE )
                 {
-                    jt_pos  *= 180/M_PI;
-                    rtc_diff *= 180/M_PI;
+                    jt_pos   /= KHI_KRNX_M2MM;
+                    jt_vel /= KHI_KRNX_M2MM;
                 }
-                snprintf( status, sizeof(status), "[%d]%.4f:%.4f:%d ", jt+1, jt_pos, rtc_diff, rtc_status[cont_no][ano][jt] );
+                snprintf( status, sizeof(status), "[%d]%.4f:%.4f:%d ", jt+1, jt_pos, jt_vel, rtc_status[cont_no][ano][jt] );
                 strcat( msg, status );
             }
             errorPrint( msg );

@@ -191,8 +191,8 @@ If an error is about "krnx_PrimeRtcCompData", the detail information is shown as
 
 |Name|Value|Description|
 |---|---|---|
-|pos|float|joint command value[deg or mm]|
-|diff|float|joint command difference value[deg or mm] between period|
+|pos|float|joint command value[rad or m]|
+|diff|float|joint command difference value[rad or m] between period|
 |status|0x0001|Operational area upper limit over|
 ||0x0002|Operational area lower limit over|
 ||0x0004|RTC joint command velocity(diff) limit over|
