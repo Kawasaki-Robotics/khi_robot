@@ -2,6 +2,28 @@
 Changelog for package khi_robot_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update a document and error messages (`#15 <https://github.com/Kawasaki-Robotics/khi_robot/issues/15>`_)
+  * Modify error messages
+  * fixup! Modify error messages
+  * fixup! Modify error messages
+  * fixup! Modify error messages
+  * fixup! Modify error messages
+* set HOME position separately (`#16 <https://github.com/Kawasaki-Robotics/khi_robot/issues/16>`_)
+* Split command string in two (`#14 <https://github.com/Kawasaki-Robotics/khi_robot/issues/14>`_)
+* Merge pull request `#13 <https://github.com/Kawasaki-Robotics/khi_robot/issues/13>`_ from d-nakamichi/load_rtc_param
+  Load a temporary RTC param file
+* fixup! Load temporary RTC param file
+* Merge pull request `#12 <https://github.com/Kawasaki-Robotics/khi_robot/issues/12>`_ from d-nakamichi/control_axes_bug_fix
+  Limit AS control axes to ROS driver's control axes
+* Load temporary RTC param file
+* Limit AS control axes to ROS driver's control axes
+* Merge pull request `#11 <https://github.com/Kawasaki-Robotics/khi_robot/issues/11>`_ from d-nakamichi/buildfarm_fix
+  Add test_depend
+* Add test_depend
+* Contributors: Daisuke NAKAMICHI, Hiroki Matsui, nakamichi_d
+
 1.1.0 (2019-04-11)
 ------------------
 * robot_control: fix msg deps of main. (`#9 <https://github.com/Kawasaki-Robotics/khi_robot/issues/9>`_)
