@@ -2,8 +2,8 @@
 Changelog for package khi_robot_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.1.1 (2019-04-25)
+------------------
 * Update a document and error messages (`#15 <https://github.com/Kawasaki-Robotics/khi_robot/issues/15>`_)
   * Modify error messages
   * fixup! Modify error messages

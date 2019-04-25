@@ -2,8 +2,8 @@
 Changelog for package rs007l_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.1.1 (2019-04-25)
+------------------
 * minor fix (`#10 <https://github.com/Kawasaki-Robotics/khi_robot/issues/10>`_)
   `rs007l` -> `khi_rs007l`
 * Contributors: Daisuke NAKAMICHI
