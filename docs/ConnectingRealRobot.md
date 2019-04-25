@@ -35,7 +35,7 @@ Make sure that the Ubuntu PC used for real-time control satisfies the following 
 
        ```bash
        sudo addgroup realtime
-       sudo usermod -aG $(whoami)
+       sudo usermod -aG realtime $(whoami)
        ```
 
     2. Add the following limits in `/etc/security/limits.conf`  
