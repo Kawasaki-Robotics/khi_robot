@@ -41,6 +41,8 @@ install:
   - cp -R $TRAVIS_BUILD_DIR $JOB_PATH/catkin_workspace/src/
   # generate the script to run a pre-release job for that target and repo
   - generate_prerelease_script.py https://raw.githubusercontent.com/ros-infrastructure/ros_buildfarm_config/production/index.yaml $ROS_DISTRO_NAME default $OS_NAME $OS_CODE_NAME $ARCH  --output-dir $JOB_PATH
+  # skip build and test for ARM containers
+  - if [[ "$ARCH" == "arm"* ]]; then sed -i '/build and test/i mkdir -p $WORKSPACE/catkin_workspace/test_results; exit 0' $JOB_PATH/prerelease_build_underlay.sh; fi
   # run the actual job which involves Docker
   - cd $JOB_PATH; sh ./prerelease.sh -y
 script:
