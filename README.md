@@ -69,3 +69,7 @@ Origin of KHI coordinate is Robot Link1 origin.
 
 Origin of ROS coordinate is World origin.
 ```
+
+### About CAD data
+
+Please read [KHI CAD Data Disclaimer](https://robotics.kawasaki.com/en1/products/CAD-disclaimer/?language_id=1) before using the CAD data of URDF. 
