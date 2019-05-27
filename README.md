@@ -73,3 +73,5 @@ Origin of ROS coordinate is World origin.
 ### About CAD data
 
 Please read [KHI CAD Data Disclaimer](https://robotics.kawasaki.com/en1/products/CAD-disclaimer/?language_id=1) before using the CAD data of URDF. 
+
+The STL files in `***_ description` are created based on CAD Data of the above website. Therefore, STL files are also included in this CAD Data Disclaimer.
