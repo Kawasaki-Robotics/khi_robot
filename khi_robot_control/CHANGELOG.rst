@@ -2,8 +2,8 @@
 Changelog for package khi_robot_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.1.2 (2019-06-07)
+------------------
 * Enable to build release package on i386/arm (`#19 <https://github.com/Kawasaki-Robotics/khi_robot/issues/19>`_)
   * .travis.yml: add test for i386/armhf/arm64
   * install QEMU for running ARM containers

@@ -2,8 +2,8 @@
 Changelog for package khi_rs_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.1.2 (2019-06-07)
+------------------
 * add KHI CAD Data Disclaimer to README (`#20 <https://github.com/Kawasaki-Robotics/khi_robot/issues/20>`_)
   * add KHI CAD Data Disclaimer to README
   * add KHI CAD Data Disclaimer to README_2
