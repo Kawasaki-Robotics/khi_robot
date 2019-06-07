@@ -2,6 +2,17 @@
 Changelog for package khi_robot_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Enable to build release package on i386/arm (`#19 <https://github.com/Kawasaki-Robotics/khi_robot/issues/19>`_)
+  * .travis.yml: add test for i386/armhf/arm64
+  * install QEMU for running ARM containers
+  * display CMAKE_SYSTEM_NAME variables and so on
+  * skip build and test for ARM containers
+  * using CMAKE_SYSTEM_PROCESSOR does not returns correct target machine on the docker system. To solve this issue, we use CMAKE_LIBRARY_ARCHITECTURE to find current target machine
+  * CMAKE_LIBRARY_ARCHTECTURE is gnueabihf/gnueabi
+* Contributors: Kei Okada
+
 1.1.1 (2019-04-25)
 ------------------
 * Update a document and error messages (`#15 <https://github.com/Kawasaki-Robotics/khi_robot/issues/15>`_)

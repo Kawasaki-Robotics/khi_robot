@@ -1,6 +1,9 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package duaro_ikfast_plugin
+Changelog for package khi_duaro_ikfast_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Forthcoming
+-----------
 
 1.1.1 (2019-04-25)
 ------------------

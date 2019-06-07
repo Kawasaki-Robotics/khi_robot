@@ -1,6 +1,9 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package rs080n_moveit_config
+Changelog for package khi_rs080n_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Forthcoming
+-----------
 
 1.1.1 (2019-04-25)
 ------------------

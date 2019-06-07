@@ -1,6 +1,11 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package rs_gazebo
+Changelog for package khi_rs_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Forthcoming
+-----------
+* minor fix (`#10 <https://github.com/Kawasaki-Robotics/khi_robot/issues/10>`_)
+* Contributors: matsui_hiro
 
 1.1.1 (2019-04-25)
 ------------------

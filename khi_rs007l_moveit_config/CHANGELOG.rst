@@ -1,6 +1,11 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package rs007l_moveit_config
+Changelog for package khi_rs007l_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Forthcoming
+-----------
+* add USE_SOURCE_PERMISSIONS in CMakeLists.txt files those package have executable scripts (`#18 <https://github.com/Kawasaki-Robotics/khi_robot/issues/18>`_)
+* Contributors: Yosuke Yamamoto
 
 1.1.1 (2019-04-25)
 ------------------

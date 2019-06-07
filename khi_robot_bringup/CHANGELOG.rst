@@ -2,6 +2,9 @@
 Changelog for package khi_robot_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.1.1 (2019-04-25)
 ------------------
 
