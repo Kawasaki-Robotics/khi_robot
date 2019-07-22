@@ -14,16 +14,13 @@ env:
     - JOB_PATH=/tmp/devel_job
     - ABORT_ON_TEST_FAILURE=1
   matrix:
-    - ROS_DISTRO_NAME=indigo  OS_NAME=ubuntu OS_CODE_NAME=trusty ARCH=amd64
     - ROS_DISTRO_NAME=kinetic OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=amd64
     - ROS_DISTRO_NAME=kinetic OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=i386
     - ROS_DISTRO_NAME=kinetic OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=armhf
     - ROS_DISTRO_NAME=kinetic OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=arm64
-    - ROS_DISTRO_NAME=lunar   OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=amd64
     - ROS_DISTRO_NAME=melodic OS_NAME=ubuntu OS_CODE_NAME=bionic ARCH=amd64
 matrix:
   allow_failures:
-    - env: ROS_DISTRO_NAME=indigo  OS_NAME=ubuntu OS_CODE_NAME=trusty ARCH=amd64
 install:
   # install QEMU for running ARM containers
   - if [[ "$ARCH" == "arm"* ]]; then sudo apt update && sudo apt install -qy qemu-user-static; fi
@@ -37,17 +34,17 @@ install:
   # run devel job for a ROS repository with the same name as this repo
   - export REPOSITORY_NAME=`basename $TRAVIS_BUILD_DIR`
   # use the code already checked out by Travis
-  - mkdir -p $JOB_PATH/catkin_workspace/src
-  - cp -R $TRAVIS_BUILD_DIR $JOB_PATH/catkin_workspace/src/
+  - mkdir -p $JOB_PATH/ws/src
+  - cp -R $TRAVIS_BUILD_DIR $JOB_PATH/ws/src/
   # generate the script to run a pre-release job for that target and repo
   - generate_prerelease_script.py https://raw.githubusercontent.com/ros-infrastructure/ros_buildfarm_config/production/index.yaml $ROS_DISTRO_NAME default $OS_NAME $OS_CODE_NAME $ARCH  --output-dir $JOB_PATH
   # skip build and test for ARM containers
-  - if [[ "$ARCH" == "arm"* ]]; then sed -i '/build and test/i mkdir -p $WORKSPACE/catkin_workspace/test_results; exit 0' $JOB_PATH/prerelease_build_underlay.sh; fi
+  - if [[ "$ARCH" == "arm"* ]]; then sed -i '/build and test/i mkdir -p $WORKSPACE/ws/test_results; exit 0' $JOB_PATH/prerelease_build_underlay.sh; fi
   # run the actual job which involves Docker
   - cd $JOB_PATH; sh ./prerelease.sh -y
 script:
   # get summary of test results
-  - /tmp/catkin/bin/catkin_test_results $JOB_PATH/catkin_workspace/test_results --all
+  - /tmp/catkin/bin/catkin_test_results $JOB_PATH/ws/test_results --all
 notifications:
   email: false
 
