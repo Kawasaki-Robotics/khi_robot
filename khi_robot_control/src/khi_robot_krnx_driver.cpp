@@ -319,11 +319,7 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
             rtc_info.interpolation = 1;
             return_code = krnx_SetRtcInfo( cont_no, &rtc_info );
             retKrnxRes( cont_no, "krnx_SetRtcInfo", return_code );
-            /* duAro Setting */
-            if ( robot_info[cont_no].robot_name == KHI_ROBOT_WD002N )
-            {
-                return_code = krnx_ExecMon( cont_no, "SW ZDBLREFFLT_MODSTABLE=OFF", msg_buf, sizeof(msg_buf), &error_code );
-            }
+            return_code = krnx_ExecMon( cont_no, "SW ZDBLREFFLT_MODSTABLE=OFF", msg_buf, sizeof(msg_buf), &error_code );
             krnx_SetRtcCompMask( cont_no, ano, pow( 2, p_rb_tbl[cont_no]->arm_tbl[ano].jt_num ) - 1 );
         }
         /* Motor Power ON */
