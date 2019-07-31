@@ -114,7 +114,7 @@ $ rosservice call /controller_manager/switch_controller "start_controllers:
 - 'rs007n_joint_group_controller'
 stop_controllers:
 - 'rs007n_arm_controller'
-strictness: 0" 
+strictness: 2" 
 ok: True
 ```
 (http://wiki.ros.org/controller_manager)  
