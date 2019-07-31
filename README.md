@@ -60,7 +60,7 @@ Refer to [docs/ConnectingRealRobot.md](docs/ConnectingRealRobot.md)
 This software is experimental code. There are known issues and missing functionality.  
 The APIs are completely unstable and likely to change. Use in production systems is not recommended.
 
-### Coordinate
+### About Coordinate
 
 KHI coordinate and ROS cordinate are different.
 
@@ -69,6 +69,55 @@ Origin of KHI coordinate is Robot Link1 origin.
 
 Origin of ROS coordinate is World origin.
 ```
+
+### About controllers
+
+`khi_robot_control` uses `position_controllers/JointPositionController` as default, and it can also use `position_controllers/JointGroupPositionController`.  
+
+`position_controllers/JointPositionController` : `***_arm_controller (e.g.)rs007n_arm_controller`  
+`position_controllers/JointGroupPositionController` : `***_joint_group_controller (e.g.)rs007n_joint_group_controller`  
+
+To check available controllers, you can use service `controller_manager/list_controllers`.  
+To switch controllers, you can use service `controller_manager/switch_controller`.  
+
+(e.g.)
+```
+$ rosservice call /controller_manager/list_controllers
+controller: 
+  - 
+    name: "rs007n_joint_group_controller"
+    state: "stopped"
+    type: "position_controllers/JointGroupPositionController"
+    claimed_resources: 
+      - 
+        hardware_interface: "hardware_interface::PositionJointInterface"
+        resources: [joint1, joint2, joint3, joint4, joint5, joint6]
+  - 
+    name: "joint_state_controller"
+    state: "running"
+    type: "joint_state_controller/JointStateController"
+    claimed_resources: 
+      - 
+        hardware_interface: "hardware_interface::JointStateInterface"
+        resources: []
+  - 
+    name: "rs007n_arm_controller"
+    state: "running"
+    type: "position_controllers/JointTrajectoryController"
+    claimed_resources: 
+      - 
+        hardware_interface: "hardware_interface::PositionJointInterface"
+        resources: [joint1, joint2, joint3, joint4, joint5, joint6]
+```
+```
+$ rosservice call /controller_manager/switch_controller "start_controllers:
+- 'rs007n_joint_group_controller'
+stop_controllers:
+- 'rs007n_arm_controller'
+strictness: 2" 
+ok: True
+```
+(http://wiki.ros.org/controller_manager)  
 
 ### About CAD data
 

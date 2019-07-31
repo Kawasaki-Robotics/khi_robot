@@ -32,3 +32,14 @@
     state_publish_rate:  50 # Defaults to 50
     action_monitor_rate: 20 # Defaults to 20
     #hold_trajectory_duration: 0 # Defaults to 0.5
+
+  # Joint Group Position Controller -------------------
+  rs080n_joint_group_controller:
+    type: "position_controllers/JointGroupPositionController"
+    joints:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6

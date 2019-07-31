@@ -11,4 +11,8 @@
                                            rs007l_arm_controller
                                          "/>
 
+  <!-- load joint group controllers -->
+  <node name="joint_group_controller_manager" pkg="controller_manager"
+        type="controller_manager" respawn="false"
+        output="screen" args="load rs007l_joint_group_controller" />
 </launch>
