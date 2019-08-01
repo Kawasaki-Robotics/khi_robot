@@ -74,6 +74,7 @@ KhiRobotKrnxDriver::KhiRobotKrnxDriver() : KhiRobotDriver()
         rtc_seq_no[cno]= 0;
         do_restart[cno] = false;
         do_quit[cno] = false;
+        sw_dblrefflt[cno] = 0;
     }
 }
 
@@ -319,8 +320,9 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
             rtc_info.interpolation = 1;
             return_code = krnx_SetRtcInfo( cont_no, &rtc_info );
             retKrnxRes( cont_no, "krnx_SetRtcInfo", return_code );
-            /* duAro Setting */
-            if ( robot_info[cont_no].robot_name == KHI_ROBOT_WD002N )
+            return_code = krnx_ExecMon( cont_no, "TYPE SWITCH(ZDBLREFFLT_MODSTABLE)", msg_buf, sizeof(msg_buf), &error_code );
+            sw_dblrefflt[cont_no] = atoi(msg_buf);
+            if ( sw_dblrefflt[cont_no] == -1 )
             {
                 return_code = krnx_ExecMon( cont_no, "SW ZDBLREFFLT_MODSTABLE=OFF", msg_buf, sizeof(msg_buf), &error_code );
             }
@@ -412,6 +414,8 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
 
 bool KhiRobotKrnxDriver::deactivate( const int cont_no )
 {
+    char msg[1024] = { 0 };
+
     if ( !contLimitCheck( cont_no, KRNX_MAX_CONTROLLER ) ) { return false; }
 
     if ( in_simulation )
@@ -434,6 +438,12 @@ bool KhiRobotKrnxDriver::deactivate( const int cont_no )
         return_code = krnx_ExecMon( cont_no, "ZPOW OFF", msg_buf, sizeof(msg_buf), &error_code );
         /* Error Reset */
         return_code = krnx_Ereset( cont_no, ano, &error_code );
+        /* Switch Reversion */
+        if ( sw_dblrefflt[cont_no] == -1 )
+        {
+            snprintf( msg, sizeof(msg), "SW ZDBLREFFLT_MODSTABLE=ON" );
+            return_code = krnx_ExecMon( cont_no, msg, msg_buf, sizeof(msg_buf), &error_code );
+        }
     }
 
     setState( cont_no, CONNECTED );
