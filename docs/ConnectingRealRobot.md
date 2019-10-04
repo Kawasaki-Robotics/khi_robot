@@ -4,7 +4,8 @@
 
 ### F Series
 
-Handling: Higher than ASF_01000000W
+Handling: Higher than ASF_01000000W  
+duAro: Higher than ASF_06000000J  
 
 ### OpenAS Series
 
