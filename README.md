@@ -48,7 +48,7 @@ Refer to [docs/ConnectingRealRobot.md](docs/ConnectingRealRobot.md)
 
 ## Supported Robot
 
- * duaro (currently simulation only)
+ * duaro
  * rs007l
  * rs007n
  * rs80n
