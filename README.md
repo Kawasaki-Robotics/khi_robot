@@ -8,7 +8,7 @@ ROS distribution `Kinetic` is supported.
 
 ### 1. Launch Control Node
 
-Start khi_robot_control as:
+Start ```khi_robot_control``` as:
 
 ```
 roslaunch khi_robot_bringup ***_bringup.launch ip:=***
@@ -123,3 +123,7 @@ ok: True
 
 `***_ description` are using STL files based on CAD Data of the KHI website.  
 Therefore [KHI CAD Data Disclaimer](https://robotics.kawasaki.com/en1/products/CAD-disclaimer/?language_id=1) is also applied to these files.
+
+## Other Languages
+
+[日本語](docs/README-ja.md)

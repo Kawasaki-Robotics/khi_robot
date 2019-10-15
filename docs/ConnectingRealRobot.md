@@ -4,12 +4,12 @@
 
 ### F Series
 
-Handling: Higher than ASF_01000000W  
-duAro: Higher than ASF_06000000J  
+Handling: Higher than ```ASF_01000000W```  
+duAro: Higher than ```ASF_06000000J```  
 
 ### OpenAS Series
 
-Handling: Higher than ASE401010XX3S
+Handling: Higher than ```ASE401010XX3S```  
 
 ## 2. Preparation
 
@@ -185,7 +185,7 @@ int32 as_ret -> AS return code. Refer AS manual.
 string cmd_ret -> Driver Status
 ```
 
-### Restart Driver when its status is ERROR
+### Restart Driver for ACTIVE
 
 ```text
 string type -> "driver"
@@ -215,7 +215,7 @@ Frequent error messages and troubleshooting are as shown in the table below.
 |Error message|Troubleshooting|
 |---|---|
 |ROS:%s does not match AS:%s|Match the robot model on ROS and robot controller.|
-|Invalid robot size|Select correct robot type.|
+|Invalid robot size|Confirm number of robot arm.|
 |Failed to make rtc param|Check the filesystem is correct.|
 |Failed to load rtc param|Check AS system.|
 |Failed to activate: timeout|Check AS's robot program.|
