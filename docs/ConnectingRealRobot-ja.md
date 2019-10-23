@@ -234,7 +234,7 @@ string cmd_ret -> 未使用
 |Name|Value|Description|
 |---|---|---|
 |pos|float|各軸指令位置 [rad or m]|
-|vel|float|各軸指令速度 [rad or m]|
+|vel|float|各軸指令速度 [rad/s or m/s]|
 |status|0x0001|各軸指令位置が上限値を超えています|
 ||0x0002|各軸指令位置が下限値を超えています|
 ||0x0004|RTCの各軸指令速度が(位置差分)が制限値を超えています|
