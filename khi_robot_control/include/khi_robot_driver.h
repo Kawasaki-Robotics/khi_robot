@@ -57,6 +57,7 @@ struct JointData
 struct RobotInfo
 {
     int state;
+    int state_trigger;
     std::string ip_address;
     std::string robot_name;
     int arm_num;
@@ -68,15 +69,13 @@ enum KhiRobotState
     STATE_MIN = -1,
     INIT,
     CONNECTING,
-    CONNECTED,
+    INACTIVE,
     ACTIVATING,
     ACTIVE,
     DEACTIVATING,
     DISCONNECTING,
     DISCONNECTED,
     ERROR,
-    RESTART,
-    QUIT,
     NOT_REGISTERED,
     STATE_MAX
 };
@@ -84,18 +83,30 @@ const static std::string KhiRobotStateName[STATE_MAX] =
 {
     "INIT",
     "CONNECTING",
-    "CONNECTED",
+    "INACTIVE",
     "ACTIVATING",
     "ACTIVE",
     "DEACTIVATING",
     "DISCONNECTING",
     "DISCONNECTED",
     "ERROR",
-    "RESTART",
-    "QUIT",
     "NOT_REGISTERED"
 };
 
+enum KhiRobotStateTrigger
+{
+    TRIGGER_MIN = -1,
+    NONE,
+    RESTART,
+    QUIT,
+    TRIGGER_MAX
+};
+const static std::string KhiRobotStateTriggerName[TRIGGER_MAX] =
+{
+    "NONE",
+    "RESTART",
+    "QUIT"
+};
 
 class KhiRobotDriver
 {
@@ -105,6 +116,7 @@ public:
         for ( int cno = 0; cno < KHI_MAX_CONTROLLER; cno++ )
         {
             robot_info[cno].state = INIT;
+            robot_info[cno].state_trigger = NONE;
             robot_info[cno].ip_address = "127.0.0.1";
             robot_info[cno].robot_name = "";
             robot_info[cno].arm_num = -1;
@@ -148,6 +160,54 @@ public:
                 infoPrint( "State %d: %s -> %s", cont_no, KhiRobotStateName[robot_info[cont_no].state].c_str(), KhiRobotStateName[state].c_str() );
                 robot_info[cont_no].state = state;
             }
+            return true;
+        }
+    }
+
+    bool isTransitionState( const int cont_no )
+    {
+        int state;
+
+        state = getState( cont_no );
+        if ( ( state == CONNECTING ) || ( state == ACTIVATING ) || ( state == DEACTIVATING ) || ( state == DISCONNECTING ) )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    int getStateTrigger( const int cont_no )
+    {
+        int state_trigger;
+
+        if ( ( cont_no < 0 ) || ( cont_no > KHI_MAX_CONTROLLER ) ) { return NONE; }
+        else
+        {
+            state_trigger = robot_info[cont_no].state_trigger;
+            robot_info[cont_no].state_trigger = NONE;
+            return state_trigger;
+        }
+    }
+
+    bool setStateTrigger( const int cont_no, const int state_trigger )
+    {
+        if ( !contLimitCheck( cont_no, KHI_MAX_CONTROLLER ) ) { return false; }
+
+        if ( ( state_trigger <= TRIGGER_MIN ) || ( state_trigger >= TRIGGER_MAX ) )
+        {
+            return false;
+        }
+        else
+        {
+            if ( robot_info[cont_no].state_trigger != NONE )
+            {
+                warnPrint( "State Trigger is already done %d: %s", cont_no, KhiRobotStateTriggerName[state_trigger].c_str() );
+            }
+            infoPrint( "State Trigger %d: %s", cont_no, KhiRobotStateTriggerName[state_trigger].c_str() );
+            robot_info[cont_no].state_trigger = state_trigger;
             return true;
         }
     }

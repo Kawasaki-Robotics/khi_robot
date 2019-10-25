@@ -80,6 +80,12 @@ void KhiRobotClient::deactivate()
     if ( driver == NULL ) { return; }
 
     driver->deactivate( cont_no );
+}
+
+void KhiRobotClient::close()
+{
+    if ( driver == NULL ) { return; }
+
     driver->close( cont_no );
     delete driver;
 }
@@ -98,12 +104,18 @@ void KhiRobotClient::read( JointData *joint )
     driver->readData( cont_no, joint );
 }
 
-int KhiRobotClient::getState()
+int KhiRobotClient::updateState()
 {
     if ( driver == NULL ) { return NOT_REGISTERED; }
 
-    driver->updateState( cont_no );
-    return driver->getState( cont_no );
+    return driver->updateState( cont_no );
+}
+
+int KhiRobotClient::getStateTrigger()
+{
+    if ( driver == NULL ) { return NONE; }
+
+    return driver->getStateTrigger( cont_no );
 }
 
 bool KhiRobotClient::getPeriodDiff( double *diff )
