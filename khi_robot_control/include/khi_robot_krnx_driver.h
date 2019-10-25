@@ -82,6 +82,7 @@ public:
     bool open( const int cont_no, const std::string ip_address );
     bool close( const int cont_no );
     bool activate( const int cont_no, JointData *joint );
+    bool hold( const int cont_no, const JointData joint );
     bool deactivate( const int cont_no );
     bool readData( const int cont_no, JointData *joint );
     bool writeData( const int cont_no, JointData joint );
@@ -111,7 +112,7 @@ private:
     std::vector<std::string> splitString( const std::string str, const char del );
     bool loadDriverParam( const int cont_no );
     bool loadRtcProg( const int cont_no, const std::string name );
-    bool syncRtcPos( const int cont_no, JointData *joint );
+    bool syncRtcPos( const int cont_no );
 };
 
 } // namespace

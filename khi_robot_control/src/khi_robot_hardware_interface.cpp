@@ -102,6 +102,11 @@ bool KhiRobotHardwareInterface::activate()
     return client->activate( &joint );
 }
 
+bool KhiRobotHardwareInterface::hold()
+{
+    return client->hold( joint );
+}
+
 void KhiRobotHardwareInterface::deactivate()
 {
     client->deactivate();

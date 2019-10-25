@@ -75,6 +75,13 @@ bool KhiRobotClient::activate( JointData *joint )
     return driver->activate( cont_no, joint );
 }
 
+bool KhiRobotClient::hold( const JointData joint )
+{
+    if ( driver == NULL ) { return false; }
+
+    return driver->hold( cont_no, joint );
+}
+
 void KhiRobotClient::deactivate()
 {
     if ( driver == NULL ) { return; }

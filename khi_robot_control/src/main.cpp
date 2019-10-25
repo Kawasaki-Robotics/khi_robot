@@ -366,7 +366,12 @@ void *controlLoop( void* )
             /* Robot State */
             robot.updateState();
             state_trigger = robot.getStateTrigger();
-            if ( state_trigger == khi_robot_control::RESTART )
+            if ( state_trigger == khi_robot_control::HOLD )
+            {
+                robot.hold();
+                continue;
+            }
+            else if ( state_trigger == khi_robot_control::RESTART )
             {
                 if ( activate( &robot, &cm, &tick ) )
                 {

@@ -50,6 +50,7 @@ public:
 
     bool open( std::string robot, std::string ip, double period, JointData joint, bool in_simulation = false );
     bool activate( JointData *joint );
+    bool hold( const JointData joint );
     void deactivate();
     void close();
 

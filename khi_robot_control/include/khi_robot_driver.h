@@ -72,6 +72,7 @@ enum KhiRobotState
     INACTIVE,
     ACTIVATING,
     ACTIVE,
+    HOLDED,
     DEACTIVATING,
     DISCONNECTING,
     DISCONNECTED,
@@ -86,6 +87,7 @@ const static std::string KhiRobotStateName[STATE_MAX] =
     "INACTIVE",
     "ACTIVATING",
     "ACTIVE",
+    "HOLDED",
     "DEACTIVATING",
     "DISCONNECTING",
     "DISCONNECTED",
@@ -97,6 +99,7 @@ enum KhiRobotStateTrigger
 {
     TRIGGER_MIN = -1,
     NONE,
+    HOLD,
     RESTART,
     QUIT,
     TRIGGER_MAX
@@ -104,6 +107,7 @@ enum KhiRobotStateTrigger
 const static std::string KhiRobotStateTriggerName[TRIGGER_MAX] =
 {
     "NONE",
+    "HOLD",
     "RESTART",
     "QUIT"
 };
@@ -296,6 +300,7 @@ public:
     virtual bool open( const int cont_no, const std::string ip_address ) = 0;
     virtual bool close( const int cont_no ) = 0;
     virtual bool activate( const int cont_no, JointData *joint ) = 0;
+    virtual bool hold( const int cont_no, const JointData joint ) = 0;
     virtual bool deactivate( const int cont_no ) = 0;
     virtual bool readData( const int cont_no, JointData *joint ) = 0;
     virtual bool writeData( const int cont_no, JointData joint ) = 0;

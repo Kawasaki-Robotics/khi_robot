@@ -360,7 +360,7 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
     }
 
     /* Sync RTC Position */
-    if ( !syncRtcPos( cont_no, joint ) )
+    if ( !syncRtcPos( cont_no ) )
     {
         errorPrint( "Failed to sync position" );
         setState( cont_no, ERROR );
@@ -422,6 +422,22 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
     setState( cont_no, ACTIVE );
 
     return true;
+}
+
+bool KhiRobotKrnxDriver::hold( const int cont_no, const JointData joint )
+{
+    int state;
+    bool ret = true;
+
+    if ( !contLimitCheck( cont_no, KRNX_MAX_CONTROLLER ) ) { return false; }
+
+    state = getState( cont_no );
+    if ( state == ACTIVE )
+    {
+        ret = setState( cont_no, HOLDED );
+    }
+
+    return ret;
 }
 
 bool KhiRobotKrnxDriver::deactivate( const int cont_no )
@@ -897,7 +913,7 @@ bool KhiRobotKrnxDriver::loadRtcProg( const int cont_no, const std::string name 
     return true;
 }
 
-bool KhiRobotKrnxDriver::syncRtcPos( const int cont_no, JointData *joint )
+bool KhiRobotKrnxDriver::syncRtcPos( const int cont_no )
 {
     TKrnxCurMotionData motion_data = { 0 };
 
@@ -909,9 +925,9 @@ bool KhiRobotKrnxDriver::syncRtcPos( const int cont_no, JointData *joint )
 
         /* Driver */
         if ( !getCurMotionData( cont_no, ano, &motion_data ) ) { return false; }
-        for ( int jt = 0; jt < joint->joint_num; jt++ )
+        for ( int jt = 0; jt < p_rb_tbl[cont_no]->arm_tbl[ano].jt_num; jt++ )
         {
-            memcpy( &p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home, &motion_data.ang_ref[jt], sizeof(motion_data.ang_ref[jt]) );
+            memcpy( &p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home, &motion_data.ang[jt], sizeof(motion_data.ang[jt]) );
             if ( p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].type == TYPE_LINE )
             {
                 p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home /= KHI_KRNX_M2MM;
@@ -933,6 +949,7 @@ bool KhiRobotKrnxDriver::commandHandler( khi_robot_msgs::KhiRobotCmd::Request &r
     const char del = ' ';
     int arg;
     int onoff;
+    int state;
     TKrnxIoInfo io;
 
     /* default */
@@ -960,17 +977,32 @@ bool KhiRobotKrnxDriver::commandHandler( khi_robot_msgs::KhiRobotCmd::Request &r
     }
     else if ( req.type == "driver" )
     {
+        state = getState( cont_no );
         if ( req.cmd == "get_status" )
         {
             res.cmd_ret = getStateName( cont_no );
         }
+        else if ( req.cmd == "hold" )
+        {
+            if ( state == ACTIVE )
+            {
+                setStateTrigger( cont_no, HOLD );
+            }
+            else
+            {
+                res.cmd_ret = "NOT ACTIVE STATE";
+            }
+        }
         else if ( req.cmd == "restart" )
         {
-            if ( ( getState( cont_no ) == INACTIVE ) || ( getState( cont_no ) == ERROR ) )
+            if ( ( state == INACTIVE ) || ( state == HOLDED ) || ( state == ERROR ) )
             {
                 setStateTrigger( cont_no, RESTART );
             }
-            else                                { res.cmd_ret = "NOT INACTIVE/ERROR STATE"; }
+            else
+            {
+                res.cmd_ret = "NOT INACTIVE/HOLDED/ERROR STATE";
+            }
         }
         else if ( req.cmd == "quit" )
         {

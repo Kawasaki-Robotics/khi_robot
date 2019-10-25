@@ -99,12 +99,11 @@ ROS上でロボットコントローラを制御するため、ドライバと�
 2:  "CONNECTED"       - ロボットコントローラと接続済み。リアルタイム制御は未実行。
 3:  "ACTIVATING"      - リアルタイム制御を開始中
 4:  "ACTIVE"          - リアルタイム制御中
-5:  "DEACTIVATING"    - リアルタイム制御を停止中
-6:  "DISCONNECTING"   - ロボットコントローラから切断中
-7:  "DISCONNECTED"    - ロボットコントローラから切断済
-8:  "ERROR"           - エラー中
-9:  "RESTART"         - 再開指示の受付中
-10: "QUIT"            - 終了指示の受付中
+5:  "HOLDED"          - リアルタイム制御を中断中
+6:  "DEACTIVATING"    - リアルタイム制御を停止中
+7:  "DISCONNECTING"   - ロボットコントローラから切断中
+8:  "DISCONNECTED"    - ロボットコントローラから切断済
+9:  "ERROR"           - エラー中
 ```
 
 これらの状態はコマンドサービス"get_status"から確認することができます。
@@ -184,6 +183,17 @@ string cmd -> "get_status"
 int32 driver_ret -> ドライバのリターンコード。krnx.hのKRNX_E_***を参照。
 int32 as_ret -> ASのリターンコード。ASのマニュアルを参照。
 string cmd_ret -> ドライバ状態
+```
+
+### ドライバの中断
+
+```text
+string type -> "driver"
+string cmd -> "hold"
+---
+int32 driver_ret -> ドライバのリターンコード。krnx.hのKRNX_E_***を参照。
+int32 as_ret -> ASのリターンコード。ASのマニュアルを参照。
+string cmd_ret -> 未使用
 ```
 
 ### ACTIVE状態への復帰
