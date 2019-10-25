@@ -98,7 +98,7 @@ bool KhiRobotKrnxDriver::retKrnxRes( const int cont_no, const std::string name, 
 {
     if ( ret != KRNX_NOERROR )
     {
-        ROS_ERROR( "[%s] %s returned -0x%X", driver_name.c_str(), name.c_str(), -ret );
+        errorPrint( "%s returned -0x%X", name.c_str(), -ret );
         if ( error ) { setState( cont_no, ERROR ); }
         return false;
     }
@@ -191,14 +191,12 @@ bool KhiRobotKrnxDriver::open( const int cont_no, const std::string ip_address )
 {
     char c_ip_address[64] = { 0 };
     char robot_name[64] = { 0 };
-    char msg[256] = { 0 };
 
     if ( !contLimitCheck( cont_no, KRNX_MAX_CONTROLLER ) ) { return false; }
 
     if ( getState( cont_no ) != INIT )
     {
-        snprintf( msg, sizeof(msg), "Cannot open cont_no:%d because it is already opend...", cont_no );
-        warnPrint( std::string(msg) );
+        warnPrint( "Cannot open cont_no:%d because it is already opend...", cont_no );
         return false;
     }
 
@@ -212,8 +210,7 @@ bool KhiRobotKrnxDriver::open( const int cont_no, const std::string ip_address )
 
     setState( cont_no, CONNECTING );
     strncpy( c_ip_address, ip_address.c_str(), sizeof(c_ip_address) );
-    snprintf( msg, sizeof(msg), "Connecting to real controller: %s", c_ip_address );
-    infoPrint( std::string(msg) );
+    infoPrint( "Connecting to real controller: %s", c_ip_address );
     return_code = krnx_Open( cont_no, c_ip_address );
     if ( return_code == cont_no )
     {
@@ -227,8 +224,7 @@ bool KhiRobotKrnxDriver::open( const int cont_no, const std::string ip_address )
                 return_code = krnx_GetRobotName( cont_no, ano, robot_name );
                 if ( strncmp( robot_name, robot_info[cont_no].robot_name.c_str(), 6 ) != 0 )
                 {
-                    snprintf( msg, sizeof(msg), "ROS:%s does not match AS:%s", robot_info[cont_no].robot_name.c_str(), robot_name );
-                    errorPrint( std::string(msg) );
+                    errorPrint( "ROS:%s does not match AS:%s", robot_info[cont_no].robot_name.c_str(), robot_name );
                     setState( cont_no, INIT );
                     return false;
                 }
@@ -651,7 +647,6 @@ bool KhiRobotKrnxDriver::updateState( const int cont_no )
     int error_code = 0;
     int rtc_sw = 0;
     int state;
-    char msg[256] = { 0 };
 
     if ( !contLimitCheck( cont_no, KRNX_MAX_CONTROLLER ) ) { return false; }
 
@@ -692,8 +687,7 @@ bool KhiRobotKrnxDriver::updateState( const int cont_no )
             if ( error_lamp != 0 )
             {
                 return_code = krnx_GetCurErrorInfo( cont_no, ano, &error_code );
-                snprintf( msg, sizeof(msg), "AS ERROR %d: ano:%d code:%d", cont_no, ano+1, error_code );
-                errorPrint( std::string(msg) );
+                errorPrint( "AS ERROR %d: ano:%d code:%d", cont_no, ano+1, error_code );
                 setState( cont_no, ERROR );
                 return true;
             }
@@ -701,8 +695,7 @@ bool KhiRobotKrnxDriver::updateState( const int cont_no )
             return_code = krnx_GetRtcSwitch( cont_no, ano, &rtc_sw );
             if ( rtc_sw == 0 )
             {
-                snprintf( msg, sizeof(msg), "RTC SWITCH turned OFF %d: ano:%d", cont_no, ano+1 );
-                errorPrint( std::string(msg) );
+                errorPrint( "RTC SWITCH turned OFF %d: ano:%d", cont_no, ano+1 );
                 setState( cont_no, ERROR );
                 return true;
             }

@@ -145,7 +145,7 @@ public:
         {
             if ( robot_info[cont_no].state != state )
             {
-                ROS_INFO( "[%s] State %d: %s -> %s", driver_name.c_str(), cont_no, KhiRobotStateName[robot_info[cont_no].state].c_str(), KhiRobotStateName[state].c_str() );
+                infoPrint( "State %d: %s -> %s", cont_no, KhiRobotStateName[robot_info[cont_no].state].c_str(), KhiRobotStateName[state].c_str() );
                 robot_info[cont_no].state = state;
             }
             return true;
@@ -173,19 +173,37 @@ public:
         }
     }
 
-    void infoPrint( const std::string msg )
+    void infoPrint( const char *format, ... )
     {
-        ROS_INFO( "[%s] %s", driver_name.c_str(), msg.c_str() );
+        char msg[512] = { 0 };
+        va_list ap;
+
+        va_start( ap, format );
+        vsnprintf( msg, sizeof(msg), format, ap );
+        va_end( ap );
+        ROS_INFO( "[%s] %s", driver_name.c_str(), msg );
     }
 
-    void warnPrint( const std::string msg )
+    void warnPrint( const char *format, ... )
     {
-        ROS_WARN( "[%s] %s", driver_name.c_str(), msg.c_str() );
+        char msg[512] = { 0 };
+        va_list ap;
+
+        va_start( ap, format );
+        vsnprintf( msg, sizeof(msg), format, ap );
+        va_end( ap );
+        ROS_WARN( "[%s] %s", driver_name.c_str(), msg );
     }
 
-    void errorPrint( const std::string msg )
+    void errorPrint( const char *format, ... )
     {
-        ROS_ERROR( "[%s] %s", driver_name.c_str(), msg.c_str() );
+        char msg[512] = { 0 };
+        va_list ap;
+
+        va_start( ap, format );
+        vsnprintf( msg, sizeof(msg), format, ap );
+        va_end( ap );
+        ROS_ERROR( "[%s] %s", driver_name.c_str(), msg );
     }
 
     void jointPrint( std::string name, const JointData joint )
@@ -210,7 +228,7 @@ public:
                 strcat( msg, jt_val );
             }
         }
-        ROS_INFO( "[SIM]%s", msg );
+        infoPrint( "[SIM]%s", msg );
     }
 
     virtual ~KhiRobotDriver() {};
