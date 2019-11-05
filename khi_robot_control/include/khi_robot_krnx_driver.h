@@ -76,11 +76,13 @@ class KhiRobotKrnxDriver : public KhiRobotDriver
 public:
     KhiRobotKrnxDriver();
     ~KhiRobotKrnxDriver();
+    bool setState( const int cont_no, const int state );
 
     bool initialize( const int cont_no, const std::string robot_name, const double period, const JointData joint, bool in_simulation = false );
     bool open( const int cont_no, const std::string ip_address );
     bool close( const int cont_no );
     bool activate( const int cont_no, JointData *joint );
+    bool hold( const int cont_no, const JointData joint );
     bool deactivate( const int cont_no );
     bool readData( const int cont_no, JointData *joint );
     bool writeData( const int cont_no, JointData joint );
@@ -92,9 +94,8 @@ private:
     /* general */
     char cmd_buf[KRNX_MSGSIZE];
     char msg_buf[KRNX_MSGSIZE];
-    bool do_restart[KRNX_MAX_CONTROLLER];
-    bool do_quit[KRNX_MAX_CONTROLLER];
     int sw_dblrefflt[KRNX_MAX_CONTROLLER];
+    bool now_as_mon_cmd[KRNX_MAX_CONTROLLER];
 
     /* RTC */
     float rtc_comp[KRNX_MAX_CONTROLLER][KRNX_MAX_ROBOT][KRNX_MAXAXES];
@@ -104,11 +105,14 @@ private:
     KrnxRobotTable *p_rb_tbl[KRNX_MAX_CONTROLLER];
 
     bool getCurMotionData( const int cont_no, const int robot_no, TKrnxCurMotionData *p_motion_data = NULL );
+    int execAsMonCmd( const int cont_no, const char *cmd, char *buffer, int buffer_sz, int *as_err_code );
     bool retKrnxRes( const int cont_no, const std::string name, const int ret, bool error = true );
     bool conditionCheck( const int cont_no );
     bool setJointDataHome( const int cont_no, JointData *joint );
     std::vector<std::string> splitString( const std::string str, const char del );
-    bool makeRtcParam( const int cont_no, const std::string name, char *p_path, size_t p_path_siz, JointData *joint );
+    bool loadDriverParam( const int cont_no );
+    bool loadRtcProg( const int cont_no, const std::string name );
+    bool syncRtcPos( const int cont_no );
 };
 
 } // namespace

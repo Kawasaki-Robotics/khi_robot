@@ -53,10 +53,13 @@ public:
 
     bool open( std::string robot_name, std::string ip_address, double period, bool in_simulation = false );
     bool activate();
+    bool hold();
     void deactivate();
+    void close();
     void read( const ros::Time time, const ros::Duration period );
     void write( const ros::Time time, const ros::Duration period );
-    int getState();
+    int updateState();
+    int getStateTrigger();
     bool getPeriodDiff( double *diff );
 
 private:

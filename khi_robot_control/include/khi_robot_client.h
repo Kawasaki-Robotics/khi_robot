@@ -50,12 +50,15 @@ public:
 
     bool open( std::string robot, std::string ip, double period, JointData joint, bool in_simulation = false );
     bool activate( JointData *joint );
+    bool hold( const JointData joint );
     void deactivate();
+    void close();
 
     void write( const JointData joint );
     void read( JointData *joint );
 
-    int getState();
+    int updateState();
+    int getStateTrigger();
     bool getPeriodDiff( double *diff );
     void startCommandService();
 

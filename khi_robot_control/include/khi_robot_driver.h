@@ -57,6 +57,7 @@ struct JointData
 struct RobotInfo
 {
     int state;
+    int state_trigger;
     std::string ip_address;
     std::string robot_name;
     int arm_num;
@@ -68,15 +69,14 @@ enum KhiRobotState
     STATE_MIN = -1,
     INIT,
     CONNECTING,
-    CONNECTED,
+    INACTIVE,
     ACTIVATING,
     ACTIVE,
+    HOLDED,
     DEACTIVATING,
     DISCONNECTING,
     DISCONNECTED,
     ERROR,
-    RESTART,
-    QUIT,
     NOT_REGISTERED,
     STATE_MAX
 };
@@ -84,18 +84,33 @@ const static std::string KhiRobotStateName[STATE_MAX] =
 {
     "INIT",
     "CONNECTING",
-    "CONNECTED",
+    "INACTIVE",
     "ACTIVATING",
     "ACTIVE",
+    "HOLDED",
     "DEACTIVATING",
     "DISCONNECTING",
     "DISCONNECTED",
     "ERROR",
-    "RESTART",
-    "QUIT",
     "NOT_REGISTERED"
 };
 
+enum KhiRobotStateTrigger
+{
+    TRIGGER_MIN = -1,
+    NONE,
+    HOLD,
+    RESTART,
+    QUIT,
+    TRIGGER_MAX
+};
+const static std::string KhiRobotStateTriggerName[TRIGGER_MAX] =
+{
+    "NONE",
+    "HOLD",
+    "RESTART",
+    "QUIT"
+};
 
 class KhiRobotDriver
 {
@@ -105,6 +120,7 @@ public:
         for ( int cno = 0; cno < KHI_MAX_CONTROLLER; cno++ )
         {
             robot_info[cno].state = INIT;
+            robot_info[cno].state_trigger = NONE;
             robot_info[cno].ip_address = "127.0.0.1";
             robot_info[cno].robot_name = "";
             robot_info[cno].arm_num = -1;
@@ -145,9 +161,57 @@ public:
         {
             if ( robot_info[cont_no].state != state )
             {
-                ROS_INFO( "[%s] State %d: %s -> %s", driver_name.c_str(), cont_no, KhiRobotStateName[robot_info[cont_no].state].c_str(), KhiRobotStateName[state].c_str() );
+                infoPrint( "State %d: %s -> %s", cont_no, KhiRobotStateName[robot_info[cont_no].state].c_str(), KhiRobotStateName[state].c_str() );
                 robot_info[cont_no].state = state;
             }
+            return true;
+        }
+    }
+
+    bool isTransitionState( const int cont_no )
+    {
+        int state;
+
+        state = getState( cont_no );
+        if ( ( state == CONNECTING ) || ( state == ACTIVATING ) || ( state == DEACTIVATING ) || ( state == DISCONNECTING ) )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    int getStateTrigger( const int cont_no )
+    {
+        int state_trigger;
+
+        if ( ( cont_no < 0 ) || ( cont_no > KHI_MAX_CONTROLLER ) ) { return NONE; }
+        else
+        {
+            state_trigger = robot_info[cont_no].state_trigger;
+            robot_info[cont_no].state_trigger = NONE;
+            return state_trigger;
+        }
+    }
+
+    bool setStateTrigger( const int cont_no, const int state_trigger )
+    {
+        if ( !contLimitCheck( cont_no, KHI_MAX_CONTROLLER ) ) { return false; }
+
+        if ( ( state_trigger <= TRIGGER_MIN ) || ( state_trigger >= TRIGGER_MAX ) )
+        {
+            return false;
+        }
+        else
+        {
+            if ( robot_info[cont_no].state_trigger != NONE )
+            {
+                warnPrint( "State Trigger is already done %d: %s", cont_no, KhiRobotStateTriggerName[state_trigger].c_str() );
+            }
+            infoPrint( "State Trigger %d: %s", cont_no, KhiRobotStateTriggerName[state_trigger].c_str() );
+            robot_info[cont_no].state_trigger = state_trigger;
             return true;
         }
     }
@@ -173,19 +237,37 @@ public:
         }
     }
 
-    void infoPrint( const std::string msg )
+    void infoPrint( const char *format, ... )
     {
-        ROS_INFO( "[%s] %s", driver_name.c_str(), msg.c_str() );
+        char msg[512] = { 0 };
+        va_list ap;
+
+        va_start( ap, format );
+        vsnprintf( msg, sizeof(msg), format, ap );
+        va_end( ap );
+        ROS_INFO( "[%s] %s", driver_name.c_str(), msg );
     }
 
-    void warnPrint( const std::string msg )
+    void warnPrint( const char *format, ... )
     {
-        ROS_WARN( "[%s] %s", driver_name.c_str(), msg.c_str() );
+        char msg[512] = { 0 };
+        va_list ap;
+
+        va_start( ap, format );
+        vsnprintf( msg, sizeof(msg), format, ap );
+        va_end( ap );
+        ROS_WARN( "[%s] %s", driver_name.c_str(), msg );
     }
 
-    void errorPrint( const std::string msg )
+    void errorPrint( const char *format, ... )
     {
-        ROS_ERROR( "[%s] %s", driver_name.c_str(), msg.c_str() );
+        char msg[512] = { 0 };
+        va_list ap;
+
+        va_start( ap, format );
+        vsnprintf( msg, sizeof(msg), format, ap );
+        va_end( ap );
+        ROS_ERROR( "[%s] %s", driver_name.c_str(), msg );
     }
 
     void jointPrint( std::string name, const JointData joint )
@@ -210,7 +292,7 @@ public:
                 strcat( msg, jt_val );
             }
         }
-        ROS_INFO( "[SIM]%s", msg );
+        infoPrint( "[SIM]%s", msg );
     }
 
     virtual ~KhiRobotDriver() {};
@@ -218,6 +300,7 @@ public:
     virtual bool open( const int cont_no, const std::string ip_address ) = 0;
     virtual bool close( const int cont_no ) = 0;
     virtual bool activate( const int cont_no, JointData *joint ) = 0;
+    virtual bool hold( const int cont_no, const JointData joint ) = 0;
     virtual bool deactivate( const int cont_no ) = 0;
     virtual bool readData( const int cont_no, JointData *joint ) = 0;
     virtual bool writeData( const int cont_no, JointData joint ) = 0;

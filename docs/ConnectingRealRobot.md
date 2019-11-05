@@ -98,12 +98,11 @@ To control robot controller on ROS, the drivere has control states.
 2:  "CONNECTED"       - Driver is connected to Robot Controller, but cannot control Robot Arm.
 3:  "ACTIVATING"      - Driver is now activating Robot Arm.
 4:  "ACTIVE"          - Driver can control Robot Arm.
-5:  "DEACTIVATING"    - Driver is now deactivating Robot Arm.
-6:  "DISCONNECTING"   - Driver is now disconnecting to Robot Controller.
-7:  "DISCONNECTED"    - Driver is disconnected to Robot Controller.
-8:  "ERROR"           - Driver halted due to ERROR.
-9:  "RESTART"         - Driver accepts restart instruction.
-10: "QUIT"            - Driver accepts quit instruction.
+5:  "HOLDED"          - Driver is holded. Driver doesn't move Robot Arm.
+6:  "DEACTIVATING"    - Driver is now deactivating Robot Arm.
+7:  "DISCONNECTING"   - Driver is now disconnecting to Robot Controller.
+8:  "DISCONNECTED"    - Driver is disconnected to Robot Controller.
+9:  "ERROR"           - Driver halted due to ERROR.
 ```
 
 You can get this status by Command Service "get_status".
@@ -183,6 +182,17 @@ string cmd -> "get_status"
 int32 driver_ret -> driver's return code. Refer KRNX_E_*** in krnx.h
 int32 as_ret -> AS return code. Refer AS manual.
 string cmd_ret -> Driver Status
+```
+
+### Hold Driver
+
+```text
+string type -> "driver"
+string cmd -> "hold"
+---
+int32 driver_ret -> driver's return code. Refer KRNX_E_*** in krnx.h
+int32 as_ret -> AS return code. Refer AS manual.
+string cmd_ret -> NOT USED
 ```
 
 ### Restart Driver for ACTIVE

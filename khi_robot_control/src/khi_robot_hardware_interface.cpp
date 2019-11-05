@@ -43,6 +43,7 @@ KhiRobotHardwareInterface::KhiRobotHardwareInterface()
 KhiRobotHardwareInterface::~KhiRobotHardwareInterface()
 {
     deactivate();
+    close();
 }
 
 bool KhiRobotHardwareInterface::open( std::string robot_name, std::string ip_address, double period, bool in_simulation )
@@ -101,9 +102,19 @@ bool KhiRobotHardwareInterface::activate()
     return client->activate( &joint );
 }
 
+bool KhiRobotHardwareInterface::hold()
+{
+    return client->hold( joint );
+}
+
 void KhiRobotHardwareInterface::deactivate()
 {
     client->deactivate();
+}
+
+void KhiRobotHardwareInterface::close()
+{
+    client->close();
     delete client;
 }
 
@@ -117,9 +128,14 @@ void KhiRobotHardwareInterface::write(const ros::Time time, const ros::Duration 
     client->write( joint );
 }
 
-int KhiRobotHardwareInterface::getState()
+int KhiRobotHardwareInterface::updateState()
 {
-    return client->getState();
+    return client->updateState();
+}
+
+int KhiRobotHardwareInterface::getStateTrigger()
+{
+    return client->getStateTrigger();
 }
 
 bool KhiRobotHardwareInterface::getPeriodDiff( double *diff )
