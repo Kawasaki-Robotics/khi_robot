@@ -722,6 +722,8 @@ bool KhiRobotKrnxDriver::writeData( const int cont_no, JointData joint )
                 }
                 snprintf( status, sizeof(status), "[%d]%.4f:%.4f:%d ", jt+1, jt_pos, jt_vel, rtc_status[cont_no][ano][jt] );
                 strcat( msg, status );
+                ROS_WARN("JT%d:%f,%f,%f,%f,%f,%f", jt+1, joint.cmd[jt], p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home+rtc_comp[cont_no][ano][jt],rtc_old_comp[cont_no][ano][jt], rtc_comp[cont_no][ano][jt], p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home, data.ang_ref[jt]);
+                ROS_WARN("JT%d:%f,%f,%f,%f,%f,%f", jt+1, joint.cmd[jt]*180/M_PI, (p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home+rtc_comp[cont_no][ano][jt])*180/M_PI, rtc_old_comp[cont_no][ano][jt]*180/M_PI, rtc_comp[cont_no][ano][jt]*180/M_PI, p_rb_tbl[cont_no]->arm_tbl[ano].jt_tbl[jt].home*180/M_PI, data.ang_ref[jt]*180/M_PI);
             }
             errorPrint( msg );
         }

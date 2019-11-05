@@ -4,6 +4,7 @@
     publish_rate: 50  
 
   khi_robot_controllers:
+    robot: RS080N
     names:
       - rs080n_arm_controller
 

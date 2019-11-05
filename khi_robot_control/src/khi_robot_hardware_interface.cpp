@@ -33,6 +33,7 @@
  *********************************************************************/
 
 #include <khi_robot_hardware_interface.h>
+#include <joint_limits_interface/joint_limits_rosparam.h>
 
 namespace khi_robot_control
 {
@@ -48,17 +49,16 @@ KhiRobotHardwareInterface::~KhiRobotHardwareInterface()
 
 bool KhiRobotHardwareInterface::open( std::string robot_name, std::string ip_address, double period, bool in_simulation )
 {
-    ros::NodeHandle nh;
+    ros::NodeHandle nh_joints;
     std::vector<std::string> controller_names, joint_names;
-    bool is_success = false;
     int cnt = 0;
 
     joint.joint_num = 0;
-    if ( nh.getParam( "khi_robot_controllers/names", controller_names ) )
+    if ( nh_joints.getParam( "khi_robot_controllers/names", controller_names ) )
     {
         for ( int cno = 0; cno < controller_names.size(); cno++ )
         {
-            if ( nh.getParam( controller_names[cno] + "/joints", joint_names ) )
+            if ( nh_joints.getParam( controller_names[cno] + "/joints", joint_names ) )
             {
                 for ( int jno = 0; jno < joint_names.size(); jno++ )
                 {
@@ -67,6 +67,13 @@ bool KhiRobotHardwareInterface::open( std::string robot_name, std::string ip_add
                     joint_state_interface.registerHandle( state_handle );
                     hardware_interface::JointHandle pos_handle( joint_state_interface.getHandle( joint.name[cnt] ), &joint.cmd[cnt] );
                     joint_position_interface.registerHandle( pos_handle );
+
+                    ros::NodeHandle nh_limits(robot_name);
+                    joint_limits_interface::JointLimits limits;
+                    joint_limits_interface::getJointLimits( joint.name[cnt], nh_limits, limits );
+                    joint_limits_interface::PositionJointSaturationHandle limits_handle( joint_position_interface.getHandle( joint.name[cnt] ), limits );
+                    joint_limit_interface.registerHandle( limits_handle );
+
                     cnt++;
                 }
                 joint.joint_num += joint_names.size();
@@ -99,6 +106,7 @@ bool KhiRobotHardwareInterface::open( std::string robot_name, std::string ip_add
 
 bool KhiRobotHardwareInterface::activate()
 {
+    joint_limit_interface.reset();
     return client->activate( &joint );
 }
 
@@ -125,6 +133,7 @@ void KhiRobotHardwareInterface::read(const ros::Time time, const ros::Duration p
 
 void KhiRobotHardwareInterface::write(const ros::Time time, const ros::Duration period)
 {
+    joint_limit_interface.enforceLimits( period );
     client->write( joint );
 }
 

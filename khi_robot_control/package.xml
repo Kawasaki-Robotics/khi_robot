@@ -34,6 +34,11 @@
   <run_depend>trajectory_msgs</run_depend>
   <run_depend>transmission_interface</run_depend>
   <run_depend>khi_robot_msgs</run_depend>
+  <run_depend>khi_duaro_moveit_config</run_depend>
+  <run_depend>khi_rs007n_moveit_config</run_depend>
+  <run_depend>khi_rs007l_moveit_config</run_depend>
+  <run_depend>khi_rs080n_moveit_config</run_depend>
 
   <test_depend>rostest</test_depend>
+  <test_depend>moveit_commander</test_depend>
 </package>
