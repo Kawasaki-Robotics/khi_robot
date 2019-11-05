@@ -58,100 +58,127 @@
     <!-- Fix duaro to world ,but better not to fix -->
     <!-- <virtual_joint name="virtual_joint" type="planar" parent_frame="odom_combined" child_link="base_link" /> --!>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="base_link" link2="cart" reason="Adjacent" />
     <disable_collisions link1="base_link" link2="duaro_body" reason="Adjacent" />
+    <disable_collisions link1="base_link" link2="duaro_body_cover" reason="Adjacent" />
     <disable_collisions link1="base_link" link2="duaro_j0" reason="Never" />
     <disable_collisions link1="base_link" link2="duaro_j0_cover" reason="Adjacent" />
     <disable_collisions link1="base_link" link2="duaro_logo" reason="Adjacent" />
+    <disable_collisions link1="base_link" link2="kawasaki_logo" reason="Adjacent" />
     <disable_collisions link1="base_link" link2="lower_link_j1" reason="Never" />
     <disable_collisions link1="base_link" link2="lower_link_j2" reason="Never" />
     <disable_collisions link1="base_link" link2="lower_link_j3" reason="Never" />
     <disable_collisions link1="base_link" link2="lower_link_j3_obst" reason="Never" />
     <disable_collisions link1="base_link" link2="lower_link_j4" reason="Never" />
-    <disable_collisions link1="base_link" link2="pedestal_obstacle" reason="Adjacent" />
     <disable_collisions link1="base_link" link2="upper_link_j1" reason="Never" />
     <disable_collisions link1="base_link" link2="upper_link_j2" reason="Never" />
     <disable_collisions link1="base_link" link2="upper_link_j3" reason="Never" />
     <disable_collisions link1="base_link" link2="upper_link_j3_obst" reason="Never" />
     <disable_collisions link1="base_link" link2="upper_link_j4" reason="Never" />
+    <disable_collisions link1="cart" link2="duaro_body" reason="Default" />
+    <disable_collisions link1="cart" link2="duaro_body_cover" reason="Never" />
+    <disable_collisions link1="cart" link2="duaro_j0" reason="Never" />
+    <disable_collisions link1="cart" link2="duaro_j0_cover" reason="Never" />
+    <disable_collisions link1="cart" link2="duaro_logo" reason="Never" />
+    <disable_collisions link1="cart" link2="kawasaki_logo" reason="Never" />
+    <disable_collisions link1="cart" link2="lower_link_j1" reason="Never" />
+    <disable_collisions link1="cart" link2="lower_link_j2" reason="Never" />
+    <disable_collisions link1="cart" link2="lower_link_j3" reason="Never" />
+    <disable_collisions link1="cart" link2="lower_link_j3_obst" reason="Never" />
+    <disable_collisions link1="cart" link2="lower_link_j4" reason="Never" />
+    <disable_collisions link1="cart" link2="upper_link_j1" reason="Never" />
+    <disable_collisions link1="cart" link2="upper_link_j2" reason="Never" />
+    <disable_collisions link1="cart" link2="upper_link_j3" reason="Never" />
+    <disable_collisions link1="cart" link2="upper_link_j3_obst" reason="Never" />
+    <disable_collisions link1="cart" link2="upper_link_j4" reason="Never" />
+    <disable_collisions link1="duaro_body" link2="duaro_body_cover" reason="Default" />
     <disable_collisions link1="duaro_body" link2="duaro_j0" reason="Adjacent" />
     <disable_collisions link1="duaro_body" link2="duaro_j0_cover" reason="Never" />
     <disable_collisions link1="duaro_body" link2="duaro_logo" reason="Default" />
+    <disable_collisions link1="duaro_body" link2="kawasaki_logo" reason="Default" />
     <disable_collisions link1="duaro_body" link2="lower_link_j1" reason="Never" />
     <disable_collisions link1="duaro_body" link2="lower_link_j2" reason="Never" />
     <disable_collisions link1="duaro_body" link2="lower_link_j3" reason="Never" />
     <disable_collisions link1="duaro_body" link2="lower_link_j3_obst" reason="Never" />
     <disable_collisions link1="duaro_body" link2="lower_link_j4" reason="Never" />
-    <disable_collisions link1="duaro_body" link2="pedestal_obstacle" reason="Default" />
     <disable_collisions link1="duaro_body" link2="upper_link_j1" reason="Never" />
     <disable_collisions link1="duaro_body" link2="upper_link_j2" reason="Never" />
     <disable_collisions link1="duaro_body" link2="upper_link_j3" reason="Never" />
     <disable_collisions link1="duaro_body" link2="upper_link_j3_obst" reason="Never" />
     <disable_collisions link1="duaro_body" link2="upper_link_j4" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="duaro_j0" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="duaro_j0_cover" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="duaro_logo" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="kawasaki_logo" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="lower_link_j1" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="lower_link_j2" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="lower_link_j3" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="lower_link_j3_obst" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="lower_link_j4" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="upper_link_j1" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="upper_link_j2" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="upper_link_j3" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="upper_link_j3_obst" reason="Never" />
+    <disable_collisions link1="duaro_body_cover" link2="upper_link_j4" reason="Never" />
     <disable_collisions link1="duaro_j0" link2="duaro_j0_cover" reason="Default" />
     <disable_collisions link1="duaro_j0" link2="duaro_logo" reason="Never" />
+    <disable_collisions link1="duaro_j0" link2="kawasaki_logo" reason="Never" />
     <disable_collisions link1="duaro_j0" link2="lower_link_j1" reason="Adjacent" />
     <disable_collisions link1="duaro_j0" link2="lower_link_j2" reason="Never" />
     <disable_collisions link1="duaro_j0" link2="lower_link_j3" reason="Never" />
     <disable_collisions link1="duaro_j0" link2="lower_link_j3_obst" reason="Never" />
     <disable_collisions link1="duaro_j0" link2="lower_link_j4" reason="Never" />
-    <disable_collisions link1="duaro_j0" link2="pedestal_obstacle" reason="Never" />
     <disable_collisions link1="duaro_j0" link2="upper_link_j1" reason="Adjacent" />
     <disable_collisions link1="duaro_j0" link2="upper_link_j2" reason="Never" />
     <disable_collisions link1="duaro_j0" link2="upper_link_j3" reason="Never" />
     <disable_collisions link1="duaro_j0" link2="upper_link_j3_obst" reason="Never" />
     <disable_collisions link1="duaro_j0" link2="upper_link_j4" reason="Never" />
     <disable_collisions link1="duaro_j0_cover" link2="duaro_logo" reason="Never" />
+    <disable_collisions link1="duaro_j0_cover" link2="kawasaki_logo" reason="Never" />
     <disable_collisions link1="duaro_j0_cover" link2="lower_link_j1" reason="Never" />
     <disable_collisions link1="duaro_j0_cover" link2="lower_link_j2" reason="Never" />
     <disable_collisions link1="duaro_j0_cover" link2="lower_link_j3" reason="Never" />
     <disable_collisions link1="duaro_j0_cover" link2="lower_link_j3_obst" reason="Never" />
     <disable_collisions link1="duaro_j0_cover" link2="lower_link_j4" reason="Never" />
-    <disable_collisions link1="duaro_j0_cover" link2="pedestal_obstacle" reason="Never" />
     <disable_collisions link1="duaro_j0_cover" link2="upper_link_j1" reason="Never" />
     <disable_collisions link1="duaro_j0_cover" link2="upper_link_j2" reason="Never" />
     <disable_collisions link1="duaro_j0_cover" link2="upper_link_j3" reason="Never" />
     <disable_collisions link1="duaro_j0_cover" link2="upper_link_j3_obst" reason="Never" />
     <disable_collisions link1="duaro_j0_cover" link2="upper_link_j4" reason="Never" />
+    <disable_collisions link1="duaro_logo" link2="kawasaki_logo" reason="Never" />
     <disable_collisions link1="duaro_logo" link2="lower_link_j1" reason="Never" />
     <disable_collisions link1="duaro_logo" link2="lower_link_j2" reason="Never" />
     <disable_collisions link1="duaro_logo" link2="lower_link_j3" reason="Never" />
     <disable_collisions link1="duaro_logo" link2="lower_link_j3_obst" reason="Never" />
     <disable_collisions link1="duaro_logo" link2="lower_link_j4" reason="Never" />
-    <disable_collisions link1="duaro_logo" link2="pedestal_obstacle" reason="Never" />
     <disable_collisions link1="duaro_logo" link2="upper_link_j1" reason="Never" />
     <disable_collisions link1="duaro_logo" link2="upper_link_j2" reason="Never" />
     <disable_collisions link1="duaro_logo" link2="upper_link_j3" reason="Never" />
     <disable_collisions link1="duaro_logo" link2="upper_link_j3_obst" reason="Never" />
     <disable_collisions link1="duaro_logo" link2="upper_link_j4" reason="Never" />
+    <disable_collisions link1="kawasaki_logo" link2="lower_link_j1" reason="Never" />
+    <disable_collisions link1="kawasaki_logo" link2="lower_link_j2" reason="Never" />
+    <disable_collisions link1="kawasaki_logo" link2="lower_link_j3" reason="Never" />
+    <disable_collisions link1="kawasaki_logo" link2="lower_link_j3_obst" reason="Never" />
+    <disable_collisions link1="kawasaki_logo" link2="lower_link_j4" reason="Never" />
+    <disable_collisions link1="kawasaki_logo" link2="upper_link_j1" reason="Never" />
+    <disable_collisions link1="kawasaki_logo" link2="upper_link_j2" reason="Never" />
+    <disable_collisions link1="kawasaki_logo" link2="upper_link_j3" reason="Never" />
+    <disable_collisions link1="kawasaki_logo" link2="upper_link_j3_obst" reason="Never" />
+    <disable_collisions link1="kawasaki_logo" link2="upper_link_j4" reason="Never" />
     <disable_collisions link1="lower_link_j1" link2="lower_link_j2" reason="Adjacent" />
-    <disable_collisions link1="lower_link_j1" link2="lower_link_j3" reason="Never" />
-    <disable_collisions link1="lower_link_j1" link2="lower_link_j3_obst" reason="Never" />
     <disable_collisions link1="lower_link_j1" link2="lower_link_j4" reason="Never" />
-    <disable_collisions link1="lower_link_j1" link2="pedestal_obstacle" reason="Never" />
     <disable_collisions link1="lower_link_j1" link2="upper_link_j1" reason="Default" />
-    <disable_collisions link1="lower_link_j1" link2="upper_link_j3_obst" reason="Never" />
     <disable_collisions link1="lower_link_j2" link2="lower_link_j3" reason="Adjacent" />
     <disable_collisions link1="lower_link_j2" link2="lower_link_j3_obst" reason="Never" />
     <disable_collisions link1="lower_link_j2" link2="lower_link_j4" reason="Never" />
-    <disable_collisions link1="lower_link_j2" link2="pedestal_obstacle" reason="Never" />
-    <disable_collisions link1="lower_link_j2" link2="upper_link_j4" reason="Never" />
     <disable_collisions link1="lower_link_j3" link2="lower_link_j3_obst" reason="Adjacent" />
     <disable_collisions link1="lower_link_j3" link2="lower_link_j4" reason="Adjacent" />
-    <disable_collisions link1="lower_link_j3" link2="pedestal_obstacle" reason="Never" />
     <disable_collisions link1="lower_link_j3_obst" link2="lower_link_j4" reason="Never" />
-    <disable_collisions link1="lower_link_j3_obst" link2="pedestal_obstacle" reason="Never" />
     <disable_collisions link1="lower_link_j3_obst" link2="upper_link_j4" reason="Never" />
-    <disable_collisions link1="lower_link_j4" link2="pedestal_obstacle" reason="Never" />
     <disable_collisions link1="lower_link_j4" link2="upper_link_j1" reason="Never" />
     <disable_collisions link1="lower_link_j4" link2="upper_link_j3_obst" reason="Never" />
-    <disable_collisions link1="pedestal_obstacle" link2="upper_link_j1" reason="Never" />
-    <disable_collisions link1="pedestal_obstacle" link2="upper_link_j2" reason="Never" />
-    <disable_collisions link1="pedestal_obstacle" link2="upper_link_j3" reason="Never" />
-    <disable_collisions link1="pedestal_obstacle" link2="upper_link_j3_obst" reason="Never" />
-    <disable_collisions link1="pedestal_obstacle" link2="upper_link_j4" reason="Never" />
     <disable_collisions link1="upper_link_j1" link2="upper_link_j2" reason="Adjacent" />
-    <disable_collisions link1="upper_link_j1" link2="upper_link_j3" reason="Never" />
-    <disable_collisions link1="upper_link_j1" link2="upper_link_j3_obst" reason="Never" />
     <disable_collisions link1="upper_link_j1" link2="upper_link_j4" reason="Never" />
     <disable_collisions link1="upper_link_j2" link2="upper_link_j3" reason="Adjacent" />
     <disable_collisions link1="upper_link_j2" link2="upper_link_j3_obst" reason="Default" />

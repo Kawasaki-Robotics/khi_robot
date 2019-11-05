@@ -59,11 +59,15 @@
     </material>
 
     <material name="White">
-      <color rgba="1 1 1 1"/>
+      <color rgba="1.0 1.0 1.0 1.0"/>
     </material>
 
     <material name="Black">
-      <color rgba="0 0 0 1"/>
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Red">
+      <color rgba="1.0 0 0 1.0"/>
     </material>
 
     <!-- link inertial-->
@@ -84,14 +88,14 @@
     <link name="${prefix}base_link">
       <visual>
         <geometry>
-          <mesh filename="package://khi_duaro_description/meshes/WD002N_A201_Adjuster_pad_Ver2m.stl"/>
+          <mesh filename="package://khi_duaro_description/meshes/WD002N_F502_Adjuster_pad.stl"/>
         </geometry>
         <material name="White"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://khi_duaro_description/meshes/WD002N_A201_Adjuster_pad_Ver2m.stl"/>
+          <mesh filename="package://khi_duaro_description/meshes/WD002N_F502_Adjuster_pad.stl"/>
         </geometry>
         <material name="White"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -100,19 +104,19 @@
 
 
     <!-- fixed parts xacro-->
-    <xacro:macro name="fixed_parts" params="prefix:=^ color name height rot mass">
+    <xacro:macro name="fixed_parts" params="prefix:=^ color name filename height rot mass">
 
       <link name="${prefix}${name}">
         <visual>
           <geometry>
-            <mesh filename="package://khi_duaro_description/meshes/${name}.stl"/>
+            <mesh filename="package://khi_duaro_description/meshes/${filename}.stl"/>
           </geometry>
           <material name="${color}"/>
           <origin rpy="0 0 ${rot}" xyz="0 0 0"/>
         </visual>
         <collision>
           <geometry>
-            <mesh filename="package://khi_duaro_description/meshes/${name}.stl"/>
+            <mesh filename="package://khi_duaro_description/meshes/${filename}.stl"/>
           </geometry>
           <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
@@ -128,22 +132,24 @@
     </xacro:macro>
 
     <!-- fixed parts  -->
-    <xacro:fixed_parts color="White" name="duaro_body" height="0" rot="0" mass="100"/>
-    <xacro:fixed_parts color="Light_blue" name="duaro_j0_cover" height="0.82" rot="0" mass="2"/>
-    <xacro:fixed_parts color="Black" name="duaro_logo" height="0" rot="${pi/2}" mass="1"/>
-    <xacro:fixed_parts color="Light_blue" name="pedestal_obstacle" height="0" rot="0" mass="2"/>
-
+    <xacro:fixed_parts color="White" name="duaro_body" filename="WD002N_F502_Cabinet_body" height="0" rot="0" mass="100"/>
+    <xacro:fixed_parts color="Light_blue" name="duaro_j0_cover" filename="WD002N_A201_j0_cover_Ver2m" height="0.82" rot="0" mass="2"/>
+    <xacro:fixed_parts color="Black" name="duaro_logo" filename="WD002N_F502_LOGO_duAro" height="0" rot="0" mass="1"/>
+    <xacro:fixed_parts color="Red" name="kawasaki_logo" filename="WD002N_F502_LOGO_Kawasaki" height="0" rot="0" mass="1"/>
+    <xacro:fixed_parts color="Light_blue" name="duaro_body_cover" filename="WD002N_F502_Cabinet_front_cover" height="0" rot="0" mass="1"/>
+    <xacro:fixed_parts color="White" name="cart" filename="WD002N_F502_Cart" height="0" rot="0" mass="2"/>
+  
     <link name="${prefix}duaro_j0">
       <visual>
         <geometry>
-          <mesh filename="package://khi_duaro_description/meshes/joint0.stl"/>
+          <mesh filename="package://khi_duaro_description/meshes/WD002N_A201_j0_Ver2m.stl"/>
         </geometry>
         <material name="White"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://khi_duaro_description/meshes/joint0.stl"/>
+          <mesh filename="package://khi_duaro_description/meshes/WD002N_A201_j0_Ver2m.stl"/>
         </geometry>
         <origin rpy="0 0 0" xyz="0 0 0"/>
       </collision>
@@ -161,14 +167,14 @@
     <link name="${prefix}lower_link_j1">
       <visual>
         <geometry>
-          <mesh filename="package://khi_duaro_description/meshes/lower_joint1.stl"/>
+          <mesh filename="package://khi_duaro_description/meshes/WD002N_A201L_J1_Ver2m.stl"/>
         </geometry>
         <material name="White"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://khi_duaro_description/meshes/lower_joint1.stl"/>
+          <mesh filename="package://khi_duaro_description/meshes/WD002N_A201L_J1_Ver2m.stl"/>
         </geometry>
         <material name="White"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
