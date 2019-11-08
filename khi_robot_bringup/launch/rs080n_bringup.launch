@@ -36,7 +36,7 @@
   <!-- Load joint controller configurations from YAML file to parameter server -->
   <rosparam file="$(find khi_robot_bringup)/config/rs080n_controllers.yaml"
             command="load"/>
-  <rosparam file="$(find khi_rs080n_moveit_config)/config/joint_limits.yaml"
+  <rosparam file="$(find khi_rs_description)/config/rs080n_joint_limits.yaml"
             command="load" ns="$(arg robot)"/>
 
   <!-- Load the default controllers -->

@@ -36,7 +36,7 @@
   <!-- Load joint controller configurations from YAML file to parameter server -->
   <rosparam file="$(find khi_robot_bringup)/config/duaro_controllers.yaml"
             command="load"/>
-  <rosparam file="$(find khi_duaro_moveit_config)/config/joint_limits.yaml"
+  <rosparam file="$(find khi_duaro_description)/config/duaro_joint_limits.yaml"
             command="load" ns="$(arg robot)"/>
 
   <!-- Load the default controllers -->
