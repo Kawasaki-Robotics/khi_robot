@@ -67,11 +67,6 @@ class KhiRobot:
                 self.max_pos_list.append(limits['joint'+str(jt+1)]['max_position'])
                 self.max_vel_list.append(limits['joint'+str(jt+1)]['max_velocity'])
                 self.max_acc_list.append(limits['joint'+str(jt+1)]['max_acceleration'])
-        print('base_position:',self.base_pos_list)
-        print('min_position:',self.min_pos_list)
-        print('max_position:',self.max_pos_list)
-        print('max_velocity:',self.max_vel_list)
-        print('max_acceleration:',self.max_acc_list)
 
     def get_pos_list(self, ano, jt, type):
         jt_list = copy.deepcopy(self.base_pos_list)
@@ -105,7 +100,7 @@ def cmdhandler_client(type_arg , cmd_arg):
         resp1 = khi_robot_command_service(type_arg, cmd_arg)
         return resp1
     except rospy.ServiceException, e:
-        print('Service call failed: %s'%e)
+        rospy.loginfo('Service call failed: %s', e)
 
 def get_driver_state():
     ret = cmdhandler_client('driver' , 'get_status')
@@ -115,16 +110,16 @@ def plan_and_execute(mgc,jt,num,timeout):
     for cnt in range(timeout):
         plan = mgc.plan()
         if plan is False:
-            print('JT%d-%d: cannot be planned' % (jt+1,num+1))
+            rospy.loginfo('JT%d-%d: cannot be planned %d times', jt+1, num+1, cnt+1)
         else:
             ret = mgc.execute(plan)
             if ret is False:
-                print('JT%d-%d: cannot be executed' % (jt+1,num+1))
+                rospy.loginfo('JT%d-%d: cannot be executed %d times', jt+1, num+1, cnt+1)
             else:
                 return True
 
         if cnt == timeout-1:
-            print('timeout')
+            rospy.loginfo('timeout')
             return False
     return False
 
@@ -132,8 +127,9 @@ class TestKhiRobotControl(unittest.TestCase):
 
     def test_position_velocity(self):
         ##############################set parameter############################
-        accuracy_pos = 0.001    # position accuracy
-        accuracy_ori = 0.001    # orientation accuracy
+        accuracy_jt  = 0.01    # joint accuracy
+        #accuracy_pos = 0.01    # position accuracy
+        #accuracy_ori = 0.01    # orientation accuracy
 
         max_vel = 1.0           # max velocity scale
         max_acc = 1.0           # max acceleration scale
@@ -141,7 +137,7 @@ class TestKhiRobotControl(unittest.TestCase):
         min_acc = 0.5           # min acceleration scale
 
         cyc_num = 3             # reperat num
-        timeout = 3             # timeout num
+        timeout = 10            # timeout num
         retcode = 0
         ########################################################################
 
@@ -151,20 +147,15 @@ class TestKhiRobotControl(unittest.TestCase):
 
         # RobotCommander
         rc = moveit_commander.RobotCommander()
-        print('=' * 15, ' robot ', '=' * 15)
-        print('=' * 10, ' Robot Groups: %s' % rc.get_group_names())
-        print('=' * 10, ' Printing robot state %s' % rc.get_current_state())
 
         # MoveGroupCommander
         mgc = moveit_commander.MoveGroupCommander(khi_robot.group)
-        print('=' * 15, ' manipulator ', '=' * 15)
-        print('=' * 10, ' Reference frame: %s' % mgc.get_planning_frame())
-        print('=' * 10, ' Reference frame: %s' % mgc.get_end_effector_link())
 
         # mgc setting
         mgc.set_planner_id(planner)
-        mgc.set_goal_position_tolerance(accuracy_pos)
-        mgc.set_goal_position_tolerance(accuracy_ori)
+        mgc.set_goal_joint_tolerance(accuracy_jt)
+        #mgc.set_goal_position_tolerance(accuracy_pos)
+        #mgc.set_goal_orientation_tolerance(accuracy_ori)
 
         ret = get_driver_state()
         if ret.cmd_ret == 'ERROR':
@@ -173,8 +164,6 @@ class TestKhiRobotControl(unittest.TestCase):
 
         ret = get_driver_state()
         self.assertEqual('ACTIVE', ret.cmd_ret)
-
-        print('=' * 15, ' test start ', '=' * 15)
 
         # move each joint
         for jt in range(khi_robot.max_jt):
@@ -192,7 +181,7 @@ class TestKhiRobotControl(unittest.TestCase):
             mgc.set_max_velocity_scaling_factor(min_vel)
             mgc.set_max_acceleration_scaling_factor(min_acc)
             jt_list = khi_robot.get_pos_list(ano, jt, 'min')
-            print('JT%d  : base' % (jt+1),jt_list)
+            rospy.loginfo('JT%d  : base', jt+1)
             mgc.set_joint_value_target(jt_list)
             self.assertTrue(plan_and_execute(mgc,jt,-1,timeout))
 
@@ -204,39 +193,41 @@ class TestKhiRobotControl(unittest.TestCase):
             for num in range(cyc_num):
                 # max position
                 jt_list = khi_robot.get_pos_list(ano, jt, 'max')
-                print('JT%d-%d:  max ' % (jt+1,num+1),jt_list)
+                rospy.loginfo('JT%d-%d:  max ', jt+1, num+1)
                 mgc.set_joint_value_target(jt_list)
                 retcode = plan_and_execute(mgc,jt,num,timeout)
                 self.assertTrue(retcode)
                 if retcode == False:
+                    rospy.loginfo('JT%d-%d:  max faild.', jt+1, num+1)
                     break
                 now_jt_list = mgc.get_current_joint_values()
-                self.assertAlmostEqual(jt_list[jt], now_jt_list[jt], 3)
+                self.assertAlmostEqual(jt_list[jt], now_jt_list[jt], delta = accuracy_jt*2)
 
                 # min position
                 jt_list = khi_robot.get_pos_list(ano, jt, 'min')
-                print('JT%d-%d:  min' % (jt+1,num+1),jt_list)
+                rospy.loginfo('JT%d-%d:  min', jt+1, num+1)
                 mgc.set_joint_value_target(jt_list)
                 retcode = plan_and_execute(mgc,jt,1,timeout)
                 self.assertTrue(retcode)
                 if retcode == False:
+                    rospy.loginfo('JT%d-%d:  min faild.', jt+1, num+1)
                     break
                 now_jt_list = mgc.get_current_joint_values()
-                self.assertAlmostEqual(jt_list[jt], now_jt_list[jt], 3)
+                self.assertAlmostEqual(jt_list[jt], now_jt_list[jt], delta = accuracy_jt*2)
 
                 # state check
                 ret = get_driver_state()
                 self.assertEqual('ACTIVE', ret.cmd_ret)
                 if ret.cmd_ret != 'ACTIVE':
-                    print('=' * 10,'[JT%d][v:%d][a:%d]now driver stats::%s' % (jt+1,max_vel*100,max_acc*100,ret.cmd_ret))
-    
+                    rospy.loginfo('JT%d-%d:  not active', jt+1, num+1)
+                    break
+
             # finish repeat moveing
             ret = get_driver_state()
             self.assertEqual('ACTIVE', ret.cmd_ret)
             if ret.cmd_ret != 'ACTIVE':
                 break
 
-        print('=' * 15, ' test end : ', retcode, '=' * 15)
         cmdhandler_client('driver' , 'quit')
 
 if __name__ == '__main__':
