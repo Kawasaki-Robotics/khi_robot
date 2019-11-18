@@ -36,5 +36,4 @@
   <run_depend>khi_robot_msgs</run_depend>
 
   <test_depend>rostest</test_depend>
-  <test_depend>moveit_commander</test_depend>
 </package>

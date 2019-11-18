@@ -70,10 +70,6 @@ target_link_libraries(main ${catkin_LIBRARIES} khi_robot_client)
 if (CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
   add_rostest(tests/test_main.xml)
-  add_rostest(tests/test_position_velocity_duaro.xml)
-  add_rostest(tests/test_position_velocity_rs007n.xml)
-  add_rostest(tests/test_position_velocity_rs007l.xml)
-  add_rostest(tests/test_position_velocity_rs080n.xml)
 endif()
 
 install(DIRECTORY launch
