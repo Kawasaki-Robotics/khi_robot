@@ -56,8 +56,8 @@ public:
     bool hold();
     void deactivate();
     void close();
-    void read( const ros::Time time, const ros::Duration period );
-    void write( const ros::Time time, const ros::Duration period );
+    void read( const ros::Time& time, const ros::Duration& period );
+    void write( const ros::Time& time, const ros::Duration& period );
     int updateState();
     int getStateTrigger();
     bool getPeriodDiff( double *diff );

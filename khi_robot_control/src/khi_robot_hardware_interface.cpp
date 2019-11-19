@@ -118,12 +118,12 @@ void KhiRobotHardwareInterface::close()
     delete client;
 }
 
-void KhiRobotHardwareInterface::read(const ros::Time time, const ros::Duration period)
+void KhiRobotHardwareInterface::read(const ros::Time& time, const ros::Duration& period)
 {
     client->read( &joint );
 }
 
-void KhiRobotHardwareInterface::write(const ros::Time time, const ros::Duration period)
+void KhiRobotHardwareInterface::write(const ros::Time& time, const ros::Duration& period)
 {
     client->write( joint );
 }
