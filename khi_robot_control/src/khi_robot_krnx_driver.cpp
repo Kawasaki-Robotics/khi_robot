@@ -1022,19 +1022,19 @@ bool KhiRobotKrnxDriver::commandHandler( khi_robot_msgs::KhiRobotCmd::Request &r
                     if ( arg >= 1 && arg <= KHI_MAX_SIG_SIZE )
                     {
                         /* DO */
-                        onoff = io.io_do[arg/8] & ( 1 << (arg-1)%8 );
+                        onoff = io.io_do[(arg-1)/8] & ( 1 << (arg-1)%8 );
                     }
                     else if ( arg >= 1000 && arg <= 1000 + KHI_MAX_SIG_SIZE )
                     {
                         /* DI */
                         arg -= 1000;
-                        onoff = io.io_di[arg/8] & ( 1 << (arg-1)%8 );
+                        onoff = io.io_di[(arg-1)/8] & ( 1 << (arg-1)%8 );
                     }
                     else if ( arg >= 2001 && arg <= 2000 + KHI_MAX_SIG_SIZE )
                     {
                         /* INTERNAL */
                         arg -= 2000;
-                        onoff = io.internal[arg/8] & ( 1 << (arg-1)%8 );
+                        onoff = io.internal[(arg-1)/8] & ( 1 << (arg-1)%8 );
                     }
                     else
                     {
