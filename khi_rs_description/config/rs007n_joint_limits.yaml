@@ -3,32 +3,50 @@
 # Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
 joint_limits:
   joint1:
+    has_position_limits: true
+    min_position: -3.14159265359
+    max_position: 3.14159265359
     has_velocity_limits: true
-    max_velocity: 8.03898653468
+    max_velocity: 8.2030
     has_acceleration_limits: true
     max_acceleration: 14.35533309765
   joint2:
+    has_position_limits: true
+    min_position: -2.35619449019
+    max_position: 2.35619449019
     has_velocity_limits: true
-    max_velocity: 6.49960613442
+    max_velocity: 6.6322
     has_acceleration_limits: true
     max_acceleration: 4.42150077171
   joint3:
+    has_position_limits: true
+    min_position: -2.70526034059
+    max_position: 2.70526034059
     has_velocity_limits: true
-    max_velocity: 8.89419786816
+    max_velocity: 9.0757
     has_acceleration_limits: true
     max_acceleration: 6.80678408277
   joint4:
+    has_position_limits: true
+    min_position: -3.49065850399
+    max_position: 3.49065850399
     has_velocity_limits: true
-    max_velocity: 9.40732466824
+    max_velocity: 9.5990
     has_acceleration_limits: true
     max_acceleration: 47.99655442984
   joint5:
+    has_position_limits: true
+    min_position: -2.18166156499
+    max_position: 2.18166156499
     has_velocity_limits: true
-    max_velocity: 9.40732466824
+    max_velocity: 9.5990
     has_acceleration_limits: true
     max_acceleration: 38.39724354387
   joint6:
+    has_position_limits: true
+    min_position: -6.28318530718
+    max_position: 6.28318530718
     has_velocity_limits: true
-    max_velocity: 17.10422666954
+    max_velocity: 17.4532
     has_acceleration_limits: true
     max_acceleration: 13.08996938995

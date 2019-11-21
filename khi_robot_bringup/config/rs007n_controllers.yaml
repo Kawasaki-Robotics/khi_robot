@@ -4,6 +4,7 @@
     publish_rate: 50  
 
   khi_robot_controllers:
+    robot: RS007N
     names:
       - rs007n_arm_controller
 

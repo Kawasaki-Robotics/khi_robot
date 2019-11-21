@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>khi_robot_test</name>
+  <version>1.0.0</version>
+  <description>Test package for khi_robot</description>
+
+  <author email="nakamichi_d@khi.co.jp">nakamichi_d</author>
+  <maintainer email="nakamichi_d@khi.co.jp">nakamichi_d</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/khi_robot</url>
+  <url type="repository">https://github.com/Kawasaki-Robotics/khi_robot</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+  <test_depend>rostest</test_depend>
+  <test_depend>khi_robot_bringup</test_depend>
+  <test_depend>khi_robot_control</test_depend>
+  <test_depend>khi_robot_msgs</test_depend>
+  <test_depend>khi_duaro_moveit_config</test_depend>
+  <test_depend>khi_rs007l_moveit_config</test_depend>
+  <test_depend>khi_rs007n_moveit_config</test_depend>
+  <test_depend>khi_rs080n_moveit_config</test_depend>
+  <test_depend>moveit_commander</test_depend>
+</package>

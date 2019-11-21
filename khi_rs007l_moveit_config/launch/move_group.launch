@@ -10,6 +10,8 @@
 
   <!-- Verbose Mode Option -->
   <arg name="info" default="$(arg debug)" />
+  <arg unless="$(arg info)" name="command_output" value="log" />
+  <arg     if="$(arg info)" name="command_output" value="screen" />
   <arg unless="$(arg info)" name="command_args" value="" />
   <arg     if="$(arg info)" name="command_args" value="--debug" />
 
@@ -38,7 +40,7 @@
   </include>
 
   <!-- Start the actual move_group node/action server -->
-  <node name="move_group" launch-prefix="$(arg launch_prefix)" pkg="moveit_ros_move_group" type="move_group" respawn="false" output="screen" args="$(arg command_args)">
+  <node name="move_group" launch-prefix="$(arg launch_prefix)" pkg="moveit_ros_move_group" type="move_group" respawn="false" output="$(arg command_output)" args="$(arg command_args)">
     <!-- Set the display variable, in case OpenGL code is used internally -->
     <env name="DISPLAY" value="$(optenv DISPLAY :0)" />
 

@@ -4,6 +4,7 @@
     publish_rate: 50  
 
   khi_robot_controllers:
+    robot: WD002N
     names:
       - duaro_lower_arm_controller
       - duaro_upper_arm_controller
