@@ -107,7 +107,14 @@ int KhiRobotKrnxDriver::execAsMonCmd( const int cont_no, const char *cmd, char *
     now_as_mon_cmd[cont_no] = true;
 
     return_code = krnx_ExecMon( cont_no, cmd, buffer, buffer_sz, as_err_code );
-    retKrnxRes( cont_no, "krnx_ExecMon()", return_code );
+    if ( *as_err_code != 0 )
+    {
+        warnPrint( "AS returned %d by %s", *as_err_code, cmd );
+    }
+    else
+    {
+        retKrnxRes( cont_no, "krnx_ExecMon()", return_code );
+    }
 
     now_as_mon_cmd[cont_no] = false;
 
