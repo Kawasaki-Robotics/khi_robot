@@ -280,15 +280,13 @@ bool KhiRobotKrnxDriver::close( const int cont_no )
 bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
 {
     const int to_home_vel = 20; /* speed 20 */
-    const float wait_time = 5.0f; /* 5 sec */
-    const int timeout_cnt_th = wait_time/(robot_info[cont_no].period/1e+9);
+    const double timeout_sec_th = 5.0; /* 5 sec */
     bool is_ready;
     TKrnxCurMotionData motion_data = { 0 };
     int rtc_sw = 0;
-    int timeout_cnt = 0;
+    double timeout_sec_cnt = 0.0;
     int conv = 1;
     float diff = 0;
-    FILE *fp;
     int error_lamp = 0;
     TKrnxPanelInfo panel_info;
     TKrnxProgramInfo program_info;
@@ -379,8 +377,8 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, JointData *joint )
         while ( 1 )
         {
             ros::Duration(robot_info[cont_no].period/1e+9).sleep();
-            timeout_cnt++;
-            if ( timeout_cnt > timeout_cnt_th )
+            timeout_sec_cnt += robot_info[cont_no].period/1e+9;
+            if ( timeout_sec_cnt > timeout_sec_th )
             {
                 errorPrint( "Failed to activate: timeout" );
                 setState( cont_no, ERROR );
