@@ -87,7 +87,6 @@ KhiRobotKrnxDriver::~KhiRobotKrnxDriver()
         if ( ( state != INIT ) && ( state != DISCONNECTED ) )
         {
             infoPrint("destructor");
-            deactivate( cno );
             close( cno );
         }
     }
