@@ -499,10 +499,13 @@ bool KhiRobotKrnxDriver::loadDriverParam( const int cont_no )
 
         /* AS Switch */
         return_code = execAsMonCmd( cont_no, "TYPE SWITCH(ZDBLREFFLT_MODSTABLE)", msg_buf, sizeof(msg_buf), &error_code );
-        sw_dblrefflt[cont_no] = atoi(msg_buf);
-        if ( sw_dblrefflt[cont_no] == -1 )
+        if ( retKrnxRes( cont_no, msg, return_code ) )
         {
-            return_code = execAsMonCmd( cont_no, "SW ZDBLREFFLT_MODSTABLE=OFF", msg_buf, sizeof(msg_buf), &error_code );
+            sw_dblrefflt[cont_no] = atoi(msg_buf);
+            if ( sw_dblrefflt[cont_no] == -1 )
+            {
+                return_code = execAsMonCmd( cont_no, "SW ZDBLREFFLT_MODSTABLE=OFF", msg_buf, sizeof(msg_buf), &error_code );
+            }
         }
 
         /* KRNX */
