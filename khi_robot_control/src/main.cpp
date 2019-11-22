@@ -391,7 +391,7 @@ void *controlLoop( void* )
         }
 
         /* Cycle Adjustment */
-        if ( robot.getPeriodDiff( &period_diff ) )
+        if ( robot.getPeriodDiff( period_diff ) )
         {
             timespecInc( tick, PERIOD_DIFF_WEIGHT * period_diff );
         }

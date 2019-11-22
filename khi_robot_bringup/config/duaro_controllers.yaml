@@ -1,13 +1,15 @@
+  khi_robot_param:
+    robot: WD002N
+    arm:
+      arm1:
+        - duaro_lower_arm_controller
+      arm2:
+        - duaro_upper_arm_controller
+
   # Publish all joint states -----------------------------------
   joint_state_controller:
     type: joint_state_controller/JointStateController
     publish_rate: 50  
-
-  khi_robot_controllers:
-    robot: WD002N
-    names:
-      - duaro_lower_arm_controller
-      - duaro_upper_arm_controller
 
   # Position - Right and Left Joint Position Trajectory Controllers -------------------
   duaro_lower_arm_controller:

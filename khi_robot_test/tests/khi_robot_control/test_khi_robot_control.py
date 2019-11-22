@@ -68,14 +68,14 @@ class KhiRobot:
         self.max_pos_list = []
         self.max_vel_list = []
         self.max_acc_list = []
-        self.arm_name = rospy.get_param(gn+'/khi_robot_controllers/robot')
+        self.arm_name = rospy.get_param(gn+'/khi_robot_param/robot')
         limits = rospy.get_param(gn+'/'+self.arm_name+'/joint_limits')
         if self.arm_name == 'WD002N':
             self.arm_num = 2
             self.max_jt = 8
             self.group = 'botharms'
             self.base_pos_list = [ -90*math.pi/180, 0, 0, 0, 90*math.pi/180, 0, 0, 0 ]
-            for jt in range(len(limits)):
+            for jt in range(self.max_jt):
                 if jt < 4:
                     self.min_pos_list.append(limits['lower_joint'+str(jt+1)]['min_position'])
                     self.max_pos_list.append(limits['lower_joint'+str(jt+1)]['max_position'])
@@ -91,7 +91,7 @@ class KhiRobot:
             self.max_jt = 6
             self.group = 'manipulator'
             self.base_pos_list = [ 90*math.pi/180, 0, 90*math.pi/180, 0, 90*math.pi/180, 0 ]
-            for jt in range(len(limits)):
+            for jt in range(self.max_jt):
                 self.min_pos_list.append(limits['joint'+str(jt+1)]['min_position'])
                 self.max_pos_list.append(limits['joint'+str(jt+1)]['max_position'])
                 self.max_vel_list.append(limits['joint'+str(jt+1)]['max_velocity'])

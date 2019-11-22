@@ -1,12 +1,13 @@
+  khi_robot_param:
+    robot: RS007N
+    arm:
+      arm1:
+        - rs007n_arm_controller
+
   # Publish all joint states -----------------------------------
   joint_state_controller:
     type: joint_state_controller/JointStateController
     publish_rate: 50  
-
-  khi_robot_controllers:
-    robot: RS007N
-    names:
-      - rs007n_arm_controller
 
   # Position - Joint Position Trajectory Controller -------------------
   rs007n_arm_controller:

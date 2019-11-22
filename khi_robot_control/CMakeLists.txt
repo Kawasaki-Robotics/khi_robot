@@ -54,6 +54,9 @@ endif()
 find_library(krnx_LIBRARIES lib${krnx_lib_name}.so PATHS ${PROJECT_SOURCE_DIR}/lib)
 message(STATUS "Found KRNX library at: ${krnx_LIBRARIES}")
 
+## Specify C++11
+add_definitions(-std=c++11)
+
 ## Declare a C++ library
 add_library(khi_robot_client src/khi_robot_client.cpp src/khi_robot_krnx_driver.cpp)
 

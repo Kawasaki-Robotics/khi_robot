@@ -48,27 +48,23 @@ public:
     KhiRobotClient(){};
     ~KhiRobotClient(){};
 
-    bool open( std::string robot, std::string ip, double period, JointData joint, bool in_simulation = false );
-    bool activate( JointData *joint );
-    bool hold( const JointData joint );
-    void deactivate();
+    bool open( const std::string robot, const std::string ip, const double period, KhiRobotData& data, bool in_simulation = false );
+    bool activate( KhiRobotData& data );
+    bool hold( const KhiRobotData data );
+    void deactivate( const KhiRobotData data );
     void close();
 
-    void write( const JointData joint );
-    void read( JointData *joint );
+    void write( const KhiRobotData data );
+    void read( KhiRobotData& data );
 
-    int updateState();
+    int updateState( const KhiRobotData data );
     int getStateTrigger();
-    bool getPeriodDiff( double *diff );
+    bool getPeriodDiff( double& diff );
     void startCommandService();
 
 private:
     int cont_no;
-    JointData joint_cmd;
-    JointData joint_pos;
     KhiRobotDriver *driver;
-
-    void printJointData( std::string name, const JointData joint );
 };
 
 } // namespace
