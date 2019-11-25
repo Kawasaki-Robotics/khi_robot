@@ -546,12 +546,18 @@ bool KhiRobotKrnxDriver::loadDriverParam( const int cont_no )
 bool KhiRobotKrnxDriver::readData( const int cont_no, JointData *joint )
 {
     static int sim_cnt = 0;
+    static JointData prev_data = *joint;
 
     if ( !contLimitCheck( cont_no, KRNX_MAX_CONTROLLER ) ) { return false; }
 
     if ( in_simulation )
     {
         memcpy( &joint->pos[0], &joint->cmd[0], sizeof(joint->cmd) );
+        for ( int jt = 0; jt < KHI_MAX_JOINT; jt++ )
+        {
+            joint->vel[jt] = joint->pos[jt] - prev_data.pos[jt];
+        }
+        prev_data = *joint;
         if ( ( sim_cnt - 1 ) % KRNX_PRINT_TH == 0 )
         {
             jointPrint( std::string("read"), *joint );
