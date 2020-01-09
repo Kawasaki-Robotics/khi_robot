@@ -71,7 +71,7 @@ KhiRobotKrnxDriver::~KhiRobotKrnxDriver()
     }
 }
 
-bool KhiRobotKrnxDriver::setState( const int cont_no, const int state )
+bool KhiRobotKrnxDriver::setState( const int& cont_no, const int& state )
 {
     while( now_as_mon_cmd[cont_no] )
     {
@@ -81,7 +81,7 @@ bool KhiRobotKrnxDriver::setState( const int cont_no, const int state )
     KhiRobotDriver::setState( cont_no, state );
 }
 
-int KhiRobotKrnxDriver::execAsMonCmd( const int cont_no, const char* cmd, char* buffer, int buffer_sz, int* as_err_code )
+int KhiRobotKrnxDriver::execAsMonCmd( const int& cont_no, const char* cmd, char* buffer, int buffer_sz, int* as_err_code )
 {
     now_as_mon_cmd[cont_no] = true;
 
@@ -100,7 +100,7 @@ int KhiRobotKrnxDriver::execAsMonCmd( const int cont_no, const char* cmd, char* 
     return return_code;
 }
 
-bool KhiRobotKrnxDriver::retKrnxRes( const int cont_no, const std::string name, const int ret, const bool error )
+bool KhiRobotKrnxDriver::retKrnxRes( const int& cont_no, const std::string& name, const int& ret, const bool error )
 {
     if ( ret != KRNX_NOERROR )
     {
@@ -115,7 +115,7 @@ bool KhiRobotKrnxDriver::retKrnxRes( const int cont_no, const std::string name, 
 }
 
 /* This function needs some communication time. Don't use this in control loop */
-bool KhiRobotKrnxDriver::conditionCheck( const int cont_no, const KhiRobotData data )
+bool KhiRobotKrnxDriver::conditionCheck( const int& cont_no, const KhiRobotData& data )
 {
     TKrnxPanelInfo panel_info;
     bool ret = true;
@@ -166,7 +166,7 @@ bool KhiRobotKrnxDriver::conditionCheck( const int cont_no, const KhiRobotData d
     return ret;
 }
 
-bool KhiRobotKrnxDriver::initialize( const int cont_no, const std::string robot_name, const double period, KhiRobotData& data, bool in_simulation )
+bool KhiRobotKrnxDriver::initialize( const int& cont_no, const std::string& robot_name, const double& period, KhiRobotData& data, const bool in_simulation )
 {
     char msg[256] = { 0 };
 
@@ -181,7 +181,7 @@ bool KhiRobotKrnxDriver::initialize( const int cont_no, const std::string robot_
     return true;
 }
 
-bool KhiRobotKrnxDriver::open( const int cont_no, const std::string ip_address, KhiRobotData& data )
+bool KhiRobotKrnxDriver::open( const int& cont_no, const std::string& ip_address, KhiRobotData& data )
 {
     char c_ip_address[64] = { 0 };
 
@@ -221,7 +221,7 @@ bool KhiRobotKrnxDriver::open( const int cont_no, const std::string ip_address, 
     }
 }
 
-bool KhiRobotKrnxDriver::close( const int cont_no )
+bool KhiRobotKrnxDriver::close( const int& cont_no )
 {
     char msg[1024] = { 0 };
 
@@ -251,7 +251,7 @@ bool KhiRobotKrnxDriver::close( const int cont_no )
     return retKrnxRes( cont_no, "krnx_Close", return_code, false );
 }
 
-bool KhiRobotKrnxDriver::activate( const int cont_no, KhiRobotData& data )
+bool KhiRobotKrnxDriver::activate( const int& cont_no, KhiRobotData& data )
 {
     const int to_home_vel = 20; /* speed 20 */
     const double timeout_sec_th = 5.0; /* 5 sec */
@@ -390,12 +390,14 @@ bool KhiRobotKrnxDriver::activate( const int cont_no, KhiRobotData& data )
 
     if ( !conditionCheck( cont_no, data ) ) { return false; }
 
+    prev_data[cont_no] = data;
+
     setState( cont_no, ACTIVE );
 
     return true;
 }
 
-bool KhiRobotKrnxDriver::hold( const int cont_no, const KhiRobotData data )
+bool KhiRobotKrnxDriver::hold( const int& cont_no, const KhiRobotData& data )
 {
     int state;
     bool ret = true;
@@ -411,7 +413,7 @@ bool KhiRobotKrnxDriver::hold( const int cont_no, const KhiRobotData data )
     return ret;
 }
 
-bool KhiRobotKrnxDriver::deactivate( const int cont_no, const KhiRobotData data )
+bool KhiRobotKrnxDriver::deactivate( const int& cont_no, const KhiRobotData& data )
 {
     char msg[1024] = { 0 };
     int error_lamp = 0;
@@ -449,7 +451,7 @@ bool KhiRobotKrnxDriver::deactivate( const int cont_no, const KhiRobotData data 
     return true;
 }
 
-bool KhiRobotKrnxDriver::loadDriverParam( const int cont_no, KhiRobotData& data )
+bool KhiRobotKrnxDriver::loadDriverParam( const int& cont_no, KhiRobotData& data )
 {
     char robot_name[64] = { 0 };
     char msg[256] = { 0 };
@@ -605,7 +607,7 @@ bool KhiRobotKrnxDriver::readData( const int cont_no, KhiRobotData& data )
     return true;
 }
 
-bool KhiRobotKrnxDriver::getCurMotionData( const int cont_no, const int robot_no, TKrnxCurMotionData* p_motion_data )
+bool KhiRobotKrnxDriver::getCurMotionData( const int& cont_no, const int& robot_no, TKrnxCurMotionData* p_motion_data )
 {
     if ( !contLimitCheck( cont_no, KRNX_MAX_CONTROLLER ) ) { return false; }
 
@@ -614,7 +616,7 @@ bool KhiRobotKrnxDriver::getCurMotionData( const int cont_no, const int robot_no
     return retKrnxRes( cont_no, "krnx_GetCurMotionData", return_code );
 }
 
-bool KhiRobotKrnxDriver::setRobotDataHome( const int cont_no, KhiRobotData& data )
+bool KhiRobotKrnxDriver::setRobotDataHome( const int& cont_no, KhiRobotData& data )
 {
     KhiRobotData base;
     int arm_num = data.arm_num;
@@ -653,7 +655,7 @@ bool KhiRobotKrnxDriver::setRobotDataHome( const int cont_no, KhiRobotData& data
 /**
  * public write function
  */
-bool KhiRobotKrnxDriver::writeData( const int cont_no, const KhiRobotData data )
+bool KhiRobotKrnxDriver::writeData( const int& cont_no, const KhiRobotData& data )
 {
     static int sim_cnt[KHI_MAX_CONTROLLER] = { 0 };
     int idx, ano, jt;
@@ -731,7 +733,7 @@ bool KhiRobotKrnxDriver::writeData( const int cont_no, const KhiRobotData data )
     return retKrnxRes( cont_no, "krnx_SendRtcCompData", return_code );
 }
 
-bool KhiRobotKrnxDriver::updateState( const int cont_no, const KhiRobotData data )
+bool KhiRobotKrnxDriver::updateState( const int& cont_no, const KhiRobotData& data )
 {
     int error_lamp = 0;
     int error_code = 0;
@@ -780,7 +782,7 @@ bool KhiRobotKrnxDriver::updateState( const int cont_no, const KhiRobotData data
     return true;
 }
 
-bool KhiRobotKrnxDriver::getPeriodDiff( const int cont_no, double& diff )
+bool KhiRobotKrnxDriver::getPeriodDiff( const int& cont_no, double& diff )
 {
     if ( !contLimitCheck( cont_no, KRNX_MAX_CONTROLLER ) ) { return false; }
     static bool buffer_enabled = false;
@@ -818,7 +820,7 @@ bool KhiRobotKrnxDriver::getPeriodDiff( const int cont_no, double& diff )
     return true;
 }
 
-std::vector<std::string> KhiRobotKrnxDriver::splitString( const std::string str, const char del )
+std::vector<std::string> KhiRobotKrnxDriver::splitString( const std::string& str, const char& del )
 {
     int first = 0;
     int last = str.find_first_of( del );
@@ -836,7 +838,7 @@ std::vector<std::string> KhiRobotKrnxDriver::splitString( const std::string str,
     return list;
 }
 
-bool KhiRobotKrnxDriver::loadRtcProg( const int cont_no, const std::string name )
+bool KhiRobotKrnxDriver::loadRtcProg( const int& cont_no, const std::string& name )
 {
     FILE* fp;
     int fd;
@@ -910,7 +912,7 @@ bool KhiRobotKrnxDriver::loadRtcProg( const int cont_no, const std::string name 
     return true;
 }
 
-bool KhiRobotKrnxDriver::syncRtcPos( const int cont_no, KhiRobotData& data )
+bool KhiRobotKrnxDriver::syncRtcPos( const int& cont_no, KhiRobotData& data )
 {
     TKrnxCurMotionData motion_data = { 0 };
 
@@ -935,7 +937,7 @@ bool KhiRobotKrnxDriver::syncRtcPos( const int cont_no, KhiRobotData& data )
     return true;
 }
 
-bool KhiRobotKrnxDriver::commandHandler( khi_robot_msgs::KhiRobotCmd::Request &req, khi_robot_msgs::KhiRobotCmd::Response &res)
+bool KhiRobotKrnxDriver::commandHandler( khi_robot_msgs::KhiRobotCmd::Request& req, khi_robot_msgs::KhiRobotCmd::Response& res)
 {
     int cont_no = 0;
     char resp[KRNX_MSGSIZE] = { 0 };

@@ -51,7 +51,7 @@ public:
     KhiRobotHardwareInterface();
     ~KhiRobotHardwareInterface();
 
-    bool open( const std::string robot_name, const std::string ip_address, const double period, bool in_simulation = false );
+    bool open( const std::string& robot_name, const std::string& ip_address, const double& period, const bool in_simulation = false );
     bool activate();
     bool hold();
     void deactivate();

@@ -125,7 +125,7 @@ static struct
 }
 g_stats;
 
-static void publishDiagnostics(RealtimePublisher<diagnostic_msgs::DiagnosticArray> &publisher)
+static void publishDiagnostics(RealtimePublisher<diagnostic_msgs::DiagnosticArray>& publisher)
 {
     if ( publisher.trylock() )
     {
@@ -201,7 +201,7 @@ static inline double now()
     return static_cast<double>(n.tv_nsec) / SEC_2_NSEC + n.tv_sec;
 }
 
-static void timespecInc( struct timespec &tick, int nsec )
+static void timespecInc( struct timespec& tick, const int& nsec )
 {
     tick.tv_nsec += nsec;
     if ( tick.tv_nsec > 0 )
@@ -249,13 +249,13 @@ protected:
     vector<double> history_;
 };
 
-inline bool activate( khi_robot_control::KhiRobotHardwareInterface *robot, controller_manager::ControllerManager *cm, struct timespec *tick )
+inline bool activate( khi_robot_control::KhiRobotHardwareInterface& robot, struct timespec* tick )
 {
     bool ret = true;
 
     if ( g_options.write_ )
     {
-        ret = robot->activate();
+        ret = robot.activate();
         if ( ret == false )
         {
             ROS_ERROR( "Failed to activate KHI robot" );
@@ -337,7 +337,7 @@ void *controlLoop( void* )
         ros::shutdown();
         return NULL;
     }
-    if ( !activate( &robot, &cm, &tick ) )
+    if ( !activate( robot, &tick ) )
     {
         publisher.stop();
         robot.deactivate();
@@ -373,7 +373,7 @@ void *controlLoop( void* )
             }
             else if ( state_trigger == khi_robot_control::RESTART )
             {
-                if ( activate( &robot, &cm, &tick ) )
+                if ( activate( robot, &tick ) )
                 {
                     ros::Time activate_moment( tick.tv_sec, tick.tv_nsec );
                     robot.read( activate_moment, durp );

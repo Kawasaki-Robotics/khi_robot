@@ -52,7 +52,7 @@ void KhiCommandService( KhiRobotDriver* driver )
     ros::waitForShutdown();
 }
 
-bool KhiRobotClient::open( const std::string robot, const std::string ip, const double period, KhiRobotData& data, bool in_simulation )
+bool KhiRobotClient::open( const std::string& robot, const std::string& ip, const double& period, KhiRobotData& data, const bool in_simulation )
 {
     cont_no = 0;
 
@@ -75,14 +75,14 @@ bool KhiRobotClient::activate( KhiRobotData& data )
     return driver->activate( cont_no, data );
 }
 
-bool KhiRobotClient::hold( const KhiRobotData data )
+bool KhiRobotClient::hold( const KhiRobotData& data )
 {
     if ( driver == NULL ) { return false; }
 
     return driver->hold( cont_no, data );
 }
 
-void KhiRobotClient::deactivate( const KhiRobotData data )
+void KhiRobotClient::deactivate( const KhiRobotData& data )
 {
     if ( driver == NULL ) { return; }
 
@@ -97,7 +97,7 @@ void KhiRobotClient::close()
     delete driver;
 }
 
-void KhiRobotClient::write( const KhiRobotData data )
+void KhiRobotClient::write( const KhiRobotData& data )
 {
     if ( driver == NULL ) { return; }
 
@@ -111,7 +111,7 @@ void KhiRobotClient::read( KhiRobotData& data )
     driver->readData( cont_no, data );
 }
 
-int KhiRobotClient::updateState( const KhiRobotData data )
+int KhiRobotClient::updateState( const KhiRobotData& data )
 {
     if ( driver == NULL ) { return NOT_REGISTERED; }
 

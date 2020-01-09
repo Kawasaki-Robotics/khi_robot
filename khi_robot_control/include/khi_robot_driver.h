@@ -135,13 +135,13 @@ public:
         driver_name = __func__;
     }
 
-    int getState( const int cont_no )
+    int getState( const int& cont_no )
     {
         if ( ( cont_no < 0 ) || ( cont_no > KHI_MAX_CONTROLLER ) ) { return NOT_REGISTERED; }
         else                                                       { return cont_info[cont_no].state; }
     }
 
-    std::string getStateName( const int cont_no )
+    std::string getStateName( const int& cont_no )
     {
         int state;
         std::string name = "";
@@ -155,7 +155,7 @@ public:
         return name;
     }
 
-    bool setState( const int cont_no, const int state )
+    bool setState( const int& cont_no, const int& state )
     {
         if ( !contLimitCheck( cont_no, KHI_MAX_CONTROLLER ) ) { return false; }
 
@@ -174,7 +174,7 @@ public:
         }
     }
 
-    bool isTransitionState( const int cont_no )
+    bool isTransitionState( const int& cont_no )
     {
         int state;
 
@@ -189,7 +189,7 @@ public:
         }
     }
 
-    int getStateTrigger( const int cont_no )
+    int getStateTrigger( const int& cont_no )
     {
         int state_trigger;
 
@@ -202,7 +202,7 @@ public:
         }
     }
 
-    bool setStateTrigger( const int cont_no, const int state_trigger )
+    bool setStateTrigger( const int& cont_no, const int& state_trigger )
     {
         if ( !contLimitCheck( cont_no, KHI_MAX_CONTROLLER ) ) { return false; }
 
@@ -222,7 +222,7 @@ public:
         }
     }
 
-    bool contLimitCheck( const int cont_no, const int limit )
+    bool contLimitCheck( const int& cont_no, const int& limit )
     {
         if ( ( cont_no < 0 ) || ( cont_no > KHI_MAX_CONTROLLER ) || ( cont_no > limit ) )
         {
@@ -268,7 +268,7 @@ public:
         ROS_ERROR( "[%s] %s", driver_name.c_str(), msg );
     }
 
-    void jointPrint( std::string name, const KhiRobotData data )
+    void jointPrint( std::string name, const KhiRobotData& data )
     {
         char msg[512] = { 0 };
         char jt_val[16] = { 0 };
@@ -289,16 +289,16 @@ public:
     }
 
     virtual ~KhiRobotDriver() {};
-    virtual bool initialize( const int cont_no, const std::string robot_name, const double period, KhiRobotData& data, const bool in_simulation = false ) = 0;
-    virtual bool open( const int cont_no, const std::string ip_address, KhiRobotData& data ) = 0;
-    virtual bool close( const int cont_no ) = 0;
-    virtual bool activate( const int cont_no, KhiRobotData& data ) = 0;
-    virtual bool hold( const int cont_no, const KhiRobotData data ) = 0;
-    virtual bool deactivate( const int cont_no, const KhiRobotData data ) = 0;
-    virtual bool readData( const int cont_no, KhiRobotData& data ) = 0;
-    virtual bool writeData( const int cont_no, const KhiRobotData data ) = 0;
-    virtual bool updateState( const int cont_no, const KhiRobotData data ) = 0;
-    virtual bool getPeriodDiff( const int cont_no, double& diff ) = 0;
+    virtual bool initialize( const int& cont_no, const std::string& robot_name, const double& period, KhiRobotData& data, const bool in_simulation = false ) = 0;
+    virtual bool open( const int& cont_no, const std::string& ip_address, KhiRobotData& data ) = 0;
+    virtual bool close( const int& cont_no ) = 0;
+    virtual bool activate( const int& cont_no, KhiRobotData& data ) = 0;
+    virtual bool hold( const int& cont_no, const KhiRobotData& data ) = 0;
+    virtual bool deactivate( const int& cont_no, const KhiRobotData& data ) = 0;
+    virtual bool readData( const int& cont_no, KhiRobotData& data ) = 0;
+    virtual bool writeData( const int& cont_no, const KhiRobotData& data ) = 0;
+    virtual bool updateState( const int& cont_no, const KhiRobotData& data ) = 0;
+    virtual bool getPeriodDiff( const int& cont_no, double& diff ) = 0;
     virtual bool commandHandler( khi_robot_msgs::KhiRobotCmd::Request& req, khi_robot_msgs::KhiRobotCmd::Response& res ) = 0;
 
 protected:
