@@ -111,7 +111,7 @@ bool KhiRobotHardwareInterface::open( const std::string& robot_name, const std::
 
     /* start KhiRobotClient */
     client = new KhiRobotClient();
-    return client->open( robot_name, ip_address, period, data, in_simulation );
+    return client->open( ip_address, period, data, in_simulation );
 }
 
 bool KhiRobotHardwareInterface::activate()

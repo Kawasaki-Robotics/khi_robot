@@ -63,7 +63,7 @@ public:
     ~KhiRobotKrnxDriver();
     bool setState( const int& cont_no, const int& state );
 
-    bool initialize( const int& cont_no, const std::string& robot_name, const double& period, KhiRobotData& data, const bool in_simulation = false ) override;
+    bool initialize( const int& cont_no, const double& period, KhiRobotData& data, const bool in_simulation = false ) override;
     bool open( const int& cont_no, const std::string& ip_address, KhiRobotData& data ) override;
     bool close( const int& cont_no ) override;
     bool activate( const int& cont_no, KhiRobotData& data ) override;

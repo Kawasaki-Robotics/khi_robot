@@ -166,7 +166,7 @@ bool KhiRobotKrnxDriver::conditionCheck( const int& cont_no, const KhiRobotData&
     return ret;
 }
 
-bool KhiRobotKrnxDriver::initialize( const int& cont_no, const std::string& robot_name, const double& period, KhiRobotData& data, const bool in_simulation )
+bool KhiRobotKrnxDriver::initialize( const int& cont_no, const double& period, KhiRobotData& data, const bool in_simulation )
 {
     char msg[256] = { 0 };
 

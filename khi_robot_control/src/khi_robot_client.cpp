@@ -52,13 +52,13 @@ void KhiCommandService( KhiRobotDriver* driver )
     ros::waitForShutdown();
 }
 
-bool KhiRobotClient::open( const std::string& robot, const std::string& ip, const double& period, KhiRobotData& data, const bool in_simulation )
+bool KhiRobotClient::open( const std::string& ip, const double& period, KhiRobotData& data, const bool in_simulation )
 {
     cont_no = 0;
 
     /* select driver */
     driver = new KhiRobotKrnxDriver();
-    if ( !driver->initialize( cont_no, robot, period, data, in_simulation ) ) { return false; }
+    if ( !driver->initialize( cont_no, period, data, in_simulation ) ) { return false; }
 
     /* open */
     if ( !driver->open( cont_no, ip, data ) ) { return false; }

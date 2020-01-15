@@ -48,7 +48,7 @@ public:
     KhiRobotClient(){};
     ~KhiRobotClient(){};
 
-    bool open( const std::string& robot, const std::string& ip, const double& period, KhiRobotData& data, const bool in_simulation = false );
+    bool open( const std::string& ip, const double& period, KhiRobotData& data, const bool in_simulation = false );
     bool activate( KhiRobotData& data );
     bool hold( const KhiRobotData& data );
     void deactivate( const KhiRobotData& data );

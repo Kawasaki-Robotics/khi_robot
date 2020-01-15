@@ -289,7 +289,7 @@ public:
     }
 
     virtual ~KhiRobotDriver() {};
-    virtual bool initialize( const int& cont_no, const std::string& robot_name, const double& period, KhiRobotData& data, const bool in_simulation = false ) = 0;
+    virtual bool initialize( const int& cont_no, const double& period, KhiRobotData& data, const bool in_simulation = false ) = 0;
     virtual bool open( const int& cont_no, const std::string& ip_address, KhiRobotData& data ) = 0;
     virtual bool close( const int& cont_no ) = 0;
     virtual bool activate( const int& cont_no, KhiRobotData& data ) = 0;
