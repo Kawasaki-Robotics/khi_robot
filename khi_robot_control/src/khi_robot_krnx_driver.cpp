@@ -390,8 +390,6 @@ bool KhiRobotKrnxDriver::activate( const int& cont_no, KhiRobotData& data )
 
     if ( !conditionCheck( cont_no, data ) ) { return false; }
 
-    prev_data[cont_no] = data;
-
     setState( cont_no, ACTIVE );
 
     return true;
@@ -534,7 +532,7 @@ bool KhiRobotKrnxDriver::loadDriverParam( const int& cont_no, KhiRobotData& data
 /**
  * public read function
  */
-bool KhiRobotKrnxDriver::readData( const int cont_no, KhiRobotData& data )
+bool KhiRobotKrnxDriver::readData( const int& cont_no, KhiRobotData& data )
 {
     static int sim_cnt[KHI_MAX_CONTROLLER] = { 0 };
     static KhiRobotData prev_data = data;
