@@ -47,28 +47,13 @@ namespace khi_robot_control
 #define KRNX_MOTION_BUF 10
 #define KRNX_PRINT_TH 1000
 
-enum KrnxJointType
+struct KhiRobotKrnxRtcData
 {
-    TYPE_RAD,
-    TYPE_LINE
-};
-
-struct KrnxJointTable
-{
-    float home;
-    int type;
-    std::string joint_name;
-};
-struct KrnxArmTable
-{
-    int jt_num;
-    KrnxJointTable jt_tbl[KHI_MAX_JOINT];
-};
-struct KrnxRobotTable
-{
-    std::string robot_name;
-    int arm_num;
-    KrnxArmTable arm_tbl[KRNX_MAX_ROBOT];
+    int sw;
+    int seq_no;
+    float comp[KRNX_MAX_ROBOT][KRNX_MAXAXES];
+    float old_comp[KRNX_MAX_ROBOT][KRNX_MAXAXES];
+    int status[KRNX_MAX_ROBOT][KRNX_MAXAXES];
 };
 
 class KhiRobotKrnxDriver : public KhiRobotDriver
@@ -76,19 +61,19 @@ class KhiRobotKrnxDriver : public KhiRobotDriver
 public:
     KhiRobotKrnxDriver();
     ~KhiRobotKrnxDriver();
-    bool setState( const int cont_no, const int state );
+    bool setState( const int& cont_no, const int& state );
 
-    bool initialize( const int cont_no, const std::string robot_name, const double period, const JointData joint, bool in_simulation = false );
-    bool open( const int cont_no, const std::string ip_address );
-    bool close( const int cont_no );
-    bool activate( const int cont_no, JointData *joint );
-    bool hold( const int cont_no, const JointData joint );
-    bool deactivate( const int cont_no );
-    bool readData( const int cont_no, JointData *joint );
-    bool writeData( const int cont_no, JointData joint );
-    bool updateState( const int cont_no );
-    bool getPeriodDiff( const int cont_no, double *diff );
-    bool commandHandler( khi_robot_msgs::KhiRobotCmd::Request &req, khi_robot_msgs::KhiRobotCmd::Response &res );
+    bool initialize( const int& cont_no, const double& period, KhiRobotData& data, const bool in_simulation = false ) override;
+    bool open( const int& cont_no, const std::string& ip_address, KhiRobotData& data ) override;
+    bool close( const int& cont_no ) override;
+    bool activate( const int& cont_no, KhiRobotData& data ) override;
+    bool hold( const int& cont_no, const KhiRobotData& data ) override;
+    bool deactivate( const int& cont_no, const KhiRobotData& data ) override;
+    bool readData( const int& cont_no, KhiRobotData& data ) override;
+    bool writeData( const int& cont_no, const KhiRobotData& data ) override;
+    bool updateState( const int& cont_no, const KhiRobotData& data ) override;
+    bool getPeriodDiff( const int& cont_no, double& diff ) override;
+    bool commandHandler( khi_robot_msgs::KhiRobotCmd::Request& req, khi_robot_msgs::KhiRobotCmd::Response& res ) override;
 
 private:
     /* general */
@@ -98,21 +83,17 @@ private:
     bool now_as_mon_cmd[KRNX_MAX_CONTROLLER];
 
     /* RTC */
-    float rtc_comp[KRNX_MAX_CONTROLLER][KRNX_MAX_ROBOT][KRNX_MAXAXES];
-    float rtc_old_comp[KRNX_MAX_CONTROLLER][KRNX_MAX_ROBOT][KRNX_MAXAXES];
-    int rtc_status[KRNX_MAX_CONTROLLER][KRNX_MAX_ROBOT][KRNX_MAXAXES];
-    int rtc_seq_no[KRNX_MAX_CONTROLLER];
-    KrnxRobotTable *p_rb_tbl[KRNX_MAX_CONTROLLER];
+    KhiRobotKrnxRtcData rtc_data[KRNX_MAX_CONTROLLER];
 
-    bool getCurMotionData( const int cont_no, const int robot_no, TKrnxCurMotionData *p_motion_data = NULL );
-    int execAsMonCmd( const int cont_no, const char *cmd, char *buffer, int buffer_sz, int *as_err_code );
-    bool retKrnxRes( const int cont_no, const std::string name, const int ret, bool error = true );
-    bool conditionCheck( const int cont_no );
-    bool setJointDataHome( const int cont_no, JointData *joint );
-    std::vector<std::string> splitString( const std::string str, const char del );
-    bool loadDriverParam( const int cont_no );
-    bool loadRtcProg( const int cont_no, const std::string name );
-    bool syncRtcPos( const int cont_no );
+    bool getCurMotionData( const int& cont_no, const int& robot_no, TKrnxCurMotionData* p_motion_data );
+    int execAsMonCmd( const int& cont_no, const char* cmd, char* buffer, int buffer_sz, int* as_err_code );
+    bool retKrnxRes( const int& cont_no, const std::string& name, const int& ret, const bool error = true );
+    bool conditionCheck( const int& cont_no, const KhiRobotData& data );
+    bool setRobotDataHome( const int& cont_no, KhiRobotData& data );
+    std::vector<std::string> splitString( const std::string& str, const char& del );
+    bool loadDriverParam( const int& cont_no, KhiRobotData& data );
+    bool loadRtcProg( const int& cont_no, const std::string& name );
+    bool syncRtcPos( const int& cont_no, KhiRobotData& data );
 };
 
 } // namespace

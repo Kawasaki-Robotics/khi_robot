@@ -39,7 +39,7 @@
 
 namespace khi_robot_control
 {
-void KhiCommandService( KhiRobotDriver *driver )
+void KhiCommandService( KhiRobotDriver* driver )
 {
     if ( driver == NULL ) return;
 
@@ -52,41 +52,41 @@ void KhiCommandService( KhiRobotDriver *driver )
     ros::waitForShutdown();
 }
 
-bool KhiRobotClient::open( std::string robot, std::string ip, double period, JointData joint, bool in_simulation )
+bool KhiRobotClient::open( const std::string& ip, const double& period, KhiRobotData& data, const bool in_simulation )
 {
     cont_no = 0;
 
     /* select driver */
     driver = new KhiRobotKrnxDriver();
-    if ( !driver->initialize( cont_no, robot, period, joint, in_simulation ) ) { return false; }
+    if ( !driver->initialize( cont_no, period, data, in_simulation ) ) { return false; }
 
     /* open */
-    if ( !driver->open( cont_no, ip ) ) { return false; }
+    if ( !driver->open( cont_no, ip, data ) ) { return false; }
 
     startCommandService();
 
     return true;
 }
 
-bool KhiRobotClient::activate( JointData *joint )
+bool KhiRobotClient::activate( KhiRobotData& data )
 {
     if ( driver == NULL ) { return false; }
 
-    return driver->activate( cont_no, joint );
+    return driver->activate( cont_no, data );
 }
 
-bool KhiRobotClient::hold( const JointData joint )
+bool KhiRobotClient::hold( const KhiRobotData& data )
 {
     if ( driver == NULL ) { return false; }
 
-    return driver->hold( cont_no, joint );
+    return driver->hold( cont_no, data );
 }
 
-void KhiRobotClient::deactivate()
+void KhiRobotClient::deactivate( const KhiRobotData& data )
 {
     if ( driver == NULL ) { return; }
 
-    driver->deactivate( cont_no );
+    driver->deactivate( cont_no, data );
 }
 
 void KhiRobotClient::close()
@@ -97,25 +97,25 @@ void KhiRobotClient::close()
     delete driver;
 }
 
-void KhiRobotClient::write( const JointData joint )
+void KhiRobotClient::write( const KhiRobotData& data )
 {
     if ( driver == NULL ) { return; }
 
-    driver->writeData( cont_no, joint );
+    driver->writeData( cont_no, data );
 }
 
-void KhiRobotClient::read( JointData *joint )
+void KhiRobotClient::read( KhiRobotData& data )
 {
     if ( driver == NULL ) { return; }
 
-    driver->readData( cont_no, joint );
+    driver->readData( cont_no, data );
 }
 
-int KhiRobotClient::updateState()
+int KhiRobotClient::updateState( const KhiRobotData& data )
 {
     if ( driver == NULL ) { return NOT_REGISTERED; }
 
-    return driver->updateState( cont_no );
+    return driver->updateState( cont_no, data );
 }
 
 int KhiRobotClient::getStateTrigger()
@@ -125,7 +125,7 @@ int KhiRobotClient::getStateTrigger()
     return driver->getStateTrigger( cont_no );
 }
 
-bool KhiRobotClient::getPeriodDiff( double *diff )
+bool KhiRobotClient::getPeriodDiff( double& diff )
 {
     if ( driver == NULL ) { return false; }
 

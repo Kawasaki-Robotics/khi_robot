@@ -51,7 +51,7 @@ public:
     KhiRobotHardwareInterface();
     ~KhiRobotHardwareInterface();
 
-    bool open( std::string robot_name, std::string ip_address, double period, bool in_simulation = false );
+    bool open( const std::string& robot_name, const std::string& ip_address, const double& period, const bool in_simulation = false );
     bool activate();
     bool hold();
     void deactivate();
@@ -60,14 +60,14 @@ public:
     void write( const ros::Time& time, const ros::Duration& period ) override;
     int updateState();
     int getStateTrigger();
-    bool getPeriodDiff( double *diff );
+    bool getPeriodDiff( double& diff );
 
 private:
     hardware_interface::JointStateInterface joint_state_interface;
     hardware_interface::PositionJointInterface joint_position_interface;
     joint_limits_interface::PositionJointSaturationInterface joint_limit_interface;
 
-    khi_robot_control::JointData joint;
+    khi_robot_control::KhiRobotData data;
     khi_robot_control::KhiRobotClient *client;
 };
 

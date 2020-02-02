@@ -34,6 +34,7 @@
 
 #include <khi_robot_hardware_interface.h>
 #include <joint_limits_interface/joint_limits_rosparam.h>
+#include <urdf/model.h>
 
 namespace khi_robot_control
 {
@@ -47,53 +48,62 @@ KhiRobotHardwareInterface::~KhiRobotHardwareInterface()
     close();
 }
 
-bool KhiRobotHardwareInterface::open( std::string robot_name, std::string ip_address, double period, bool in_simulation )
+bool KhiRobotHardwareInterface::open( const std::string& robot_name, const std::string& ip_address, const double& period, const bool in_simulation )
 {
     ros::NodeHandle nh_joints;
     std::vector<std::string> controller_names, joint_names;
-    int cnt = 0;
+    std::stringstream param[KHI_MAX_ARM];
+    int jt;
 
-    joint.joint_num = 0;
-    if ( nh_joints.getParam( "khi_robot_controllers/names", controller_names ) )
+    std::string ns = ros::this_node::getNamespace();
+    urdf::Model model;
+    model.initParam( ns + "/robot_description" );
+    data.robot_name = robot_name;
+
+    data.arm_num = 0;
+    for ( int ano = 0; ano < KHI_MAX_ARM; ano++ )
     {
-        for ( int cno = 0; cno < controller_names.size(); cno++ )
+        jt = 0;
+        data.arm[ano].jt_num = 0;
+        param[ano] << "khi_robot_param/arm/arm" << ano + 1;
+        if ( nh_joints.getParam( param[ano].str(), controller_names ) )
         {
-            if ( nh_joints.getParam( controller_names[cno] + "/joints", joint_names ) )
+            data.arm_num++;
+            for ( int cno = 0; cno < controller_names.size(); cno++ )
             {
-                for ( int jno = 0; jno < joint_names.size(); jno++ )
+                if ( nh_joints.getParam( controller_names[cno] + "/joints", joint_names ) )
                 {
-                    joint.name[cnt] = joint_names[jno];
-                    hardware_interface::JointStateHandle state_handle( joint.name[cnt], &joint.pos[cnt], &joint.vel[cnt], &joint.eff[cnt] );
-                    joint_state_interface.registerHandle( state_handle );
-                    hardware_interface::JointHandle pos_handle( joint_state_interface.getHandle( joint.name[cnt] ), &joint.cmd[cnt] );
-                    joint_position_interface.registerHandle( pos_handle );
+                    for ( int n = 0; n < joint_names.size(); n++ )
+                    {
+                        data.arm[ano].name[jt] = joint_names[n];
+                        auto jt_ptr = model.getJoint( joint_names[n] );
+                        data.arm[ano].type[jt] = jt_ptr->type;
+                        hardware_interface::JointStateHandle state_handle( data.arm[ano].name[jt], &data.arm[ano].pos[jt], &data.arm[ano].vel[jt], &data.arm[ano].eff[jt] );
+                        joint_state_interface.registerHandle( state_handle );
+                        hardware_interface::JointHandle pos_handle( joint_state_interface.getHandle( data.arm[ano].name[jt] ), &data.arm[ano].cmd[jt] );
+                        joint_position_interface.registerHandle( pos_handle );
+                        ros::NodeHandle nh_limits(robot_name);
+                        joint_limits_interface::JointLimits limits;
 
-                    ros::NodeHandle nh_limits(robot_name);
-                    joint_limits_interface::JointLimits limits;
-                    joint_limits_interface::getJointLimits( joint.name[cnt], nh_limits, limits );
-                    joint_limits_interface::PositionJointSaturationHandle limits_handle( joint_position_interface.getHandle( joint.name[cnt] ), limits );
-                    joint_limit_interface.registerHandle( limits_handle );
-
-                    cnt++;
+                        joint_limits_interface::getJointLimits( data.arm[ano].name[jt], nh_limits, limits );
+                        joint_limits_interface::PositionJointSaturationHandle limits_handle( joint_position_interface.getHandle( data.arm[ano].name[jt] ), limits );
+                        joint_limit_interface.registerHandle( limits_handle );
+                        jt++;
+                    }
                 }
-                joint.joint_num += joint_names.size();
+                else
+                {
+                    ROS_ERROR( "Failed to get param '/joints'" );
+                    return false;
+                }
             }
-            else
-            {
-                ROS_ERROR( "Failed to get param '/joints'" );
-                return false;
-            }
+             data.arm[ano].jt_num = jt;
         }
-    }
-    else
-    {
-        ROS_ERROR( "Failed to get param 'khi_robot_controllers/names'" );
-        return false;
     }
 
     if ( in_simulation )
     {
-        ROS_INFO_STREAM_NAMED("khi_robot","KHI Robot Hardware Interface in simulation mode");
+        ROS_INFO_STREAM_NAMED( "khi_robot","KHI Robot Hardware Interface in simulation mode" );
     }
 
     registerInterface( &joint_state_interface );
@@ -101,23 +111,23 @@ bool KhiRobotHardwareInterface::open( std::string robot_name, std::string ip_add
 
     /* start KhiRobotClient */
     client = new KhiRobotClient();
-    return client->open( robot_name, ip_address, period, joint, in_simulation );
+    return client->open( ip_address, period, data, in_simulation );
 }
 
 bool KhiRobotHardwareInterface::activate()
 {
     joint_limit_interface.reset();
-    return client->activate( &joint );
+    return client->activate( data );
 }
 
 bool KhiRobotHardwareInterface::hold()
 {
-    return client->hold( joint );
+    return client->hold( data );
 }
 
 void KhiRobotHardwareInterface::deactivate()
 {
-    client->deactivate();
+    client->deactivate( data );
 }
 
 void KhiRobotHardwareInterface::close()
@@ -128,18 +138,18 @@ void KhiRobotHardwareInterface::close()
 
 void KhiRobotHardwareInterface::read(const ros::Time& time, const ros::Duration& period)
 {
-    client->read( &joint );
+    client->read( data );
 }
 
 void KhiRobotHardwareInterface::write(const ros::Time& time, const ros::Duration& period)
 {
     joint_limit_interface.enforceLimits( period );
-    client->write( joint );
+    client->write( data );
 }
 
 int KhiRobotHardwareInterface::updateState()
 {
-    return client->updateState();
+    return client->updateState( data );
 }
 
 int KhiRobotHardwareInterface::getStateTrigger()
@@ -147,7 +157,7 @@ int KhiRobotHardwareInterface::getStateTrigger()
     return client->getStateTrigger();
 }
 
-bool KhiRobotHardwareInterface::getPeriodDiff( double *diff )
+bool KhiRobotHardwareInterface::getPeriodDiff( double& diff )
 {
     return client->getPeriodDiff( diff );
 }
