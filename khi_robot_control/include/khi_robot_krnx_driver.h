@@ -35,6 +35,7 @@
 #ifndef KHI_ROBOT_KRNX_DRIVER_H
 #define KHI_ROBOT_KRNX_DRIVER_H
 
+#include <mutex>
 #include <ros/ros.h>
 #include <ros/console.h>
 #include <khi_robot_driver.h>
@@ -80,7 +81,7 @@ private:
     char cmd_buf[KRNX_MSGSIZE];
     char msg_buf[KRNX_MSGSIZE];
     int sw_dblrefflt[KRNX_MAX_CONTROLLER];
-    bool now_as_mon_cmd[KRNX_MAX_CONTROLLER];
+    std::mutex mutex_state[KRNX_MAX_CONTROLLER];
 
     /* RTC */
     KhiRobotKrnxRtcData rtc_data[KRNX_MAX_CONTROLLER];
