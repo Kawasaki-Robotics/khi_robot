@@ -52,7 +52,6 @@ KhiRobotKrnxDriver::KhiRobotKrnxDriver() : KhiRobotDriver()
     {
         rtc_data[cno].seq_no = 0;
         sw_dblrefflt[cno] = 0;
-        now_as_mon_cmd[cno] = false;
     }
 }
 
@@ -73,17 +72,14 @@ KhiRobotKrnxDriver::~KhiRobotKrnxDriver()
 
 bool KhiRobotKrnxDriver::setState( const int& cont_no, const int& state )
 {
-    while( now_as_mon_cmd[cont_no] )
-    {
-        ros::Duration( cont_info[cont_no].period/1e+9 ).sleep();
-    }
+    std::lock_guard<std::mutex> lock( mutex_state[cont_no] );
 
     KhiRobotDriver::setState( cont_no, state );
 }
 
 int KhiRobotKrnxDriver::execAsMonCmd( const int& cont_no, const char* cmd, char* buffer, int buffer_sz, int* as_err_code )
 {
-    now_as_mon_cmd[cont_no] = true;
+    std::lock_guard<std::mutex> lock( mutex_state[cont_no] );
 
     return_code = krnx_ExecMon( cont_no, cmd, buffer, buffer_sz, as_err_code );
     if ( *as_err_code != 0 )
@@ -94,8 +90,6 @@ int KhiRobotKrnxDriver::execAsMonCmd( const int& cont_no, const char* cmd, char*
     {
         retKrnxRes( cont_no, "krnx_ExecMon()", return_code );
     }
-
-    now_as_mon_cmd[cont_no] = false;
 
     return return_code;
 }
