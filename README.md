@@ -2,7 +2,7 @@ khi_robot [![Build Status](https://travis-ci.com/Kawasaki-Robotics/khi_robot.svg
 ===================================================================================================================================================
 
 This repository provides ROS support for KHI robots.  
-ROS distribution `Kinetic` is supported.
+ROS distribution `Kinetic` and `Melodic` are supported.
 
 ## How to Launch
 
