@@ -29,7 +29,7 @@ Make sure that the robot controller used for real-time control satisfies the fol
 
 Make sure that the Ubuntu PC used for real-time control satisfies the following conditions.
 
-* The PC is using realtime kernel for Ubuntu 16.04.
+* The PC is using realtime kernel for Ubuntu 16.04/18.04.
 * The user has real-time permissions.
   * (e.g.)Making a real-time group named `realtime`
     1. Make a group and add a user
@@ -301,7 +301,7 @@ Error code of KRNX API is defined in “khi_robot/khi_robot_control/include/krnx
 
 ## 7. Precausions
 
-* Make sure to use realtime kernel for Ubuntu 16.04.
+* Make sure to use realtime kernel for Ubuntu 16.04/18.04.
 * When a robot controller is in the real-time control mode, its state is same as the REPEAT mode. Therefore make sure to the safety issues when the robot controller is in real-time control mode.
 * Never make any changes on the sources of the “khi_robot” package.
 * Refer to the Documents and community of the MoveIt! for more details on motion/path planning and how to calculate command value.

@@ -5,7 +5,7 @@
 # https://github.com/ros-infrastructure/ros_buildfarm/blob/master/doc/jobs/prerelease_jobs.rst
 # while this doesn't require sudo we don't want to run within a Docker container
 sudo: true
-dist: trusty
+dist: bionic
 language: python
 env:
   global:
@@ -17,6 +17,8 @@ env:
     - ROS_DISTRO_NAME=kinetic OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=armhf
     - ROS_DISTRO_NAME=kinetic OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=arm64
     - ROS_DISTRO_NAME=melodic OS_NAME=ubuntu OS_CODE_NAME=bionic ARCH=amd64
+    - ROS_DISTRO_NAME=melodic OS_NAME=ubuntu OS_CODE_NAME=bionic ARCH=armhf
+    - ROS_DISTRO_NAME=melodic OS_NAME=ubuntu OS_CODE_NAME=bionic ARCH=arm64
 matrix:
   allow_failures:
 install:
