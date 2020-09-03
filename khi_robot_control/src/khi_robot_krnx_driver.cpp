@@ -852,26 +852,22 @@ bool KhiRobotKrnxDriver::loadRtcProg( const int& cont_no, const std::string& nam
         if ( name == KHI_ROBOT_WD002N )
         {
             fprintf( fp, ".PROGRAM rb_rtc1()\n" );
-            fprintf( fp, "  FOR .i = 1 TO 8\n" );
-            fprintf( fp, "    .acc[.i] = 1\n" );
-            fprintf( fp, "  END\n" );
-            fprintf( fp, "  L3ACCURACY .acc[1] ALWAYS\n" );
+            fprintf( fp, "  HERE #rtchome1\n" );
             fprintf( fp, "  FOR .i = 1 TO 8\n" );
             fprintf( fp, "    .acc[.i] = 0\n" );
             fprintf( fp, "  END\n" );
+            fprintf( fp, "  L3ACCURACY .acc[1] ALWAYS\n" );
             fprintf( fp, "  RTC_SW 1: ON\n" );
             fprintf( fp, "1 JMOVE #rtchome1\n" );
             fprintf( fp, "  GOTO 1\n" );
             fprintf( fp, "  RTC_SW 1: OFF\n" );
             fprintf( fp, ".END\n" );
             fprintf( fp, ".PROGRAM rb_rtc2()\n" );
-            fprintf( fp, "  FOR .i = 1 TO 8\n" );
-            fprintf( fp, "    .acc[.i] = 1\n" );
-            fprintf( fp, "  END\n" );
-            fprintf( fp, "  L3ACCURACY .acc[1] ALWAYS\n" );
+            fprintf( fp, "  HERE #rtchome2\n" );
             fprintf( fp, "  FOR .i = 1 TO 8\n" );
             fprintf( fp, "    .acc[.i] = 0\n" );
             fprintf( fp, "  END\n" );
+            fprintf( fp, "  L3ACCURACY .acc[1] ALWAYS\n" );
             fprintf( fp, "  RTC_SW 2: ON\n" );
             fprintf( fp, "1 JMOVE #rtchome2\n" );
             fprintf( fp, "  GOTO 1\n" );
@@ -881,8 +877,7 @@ bool KhiRobotKrnxDriver::loadRtcProg( const int& cont_no, const std::string& nam
         else
         {
             fprintf( fp, ".PROGRAM rb_rtc1()\n" );
-            fprintf( fp, "  ACCURACY 1 FINE\n" );
-            fprintf( fp, "  JMOVE #rtchome1\n" );
+            fprintf( fp, "  HERE #rtchome1\n" );;
             fprintf( fp, "  ACCURACY 0 ALWAYS\n" );
             fprintf( fp, "  RTC_SW 1: ON\n" );
             fprintf( fp, "1 JMOVE #rtchome1\n" );
@@ -910,10 +905,6 @@ bool KhiRobotKrnxDriver::syncRtcPos( const int& cont_no, KhiRobotData& data )
 
     for ( int ano = 0; ano < data.arm_num; ano++ )
     {
-        /* AS */
-        snprintf( cmd_buf, sizeof(cmd_buf), "HERE/N %d: #rtchome%d", ano+1, ano+1 );
-        return_code = execAsMonCmd( cont_no, cmd_buf, msg_buf, sizeof(msg_buf), &error_code );
-
         /* Driver */
         if ( !getCurMotionData( cont_no, ano, &motion_data ) ) { return false; }
         for ( int jt = 0; jt < data.arm[ano].jt_num; jt++ )
