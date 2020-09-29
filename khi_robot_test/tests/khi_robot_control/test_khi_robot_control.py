@@ -128,7 +128,7 @@ def cmdhandler_client(type_arg , cmd_arg):
         khi_robot_command_service = rospy.ServiceProxy(service,KhiRobotCmd)
         resp1 = khi_robot_command_service(type_arg, cmd_arg)
         return resp1
-    except rospy.ServiceException, e:
+    except rospy.ServiceException as e:
         rospy.loginfo('Service call failed: %s', e)
 
 def get_driver_state():
