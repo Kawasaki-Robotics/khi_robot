@@ -11,7 +11,7 @@
 
   <!-- Load robot description -->
   <param name="robot_description"
-    command="$(find xacro)/xacro.py '$(find khi_rs_description)/urdf/rs080n.urdf.xacro'" />
+    command="$(find xacro)/xacro --inorder '$(find khi_rs_description)/urdf/rs080n.urdf.xacro'" />
 
   <rosparam>
   </rosparam>
