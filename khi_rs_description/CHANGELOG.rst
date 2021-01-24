@@ -2,6 +2,21 @@
 Changelog for package khi_rs_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'master' into refactoring
+* add missing config directory in install(DIRECTORY (#34)
+  * add missing config directory in install(DIRECTORY
+  * add missing config directory in khi_rs_description
+  Co-authored-by: Daisuke NAKAMICHI <44663870+d-nakamichi@users.noreply.github.com>
+* Add joint_limits_interface (#31)
+  * Add joint_limits_interface
+  * Move joint_limits.yaml from moveit_config to description
+  * Modify test messages and conditions in test_position_velocity
+  * Change duAro's figure length
+  * Move tests from khi_robot_control to khi_robot_test
+* Contributors: Daisuke NAKAMICHI, Kei Okada, d-nakamichi
+
 1.1.2 (2019-06-07)
 ------------------
 * add KHI CAD Data Disclaimer to README (`#20 <https://github.com/Kawasaki-Robotics/khi_robot/issues/20>`_)

@@ -2,6 +2,48 @@
 Changelog for package khi_robot_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request #43 from d-nakamichi/modify_setting_home_process
+  Modify setting home process
+* Modify setting home process
+* Merge pull request #38 from d-nakamichi/krnx_mutex_update
+  Update KRNX API processing
+* Update KRNX mutex functions
+* Merge pull request #36 from d-nakamichi/refactoring
+  Refactoring about khi_robot_control
+* Remove robot_name arg
+* Fix build problem
+* Change args from value to reference
+* Refactoring khi_robot_controllers/JointData/KrnxRobotTable/RobotInfo/rtc to khi_robot_param/KhiRobotData/KhiRobotControllerInfo/KhiRobotKrnxRtcData
+* Print WARN message when krnx_ExecMon() failed by AS
+* Modify switch changing process
+* Simplify activate() timeout process
+* Don't execute deactivete() when deleted
+* Merge pull request #35 from d-nakamichi/read_velocity
+  Travis test bugfix
+* robot_control: correct read(..)/write(..) overrides. (#33)
+  * robot_control: correct read(..)/write(..) overrides.
+  Both time and period are passed as const references. Not by-value.
+  * robot_control: mark read(..)/write(..) as override.
+* Read joint velocities in simulation mode
+* Add joint_limits_interface (#31)
+  * Add joint_limits_interface
+  * Move joint_limits.yaml from moveit_config to description
+  * Modify test messages and conditions in test_position_velocity
+  * Change duAro's figure length
+  * Move tests from khi_robot_control to khi_robot_test
+* Bugfix about getting signal status (#32)
+* Merge pull request #29 from d-nakamichi/holded_state
+  Holded state
+* Add HOLDED state
+* Rearrange state transitions
+* Simplify ROS messages
+* Apply AS switch setting for all robots (#23)
+  * Apply AS switch setting for all robots
+  * fixup! Apply AS switch setting for all robots
+* Contributors: Daisuke NAKAMICHI, G.A. vd. Hoorn, Hiroki Matsui, d-nakamichi
+
 1.1.2 (2019-06-07)
 ------------------
 * Enable to build release package on i386/arm (`#19 <https://github.com/Kawasaki-Robotics/khi_robot/issues/19>`_)

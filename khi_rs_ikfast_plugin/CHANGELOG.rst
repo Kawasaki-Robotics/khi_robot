@@ -2,6 +2,9 @@
 Changelog for package khi_rs_ikfast_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.1.2 (2019-06-07)
 ------------------
 

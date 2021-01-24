@@ -2,6 +2,16 @@
 Changelog for package khi_rs007l_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add joint_limits_interface (#31)
+  * Add joint_limits_interface
+  * Move joint_limits.yaml from moveit_config to description
+  * Modify test messages and conditions in test_position_velocity
+  * Change duAro's figure length
+  * Move tests from khi_robot_control to khi_robot_test
+* Contributors: Daisuke NAKAMICHI
+
 1.1.2 (2019-06-07)
 ------------------
 * add USE_SOURCE_PERMISSIONS in CMakeLists.txt files those package have executable scripts (`#18 <https://github.com/Kawasaki-Robotics/khi_robot/issues/18>`_)

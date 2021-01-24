@@ -2,6 +2,13 @@
 Changelog for package khi_duaro_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add position_controllers/JointGroupPositionController (#22)
+  * Add position_controllers/JointGroupPositionController
+  * fixup! Add position_controllers/JointGroupPositionController
+* Contributors: Daisuke NAKAMICHI
+
 1.1.2 (2019-06-07)
 ------------------
 * add USE_SOURCE_PERMISSIONS in CMakeLists.txt files those package have executable scripts (`#18 <https://github.com/Kawasaki-Robotics/khi_robot/issues/18>`_)

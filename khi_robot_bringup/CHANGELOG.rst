@@ -2,6 +2,24 @@
 Changelog for package khi_robot_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request #36 from d-nakamichi/refactoring
+  Refactoring about khi_robot_control
+* Refactoring khi_robot_controllers/JointData/KrnxRobotTable/RobotInfo/rtc to khi_robot_param/KhiRobotData/KhiRobotControllerInfo/KhiRobotKrnxRtcData
+* Add joint_limits_interface (#31)
+  * Add joint_limits_interface
+  * Move joint_limits.yaml from moveit_config to description
+  * Modify test messages and conditions in test_position_velocity
+  * Change duAro's figure length
+  * Move tests from khi_robot_control to khi_robot_test
+* Add position_controllers/JointGroupPositionController (#22)
+  * Add position_controllers/JointGroupPositionController
+  * fixup! Add position_controllers/JointGroupPositionController
+* Delete README.md in khi_robot_bringup
+  This is unneeded.
+* Contributors: Daisuke NAKAMICHI, Hiroki Matsui, d-nakamichi
+
 1.1.2 (2019-06-07)
 ------------------
 
