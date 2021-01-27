@@ -2,8 +2,8 @@
 Changelog for package khi_rs_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.2.0 (2021-01-27)
+------------------
 * Merge branch 'master' into refactoring
 * add missing config directory in install(DIRECTORY (#34)
   * add missing config directory in install(DIRECTORY

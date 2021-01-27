@@ -2,8 +2,8 @@
 Changelog for package khi_rs007n_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.2.0 (2021-01-27)
+------------------
 * Add joint_limits_interface (#31)
   * Add joint_limits_interface
   * Move joint_limits.yaml from moveit_config to description

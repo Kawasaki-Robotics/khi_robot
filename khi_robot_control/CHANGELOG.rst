@@ -2,8 +2,8 @@
 Changelog for package khi_robot_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.2.0 (2021-01-27)
+------------------
 * Merge pull request #43 from d-nakamichi/modify_setting_home_process
   Modify setting home process
 * Modify setting home process

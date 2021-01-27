@@ -2,8 +2,8 @@
 Changelog for package khi_robot_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.2.0 (2021-01-27)
+------------------
 * Merge pull request #36 from d-nakamichi/refactoring
   Refactoring about khi_robot_control
 * Refactoring khi_robot_controllers/JointData/KrnxRobotTable/RobotInfo/rtc to khi_robot_param/KhiRobotData/KhiRobotControllerInfo/KhiRobotKrnxRtcData

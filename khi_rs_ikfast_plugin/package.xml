@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <package format="2">
   <name>khi_rs_ikfast_plugin</name>
-  <version>1.1.2</version>
+  <version>1.2.0</version>
   <description>The khi_rs_ikfast_plugin package</description>
 
   <author email="matsui_hiro@khi.co.jp">matsui_hiro</author>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>khi_robot_control</name>
-  <version>1.1.2</version>
+  <version>1.2.0</version>
   <description>ROS KHI robot controller package based on ros_control</description>
 
   <author email="nakamichi_d@khi.co.jp">nakamichi_d</author>

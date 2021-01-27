@@ -2,5 +2,5 @@
 Changelog for package khi_robot_test
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.2.0 (2021-01-27)
+------------------

@@ -2,8 +2,8 @@
 Changelog for package khi_duaro_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.2.0 (2021-01-27)
+------------------
 * Add position_controllers/JointGroupPositionController (#22)
   * Add position_controllers/JointGroupPositionController
   * fixup! Add position_controllers/JointGroupPositionController
