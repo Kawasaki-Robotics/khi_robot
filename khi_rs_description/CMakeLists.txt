@@ -9,6 +9,7 @@ if (CATKIN_ENABLE_TESTING)
   find_package(roslaunch REQUIRED)
   roslaunch_add_file_check(tests/roslaunch_test_rs007l.xml)
   roslaunch_add_file_check(tests/roslaunch_test_rs007n.xml)
+  roslaunch_add_file_check(tests/roslaunch_test_rs013n.xml)
   roslaunch_add_file_check(tests/roslaunch_test_rs080n.xml)
 endif()
 

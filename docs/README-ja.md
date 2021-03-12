@@ -51,6 +51,7 @@ roslaunch ***_moveit_config moveit_planning_execution.launch
  * duaro
  * rs007l
  * rs007n
+ * rs013n
  * rs80n
 
 ## ノート

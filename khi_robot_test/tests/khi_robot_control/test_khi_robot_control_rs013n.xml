@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+  <param name="test_group_name" value="test_rs013n"/>
+
+  <group ns="test_rs013n">
+    <!-- Load hardware interface -->
+    <include file="$(find khi_robot_bringup)/launch/rs013n_bringup.launch" >
+      <arg name="simulation" value="true" />
+    </include>
+
+    <!-- Load hardware interface -->
+    <include file="$(find khi_rs013n_moveit_config)/launch/moveit_planning_execution.launch" >
+      <arg name="use_gui" value="false" />
+      <arg name="info" value="false" />
+    </include>
+
+    <test test-name="test_khi_robot_control" pkg="khi_robot_test" type="test_khi_robot_control.py" name="test_khi_robot_control" time-limit="300">
+    </test>
+  </group>
+
+</launch>

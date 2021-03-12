@@ -51,6 +51,7 @@ Refer to [docs/ConnectingRealRobot.md](docs/ConnectingRealRobot.md)
  * duaro
  * rs007l
  * rs007n
+ * rs013n
  * rs80n
 
 ## Notes

@@ -1,0 +1,45 @@
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+  
+  # Position - Joint Position Trajectory Controller -------------------
+  rs013n_arm_controller:
+    type: "position_controllers/JointTrajectoryController"
+    joints:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6
+    constraints:
+      goal_time: 2.0                   # Defaults to zero
+      stopped_velocity_tolerance: 0.1 # Defaults to 0.01
+      lower_joint1:
+        trajectory: 0 
+        goal: 0.2       
+      lower_joint2:
+        trajectory: 0 
+        goal: 0.2       
+      lower_joint3:
+        trajectory: 0 
+        goal: 0.2       
+      lower_joint4:
+        trajectory: 0 
+        goal: 0.2       
+
+    state_publish_rate:  50 # Defaults to 50
+    action_monitor_rate: 20 # Defaults to 20
+    #hold_trajectory_duration: 0 # Defaults to 0.5
+
+  # Joint Group Position Controller -------------------
+  rs013n_joint_group_controller:
+    type: "position_controllers/JointGroupPositionController"
+    joints:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6

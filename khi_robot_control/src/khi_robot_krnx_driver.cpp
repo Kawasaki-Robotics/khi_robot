@@ -40,6 +40,7 @@ namespace khi_robot_control
 #define KHI_ROBOT_WD002N "WD002N"
 #define KHI_ROBOT_RS007L "RS007L"
 #define KHI_ROBOT_RS007N "RS007N"
+#define KHI_ROBOT_RS013N "RS013N"
 #define KHI_ROBOT_RS080N "RS080N"
 #define KHI_KRNX_BUFFER_SIZE 4
 #define KHI_KRNX_ACTIVATE_TH 0.02

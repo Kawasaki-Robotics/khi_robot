@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find khi_rs_gazebo)/config/rs013n_gazebo_control.yaml" command="load"/>
+
+  <!-- load the rs007 controllers -->
+  <node name="controller_spawner" pkg="controller_manager"
+        type="spawner" respawn="false"
+        output="screen" args="--shutdown-timeout 0.1
+                                           joint_state_controller
+                                           rs013n_arm_controller
+                                         "/>
+
+  <!-- load joint group controllers -->
+  <node name="joint_group_controller_manager" pkg="controller_manager"
+        type="controller_manager" respawn="false"
+        output="screen" args="load rs013n_joint_group_controller" />
+</launch>
