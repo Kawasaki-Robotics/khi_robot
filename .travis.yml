@@ -19,6 +19,8 @@ env:
     - ROS_DISTRO_NAME=melodic OS_NAME=ubuntu OS_CODE_NAME=bionic ARCH=amd64
     - ROS_DISTRO_NAME=melodic OS_NAME=ubuntu OS_CODE_NAME=bionic ARCH=armhf
     - ROS_DISTRO_NAME=melodic OS_NAME=ubuntu OS_CODE_NAME=bionic ARCH=arm64
+    - ROS_DISTRO_NAME=noetic OS_NAME=ubuntu OS_CODE_NAME=focal ARCH=amd64
+    - ROS_DISTRO_NAME=noetic OS_NAME=ubuntu OS_CODE_NAME=focal ARCH=arm64
 matrix:
   allow_failures:
 install:

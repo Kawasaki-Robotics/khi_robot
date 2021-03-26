@@ -44,6 +44,7 @@ import rospy
 import moveit_commander
 import geometry_msgs.msg
 from khi_robot_msgs.srv import *
+from rospkg import RosPack, ResourceNotFound
 
 if rospy.has_param('/test_group_name'):
     gn = '/' + rospy.get_param('/test_group_name')
@@ -128,7 +129,7 @@ def cmdhandler_client(type_arg , cmd_arg):
         khi_robot_command_service = rospy.ServiceProxy(service,KhiRobotCmd)
         resp1 = khi_robot_command_service(type_arg, cmd_arg)
         return resp1
-    except rospy.ServiceException, e:
+    except rospy.ServiceException as e:
         rospy.loginfo('Service call failed: %s', e)
 
 def get_driver_state():
@@ -137,20 +138,41 @@ def get_driver_state():
 
 def plan_and_execute(mgc,jt,num,timeout):
     for cnt in range(timeout):
-        plan = mgc.plan()
-        if plan is False:
-            rospy.loginfo('JT%d-%d: cannot be planned %d times', jt+1, num+1, cnt+1)
-        else:
-            ret = mgc.execute(plan)
-            if ret is False:
-                rospy.loginfo('JT%d-%d: cannot be executed %d times', jt+1, num+1, cnt+1)
+        # checking the version of the 'moveit_core' package
+        (major,minor,bugfix) = get_package_version('moveit_commander')
+        if major > 1 or ( major == 1 and minor >= 1 ):
+            (flag, trajectory, plannint_time, error_code) = mgc.plan()
+            if flag is False:
+                rospy.loginfo('JT%d-%d: cannot be planned %d times', jt+1, num+1, cnt+1)
             else:
-                return True
+                ret = mgc.execute(trajectory)
+                if ret is False:
+                    rospy.loginfo('JT%d-%d: cannot be executed %d times', jt+1, num+1, cnt+1)
+                else:
+                    return True
+        else:
+            plan = mgc.plan()
+            if plan is False:
+                rospy.loginfo('JT%d-%d: cannot be planned %d times', jt+1, num+1, cnt+1)
+            else:
+                ret = mgc.execute(plan)
+                if ret is False:
+                    rospy.loginfo('JT%d-%d: cannot be executed %d times', jt+1, num+1, cnt+1)
+                else:
+                    return True
 
         if cnt == timeout-1:
             rospy.loginfo('timeout')
             return False
     return False
+
+def get_package_version(packagename):
+    rp = RosPack()
+    try:
+        manifest = rp.get_manifest(packagename)
+        return tuple(map(int,manifest.version.split('.')))
+    except ResourceNotFound:
+        return tuple()
 
 class TestKhiRobotControl(unittest.TestCase):
     def test_position_velocity(self):
