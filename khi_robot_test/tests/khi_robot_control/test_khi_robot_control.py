@@ -104,10 +104,12 @@ class KhiRobot:
             if type == 'min':
                 if jt+1 == 2:
                     jt_list[2] = -130*math.pi/180
+                    jt_list[0] = -135*math.pi/180
                 jt_list[jt] = self.min_pos_list[jt]
             else:
                 if jt+1 == 2:
                     jt_list[2] = 130*math.pi/180
+                    jt_list[0] = -135*math.pi/180
                 jt_list[jt] = self.max_pos_list[jt]
         elif self.arm_name.startswith('WD'):
             if type == 'min':

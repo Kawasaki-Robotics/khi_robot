@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+  <!-- GDB functionality -->
+  <arg name="debug" default="false" />
+  <arg name="simulation" default="false" />
+  <arg name="viewer" default="false" />
+  <arg name="ip" default="192.168.0.2" />
+  <arg name="period" default="2" />
+  <arg name="robot" default="RS013N" />
+
+  <!-- Load robot description -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro --inorder '$(find khi_rs_description)/urdf/rs013n.urdf.xacro'" />
+
+  <rosparam>
+  </rosparam>
+  <!-- Load hardware interface -->
+  <include file="$(find khi_robot_control)/launch/khi_robot_control.launch" >
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="simulation" value="$(arg simulation)" />
+    <arg name="viewer" value="$(arg viewer)" />
+    <arg name="ip" value="$(arg ip)" />
+    <arg name="period" value="$(arg period)" />
+    <arg name="robot" value="$(arg robot)" />
+  </include>
+
+  <!-- If needed, broadcast static tf for robot root -->
+  <node pkg="tf" type="static_transform_publisher" name="world_link_broadcaster"
+        args="0 0 0 0 0 0 /world /base_link 100" />
+
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find khi_robot_bringup)/config/rs013n_controllers.yaml"
+            command="load"/>
+  <rosparam file="$(find khi_rs_description)/config/rs013n_joint_limits.yaml"
+            command="load" ns="$(arg robot)"/>
+
+  <!-- Load the default controllers -->
+  <node name="controller_spawner" pkg="controller_manager"
+        type="spawner" respawn="false"
+        output="screen"
+        args="--shutdown-timeout 0.1
+	      joint_state_controller
+	      rs013n_arm_controller
+              " />
+  <!-- position_trajectory_controller -->
+
+  <!-- load joint group controllers -->
+  <node name="joint_group_controller_manager" pkg="controller_manager"
+        type="controller_manager" respawn="false"
+        output="screen"
+        args="load rs013n_joint_group_controller" />
+
+</launch>

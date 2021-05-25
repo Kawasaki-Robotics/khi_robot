@@ -112,6 +112,8 @@ extern "C"
 #define KRNX_E_BUFSND           (-0x1010)
 #define KRNX_E_BUFRCV           (-0x1011)
 #define KRNX_E_BUFTMO           (-0x1012)
+#define KRNX_E_AVOID_SING       (-0x1013)	/* EX3578 a++ */
+#define KRNX_E_NOAVOID_SING     (-0x1014)	/* EX3578 a-- */
 
 #define KRNX_E_ASERROR          (-0x1020)
 #define KRNX_E_NOROBOT          (-0x1021)
@@ -143,6 +145,7 @@ extern "C"
 #define KRNX_E_RT_TIMEOUT       (-0x2102)
 #define KRNX_E_RT_NOTCONNECT    (-0x2103)
 #define KRNX_E_RT_SEND          (-0x2104)
+#define KRNX_E_RT_CYCLIC        (-0x2105)
 
 #define KRNX_E_PCASALREADYRUNNING (-0x2200)     /* Dcon-plus6 */
 #define KRNX_E_TOOMANYPROC      (-0x2201)       /* Dcon-plus6 */
@@ -151,6 +154,22 @@ extern "C"
 
 #define KRNX_E_UNDEF            (-0xFFFF)
 
+/* RTサイクリック通信データ種類 */
+#define KRNX_CYC_KIND_ANGLE              (0x0001)   /* 各軸位置(現在値) [rad or mm] */
+#define KRNX_CYC_KIND_ANGLE_REF          (0x0002)   /* 各軸位置(指令値) [rad or mm] */
+#define KRNX_CYC_KIND_CURRENT            (0x0004)   /* 各軸電流値(現在値) [A] */
+#define KRNX_CYC_KIND_ENCORDER           (0x0008)   /* 各軸エンコーダー値(現在値) [bit] */
+#define KRNX_CYC_KIND_ERROR              (0x0010)   /* エラーランプ/コード */
+#define KRNX_CYC_KIND_CURRENT_REF        (0x0020)   /* 各軸電流値(指令値) [A] */
+#define KRNX_CYC_KIND_CURRENT_SAT        (0x0040)   /* 各軸電流飽和率(現在値/指令値) */
+#define KRNX_CYC_KIND_ENCORDER_REF       (0x0080)   /* 各軸エンコーダー値(指令値) [bit] */
+#define KRNX_CYC_KIND_ANGLE_VEL          (0x0100)   /* 各軸速度値(現在値/指令値) [rad/s or mm/s] */
+#define KRNX_CYC_KIND_XYZOAT             (0x0200)   /* 変換位置/速度(現在値/指令値) [rad, mm, rad/s or mm/s][rad/s or mm/s] */
+#define KRNX_CYC_KIND_SIG_EXTERNAL       (0x0400)   /* 外部出力/入力信号 */
+#define KRNX_CYC_KIND_SIG_INTERNAL       (0x0800)   /* 内部信号 */
+#define KRNX_CYC_KIND_SIZE               (12)       /* 種類数 */
+#define KRNX_CYC_KIND_LEGACY             (KRNX_CYC_KIND_ANGLE|KRNX_CYC_KIND_ANGLE_REF|KRNX_CYC_KIND_CURRENT|KRNX_CYC_KIND_ERROR)
+#define KRNX_CYC_KIND_SUPPORTED          ((1<<KRNX_CYC_KIND_SIZE)-1)
 
 typedef struct
 {
@@ -176,6 +195,13 @@ typedef struct
     char    internal[INTERNAL_MAX_SIGNAL/8];
 #endif /* NON_COMPATIBLE */
 } TKrnxIoInfo;
+
+typedef struct
+{
+    char    io_do[DO_MAX_SIGNAL/8];
+    char    io_di[DI_MAX_SIGNAL/8];
+    char    internal[INTERNAL_MAX_SIGNAL/8];
+} TKrnxIoInfoEx;
 
 typedef struct
 {
@@ -398,6 +424,8 @@ DECLSPEC_IMPORT int WINAPI krnx_ConvertErrorCode( int *error_code, char *error_l
 DECLSPEC_IMPORT int WINAPI krnx_GetRtcInfo( int cont_no, TKrnxRtcInfo *rtc_info );
 DECLSPEC_IMPORT int WINAPI krnx_SetRtcInfo( int cont_no, TKrnxRtcInfo *rtc_info );
 
+DECLSPEC_IMPORT int WINAPI krnx_SetAuxApiTimeoutPeriod( int cont_no, int period ); /* FX02360 a */
+
 /**************************
  *        AS-API          *
  **************************
@@ -432,6 +460,8 @@ DECLSPEC_IMPORT int WINAPI krnx_GetErrorInfo( int cont_no, int robot_no, int *er
 DECLSPEC_IMPORT int WINAPI krnx_IoSetDI( int cont_no, const char *in, const char *mask, size_t size );
 DECLSPEC_IMPORT int WINAPI krnx_IoSetDO( int cont_no, const char *out, const char *mask, size_t size );
 
+DECLSPEC_IMPORT int WINAPI krnx_SetAsApiTimeoutPeriod( int cont_no, int period ); /* FX02360 a */
+
 /**************************
  *      順逆変換API       *
  **************************
@@ -461,21 +491,45 @@ DECLSPEC_IMPORT int WINAPI krnx_GetASCycle( int robot_no, int *cycle_time );
 
 DECLSPEC_IMPORT int WINAPI krnx_SetJT1Mode( int mode );
 
+  DECLSPEC_IMPORT int WINAPI krnx_Xyz456ToJoint( int cont_no, int robot_no, const float *xyzoat, float *joint, const float *old_joint, const float *tool );	/* EX3578-3 a */
+
 /**************************
  *        RT-API          *
  **************************
  */
 typedef struct
 {
-    float    ang[KRNX_MAXAXES];
-    float    ang_ref[KRNX_MAXAXES];
-    float    cur[KRNX_MAXAXES];
-    long     enc[KRNX_MAXAXES];
+    float    ang[KRNX_MAXAXES];             /* 各軸位置(現在値) [rad or mm] */
+    float    ang_ref[KRNX_MAXAXES];         /* 各軸位置(指令値) [rad or mm] */
+    float    cur[KRNX_MAXAXES];             /* 各軸電流値(現在値) [A] */
+    int      enc[KRNX_MAXAXES];             /* 各軸エンコーダー値(現在値) [bit] */
 } TKrnxCurMotionData;
 
+typedef struct
+{
+    float    ang[KRNX_MAXAXES];             /* 各軸位置(現在値) [rad or mm] */
+    float    ang_ref[KRNX_MAXAXES];         /* 各軸位置(指令値) [rad or mm] */
+    float    cur[KRNX_MAXAXES];             /* 各軸電流値(現在値) [A] */
+    int      enc[KRNX_MAXAXES];             /* 各軸エンコーダー値(現在値) [bit] */
+    float    cur_ref[KRNX_MAXAXES];         /* 各軸電流値(指令値) [A] */
+    float    cur_sat[KRNX_MAXAXES];         /* 各軸電流飽和率(現在値） */
+    float    cur_sat_ref[KRNX_MAXAXES];     /* 各軸電流飽和率(指令値) */
+    int      enc_ref[KRNX_MAXAXES];         /* 各軸エンコーダー値(指令値) [bit] */
+    float    ang_vel[KRNX_MAXAXES];         /* 各軸速度値(現在値) [rad/s or mm/s] */
+    float    ang_vel_ref[KRNX_MAXAXES];     /* 各軸速度値(指令値) [rad/s or mm/s] */
+    float    xyzoat[6];                     /* 変換位置(現在値) [rad or mm] */
+    float    xyzoat_ref[6];                 /* 変換位置(指令値) [rad or mm] */
+    float    xyzoat_vel;                    /* 変換速度値(現在値) [mm/s] */
+    float    xyzoat_vel_ref;                /* 変換速度値(指令値) [mm/s] */
+} TKrnxCurMotionDataEx;
+
 DECLSPEC_IMPORT int WINAPI krnx_GetCurMotionData( int cont_no, int robot_no, TKrnxCurMotionData *md );
+DECLSPEC_IMPORT int WINAPI krnx_GetCurMotionDataEx( int cont_no, int robot_no, TKrnxCurMotionDataEx *md );
 DECLSPEC_IMPORT int WINAPI krnx_GetCurErrorLamp( int cont_no, int robot_no, int *error_lamp ); /* EX3390 a */
 DECLSPEC_IMPORT int WINAPI krnx_GetCurErrorInfo( int cont_no, int robot_no, int *error_code ); /* EX3390 a */
+DECLSPEC_IMPORT int WINAPI krnx_GetCurIoInfoEx( int cont_no, TKrnxIoInfoEx *ioinfo );
+DECLSPEC_IMPORT int WINAPI krnx_SetRtCyclicDataKind( int cont_no, unsigned short kind );
+DECLSPEC_IMPORT int WINAPI krnx_GetRtCyclicDataKind( int cont_no, unsigned short *krnx_kind, unsigned short *as_kind );
 
 /* RTC */
 DECLSPEC_IMPORT int WINAPI krnx_SetRtcCompData( int cont_no, int robot_no, const float *comp, int *status, unsigned short seq_no );
