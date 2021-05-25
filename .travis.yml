@@ -12,10 +12,6 @@ env:
     - JOB_PATH=/tmp/devel_job
     - ABORT_ON_TEST_FAILURE=1
   matrix:
-    - ROS_DISTRO_NAME=kinetic OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=amd64
-    - ROS_DISTRO_NAME=kinetic OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=i386
-    - ROS_DISTRO_NAME=kinetic OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=armhf
-    - ROS_DISTRO_NAME=kinetic OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=arm64
     - ROS_DISTRO_NAME=melodic OS_NAME=ubuntu OS_CODE_NAME=bionic ARCH=amd64
     - ROS_DISTRO_NAME=melodic OS_NAME=ubuntu OS_CODE_NAME=bionic ARCH=armhf
     - ROS_DISTRO_NAME=melodic OS_NAME=ubuntu OS_CODE_NAME=bionic ARCH=arm64
