@@ -5,7 +5,7 @@
 # https://github.com/ros-infrastructure/ros_buildfarm/blob/master/doc/jobs/prerelease_jobs.rst
 # while this doesn't require sudo we don't want to run within a Docker container
 sudo: true
-dist: bionic
+dist: focal
 language: python
 env:
   global:
