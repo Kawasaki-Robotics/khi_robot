@@ -23,6 +23,7 @@ install:
   # install QEMU for running ARM containers
   - if [[ "$ARCH" == "arm"* ]]; then sudo apt update && sudo apt install -qy qemu-user-static; fi
   # either install the latest released version of ros_buildfarm
+  - pip install pyyaml==5.4.1 ## latest pyyaml raises TypeError: load() missing 1 required positional argument: 'Loader'
   - pip install ros_buildfarm
   # or checkout a specific branch
   #- git clone -b master https://github.com/ros-infrastructure/ros_buildfarm /tmp/ros_buildfarm
