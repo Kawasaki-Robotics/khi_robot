@@ -2,6 +2,18 @@
 Changelog for package khi_robot_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add rs013n (`#50 <https://github.com/Kawasaki-Robotics/khi_robot/issues/50>`_)
+  * Add rs013n
+  * Update rs013n pkgs
+  * Update libkrnx
+  * Fixed rs013n_bringup.launch to use xacro
+  * Update libkrnx to 2.2.0
+  * Modify test program for RS series robots
+  * Remove kinetic from travis.yml
+* Contributors: Hiroki Matsui
+
 1.2.0 (2021-01-27)
 ------------------
 * Merge pull request #43 from d-nakamichi/modify_setting_home_process

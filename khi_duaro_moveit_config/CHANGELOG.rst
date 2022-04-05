@@ -2,6 +2,13 @@
 Changelog for package khi_duaro_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#52 <https://github.com/Kawasaki-Robotics/khi_robot/issues/52>`_ from k-okada/add_ikfast_plugin
+  add khi\_*_ikfast_plugin to moveit_config
+* add khi\_*_ikfast_plugin to moveit_config
+* Contributors: HirokiTakami, Kei Okada
+
 1.2.0 (2021-01-27)
 ------------------
 * Add joint_limits_interface (#31)
