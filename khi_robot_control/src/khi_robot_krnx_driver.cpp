@@ -73,9 +73,11 @@ KhiRobotKrnxDriver::~KhiRobotKrnxDriver()
 
 bool KhiRobotKrnxDriver::setState( const int& cont_no, const int& state )
 {
+    bool is_state_set;
     std::lock_guard<std::mutex> lock( mutex_state[cont_no] );
 
-    KhiRobotDriver::setState( cont_no, state );
+    is_state_set = KhiRobotDriver::setState( cont_no, state );
+    return is_state_set;
 }
 
 int KhiRobotKrnxDriver::execAsMonCmd( const int& cont_no, const char* cmd, char* buffer, int buffer_sz, int* as_err_code )
