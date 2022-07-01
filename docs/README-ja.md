@@ -52,6 +52,7 @@ roslaunch ***_moveit_config moveit_planning_execution.launch
  * rs007l
  * rs007n
  * rs013n
+ * rs025n(加減速パラメータ調整中のためシミュレーションのみ対応)
  * rs80n
 
 ## ノート
