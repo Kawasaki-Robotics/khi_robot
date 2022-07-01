@@ -52,6 +52,7 @@ Refer to [docs/ConnectingRealRobot.md](docs/ConnectingRealRobot.md)
  * rs007l
  * rs007n
  * rs013n
+ * rs025n(Simulation only, because acceleration/deceleration parameters are being adjusted)
  * rs80n
 
 ## Notes
