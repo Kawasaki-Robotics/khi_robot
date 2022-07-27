@@ -326,7 +326,6 @@ void *controlLoop( void* )
     struct timespec tick;
     ros::Duration durp( g_options.period_ / 1e+9 );
     khi_robot_control::KhiRobotHardwareInterface robot;
-    controller_manager::ControllerManager cm(&robot);
     double period_diff = 0;
     if ( !robot.open( g_options.robot_, g_options.ip_, g_options.period_, g_options.simulation_ ) )
     {
@@ -337,6 +336,9 @@ void *controlLoop( void* )
         ros::shutdown();
         return NULL;
     }
+
+    controller_manager::ControllerManager cm(&robot);
+
     if ( !activate( robot, &tick ) )
     {
         publisher.stop();
