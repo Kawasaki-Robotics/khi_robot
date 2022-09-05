@@ -23,18 +23,24 @@
     constraints:
       goal_time: 2.0                   # Defaults to zero
       stopped_velocity_tolerance: 0.1 # Defaults to 0.01
-      lower_joint1:
+      joint1:
         trajectory: 0 
-        goal: 0.2       
-      lower_joint2:
+        goal: 0.0       
+      joint2:
         trajectory: 0 
-        goal: 0.2       
-      lower_joint3:
+        goal: 0.0       
+      joint3:
         trajectory: 0 
-        goal: 0.2       
-      lower_joint4:
+        goal: 0.0       
+      joint4:
         trajectory: 0 
-        goal: 0.2             
+        goal: 0.0             
+      joint5:
+        trajectory: 0 
+        goal: 0.0             
+      joint6:
+        trajectory: 0 
+        goal: 0.0              
 
     state_publish_rate:  50 # Defaults to 50
     action_monitor_rate: 20 # Defaults to 20
