@@ -48,11 +48,11 @@ roslaunch ***_moveit_config moveit_planning_execution.launch
 
 ## サポートしているロボット
 
- * duaro
+ * duaro1
  * rs007l
  * rs007n
  * rs013n
- * rs025n(加減速パラメータ調整中のためシミュレーションのみ対応)
+ * rs025n
  * rs80n
 
 ## ノート
