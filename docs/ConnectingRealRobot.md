@@ -3,6 +3,8 @@
 
 ### 1.1 Controller requirements
 
+Controllers with ”✓”  are available. 
+
 ||E02(OpenAs)|F01|F02|F60|F61|
 |---|---|---|---|---|---|
 |duaro1|||||✓|
