@@ -1,13 +1,28 @@
 # Connecting real robot
+## 1. Supported system
 
-## 1. Supported AS system
+### 1.1 Controller requirements
 
-### F Series
+Controllers with ”✓”  are available. 
 
-Handling: Higher than ```ASF_01000000W```  
-duAro: Higher than ```ASF_06000000J```  
+||E02(OpenAs)|F01|F02|F60|F61|
+|---|---|---|---|---|---|
+|duaro1|||||✓|
+|rs007l||✓||✓||
+|rs007n||✓||✓||
+|rs013n||✓||✓||
+|rs025n|||✓|||
+|rs080n|✓||✓|||
 
-### OpenAS Series
+### 1.2 Supported AS version
+
+#### F Series
+
+Handling(F60): Higher than ```ASF_01000000W```  
+Handling(F01/02): Higher than ```ASF_010102006```  
+duAro(F61): Higher than ```ASF_06000000J```  
+
+#### E Series(OpenAS Only)
 
 Handling: Higher than ```ASE401010XX3S```  
 
