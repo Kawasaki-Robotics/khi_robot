@@ -26,6 +26,7 @@
   <test_depend>khi_rs007l_moveit_config</test_depend>
   <test_depend>khi_rs007n_moveit_config</test_depend>
   <test_depend>khi_rs013n_moveit_config</test_depend>
+  <test_depend>khi_rs020n_moveit_config</test_depend>
   <test_depend>khi_rs080n_moveit_config</test_depend>
   <test_depend>moveit_commander</test_depend>
 </package>
