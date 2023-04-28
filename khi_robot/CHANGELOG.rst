@@ -2,8 +2,8 @@
 Changelog for package khi_robot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.4.0 (2023-04-28)
+------------------
 * Merge pull request `#68 <https://github.com/Kawasaki-Robotics/khi_robot/issues/68>`_ from matsui-hiro/add_rs025n
   Add rs025n
 * Add rs025n

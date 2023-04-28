@@ -2,8 +2,8 @@
 Changelog for package khi_robot_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.4.0 (2023-04-28)
+------------------
 * Merge pull request `#72 <https://github.com/Kawasaki-Robotics/khi_robot/issues/72>`_ from matsui-hiro/rs025n_realrobot
   Add rs025n for real robot
 * update libkrnx(2.3.5)
