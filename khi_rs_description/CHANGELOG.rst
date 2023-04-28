@@ -2,6 +2,21 @@
 Changelog for package khi_rs_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#79 <https://github.com/Kawasaki-Robotics/khi_robot/issues/79>`_ from ohno-atsushi/add_rs020n
+  Add rs020n
+* Add correction rs020n
+* Add rs020n
+* Merge pull request `#72 <https://github.com/Kawasaki-Robotics/khi_robot/issues/72>`_ from matsui-hiro/rs025n_realrobot
+  Add rs025n for real robot
+* Change joint_limits.yml
+* Merge pull request `#68 <https://github.com/Kawasaki-Robotics/khi_robot/issues/68>`_ from matsui-hiro/add_rs025n
+  Add rs025n
+* Rename roslaunch_test_rs025n .xml to roslaunch_test_rs025n.xml
+* Add rs025n
+* Contributors: Hiroki Matsui, HirokiTakami, matsui-hiro, matsui_hiro, ohno_atsushi
+
 1.3.0 (2022-04-05)
 ------------------
 * Add rs013n (`#50 <https://github.com/Kawasaki-Robotics/khi_robot/issues/50>`_)

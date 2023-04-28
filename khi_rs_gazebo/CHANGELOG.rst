@@ -2,6 +2,19 @@
 Changelog for package khi_rs_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#79 <https://github.com/Kawasaki-Robotics/khi_robot/issues/79>`_ from ohno-atsushi/add_rs020n
+  Add rs020n
+* Add rs020n
+* Merge pull request `#71 <https://github.com/Kawasaki-Robotics/khi_robot/issues/71>`_ from matsui-hiro/fix_controller_yml
+  Fix controller yml
+* Fix controller yml setting
+* Merge pull request `#68 <https://github.com/Kawasaki-Robotics/khi_robot/issues/68>`_ from matsui-hiro/add_rs025n
+  Add rs025n
+* Add rs025n
+* Contributors: HirokiTakami, matsui_hiro, ohno_atsushi
+
 1.3.0 (2022-04-05)
 ------------------
 * Add rs013n (`#50 <https://github.com/Kawasaki-Robotics/khi_robot/issues/50>`_)

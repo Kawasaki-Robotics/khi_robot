@@ -2,6 +2,24 @@
 Changelog for package khi_robot_test
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#79 <https://github.com/Kawasaki-Robotics/khi_robot/issues/79>`_ from ohno-atsushi/add_rs020n
+  Add rs020n
+* Add rs020n
+* Merge pull request `#72 <https://github.com/Kawasaki-Robotics/khi_robot/issues/72>`_ from matsui-hiro/rs025n_realrobot
+  Add rs025n for real robot
+* Add files for real robot
+* Contributors: HirokiTakami, matsui-hiro, ohno_atsushi
+
+* Merge pull request `#79 <https://github.com/Kawasaki-Robotics/khi_robot/issues/79>`_ from ohno-atsushi/add_rs020n
+  Add rs020n
+* Add rs020n
+* Merge pull request `#72 <https://github.com/Kawasaki-Robotics/khi_robot/issues/72>`_ from matsui-hiro/rs025n_realrobot
+  Add rs025n for real robot
+* Add files for real robot
+* Contributors: HirokiTakami, matsui-hiro, ohno_atsushi
+
 1.3.0 (2022-04-05)
 ------------------
 * Add rs013n (`#50 <https://github.com/Kawasaki-Robotics/khi_robot/issues/50>`_)

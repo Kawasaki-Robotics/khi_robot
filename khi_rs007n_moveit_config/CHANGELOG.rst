@@ -2,6 +2,9 @@
 Changelog for package khi_rs007n_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.3.0 (2022-04-05)
 ------------------
 * Merge pull request `#52 <https://github.com/Kawasaki-Robotics/khi_robot/issues/52>`_ from k-okada/add_ikfast_plugin

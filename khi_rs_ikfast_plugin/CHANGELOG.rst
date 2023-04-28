@@ -2,6 +2,16 @@
 Changelog for package khi_rs_ikfast_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#79 <https://github.com/Kawasaki-Robotics/khi_robot/issues/79>`_ from ohno-atsushi/add_rs020n
+  Add rs020n
+* Add rs020n
+* Merge pull request `#68 <https://github.com/Kawasaki-Robotics/khi_robot/issues/68>`_ from matsui-hiro/add_rs025n
+  Add rs025n
+* Add rs025n
+* Contributors: HirokiTakami, matsui_hiro, ohno_atsushi
+
 1.3.0 (2022-04-05)
 ------------------
 * Add rs013n (`#50 <https://github.com/Kawasaki-Robotics/khi_robot/issues/50>`_)

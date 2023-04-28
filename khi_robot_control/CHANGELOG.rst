@@ -2,6 +2,26 @@
 Changelog for package khi_robot_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#72 <https://github.com/Kawasaki-Robotics/khi_robot/issues/72>`_ from matsui-hiro/rs025n_realrobot
+  Add rs025n for real robot
+* update libkrnx(2.3.5)
+* Merge pull request `#70 <https://github.com/Kawasaki-Robotics/khi_robot/issues/70>`_ from Yuki-cpp/fix-potential-race-condition
+  Create the ControllerManager after robot was openned
+* Create the ControllerManager after robot was openned
+  In the khi_robot_control node, the ControllerManager (cm) provides
+  services that require controller classes to be loaded beforehand.
+  This loading occurs when we open the robot.
+  By moving the creation of the ControllerManager after we try to open
+  the robot, we ensure that no race condition will occur and that the
+  controllers will always be loaded when the provided services are called.
+* Merge pull request `#65 <https://github.com/Kawasaki-Robotics/khi_robot/issues/65>`_ from 5567655/master
+  Bugfix: contLimitCheck ERROR. Fix for Issue `#64 <https://github.com/Kawasaki-Robotics/khi_robot/issues/64>`_
+* Bugfix: contLimitCheck ERROR
+  Function that is supposed to return boolean doesn't return anything
+* Contributors: 5567655, Hiroki Matsui, HirokiTakami, Leo Ghafari, matsui-hiro
+
 1.3.0 (2022-04-05)
 ------------------
 * Add rs013n (`#50 <https://github.com/Kawasaki-Robotics/khi_robot/issues/50>`_)
