@@ -36,3 +36,4 @@ jobs:
         uses: tork-a/ros-prerelease-job-action@main
         with:
           ros_distro_name: ${{matrix.ROS_DISTRO_NAME}}
+          arch: ${{matrix.ARCH}}
