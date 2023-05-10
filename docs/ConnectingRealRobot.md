@@ -11,8 +11,8 @@ Controllers with ”✓”  are available.
 |rs007l|||✓||✓||
 |rs007n|||✓||✓||
 |rs013n|||✓||✓||
-|rs020n|||✓||✓||
-|rs025n|✓||✓||||
+|rs020n|✓||✓||||
+|rs025n||||✓|||
 |rs080n||✓||✓|||
 
 ### 1.2 Supported AS version
