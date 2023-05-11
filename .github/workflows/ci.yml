@@ -12,18 +12,18 @@ jobs:
           - build: melodic_amd64
             ROS_DISTRO_NAME : melodic
             ARCH : amd64
-          - build: melodic_armhf
-            ROS_DISTRO_NAME : melodic
-            ARCH : armhf
-          - build: melodic_arm64
-            ROS_DISTRO_NAME : melodic
-            ARCH : arm64
+          # - build: melodic_armhf
+          #   ROS_DISTRO_NAME : melodic
+          #   ARCH : armhf
+          # - build: melodic_arm64
+          #   ROS_DISTRO_NAME : melodic
+          #   ARCH : arm64
           - build: noetic_amd64
             ROS_DISTRO_NAME : noetic
             ARCH : amd64
-          - build: noetic_arm64
-            ROS_DISTRO_NAME : noetic
-            ARCH : arm64
+          # - build: noetic_arm64
+          #   ROS_DISTRO_NAME : noetic
+          #   ARCH : arm64
 
     name: ${{ matrix.build }}
 
