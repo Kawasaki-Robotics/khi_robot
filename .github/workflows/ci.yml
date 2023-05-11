@@ -1,5 +1,7 @@
 # this file is written based on https://github.com/tork-a/ros-prerelease-job-action/tree/main
 
+name: build
+
 on: [push]
 
 jobs:
