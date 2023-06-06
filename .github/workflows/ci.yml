@@ -1,0 +1,41 @@
+# this file is written based on https://github.com/tork-a/ros-prerelease-job-action/tree/main
+
+name: build
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - build: melodic_amd64
+            ROS_DISTRO_NAME : melodic
+            ARCH : amd64
+          # - build: melodic_armhf
+          #   ROS_DISTRO_NAME : melodic
+          #   ARCH : armhf
+          # - build: melodic_arm64
+          #   ROS_DISTRO_NAME : melodic
+          #   ARCH : arm64
+          - build: noetic_amd64
+            ROS_DISTRO_NAME : noetic
+            ARCH : amd64
+          # - build: noetic_arm64
+          #   ROS_DISTRO_NAME : noetic
+          #   ARCH : arm64
+
+    name: ${{ matrix.build }}
+
+    steps:
+      - name: Chcekout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Run prerelease test
+        uses: tork-a/ros-prerelease-job-action@main
+        with:
+          ros_distro_name: ${{matrix.ROS_DISTRO_NAME}}
+          arch: ${{matrix.ARCH}}
