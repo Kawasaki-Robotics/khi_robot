@@ -56,7 +56,7 @@ extern "C"
 #ifdef CAROTT3
 #define KRNX_MAX_CONTROLLER	16	/* 最大接続コントローラ数 */
 #else
-#define KRNX_MAX_CONTROLLER	8	/* 最大接続コントローラ数 */
+#define KRNX_MAX_CONTROLLER	16	/* 最大接続コントローラ数 */
 #endif
 #define KRNX_MAX_ROBOT		8	/* 1コントローラがサポートするロボット台数 */
 #define KRNX_MAX_PCPROG         3       /* 1コントローラがサポートするPCプログラム数 */
@@ -65,8 +65,14 @@ extern "C"
 /* 最大軸数 */
 #define KRNX_MAXAXES	18      /* this should be same as the defined in AS system */
 
+/* 最大信号数 */
 #define KRNX_MAXSIGNAL  512
 
+/* FX03496 a++ */
+/* 最大エラー数 */
+#define KRNX_MAX_ERROR_LIST_SIZ 10
+#define KRNX_MAX_ERROR_MSG_SIZ  160
+/* FX03496 a-- */
 	
 #define INT_CBUF_SIZ	512
 
@@ -114,6 +120,7 @@ extern "C"
 #define KRNX_E_BUFTMO           (-0x1012)
 #define KRNX_E_AVOID_SING       (-0x1013)	/* EX3578 a++ */
 #define KRNX_E_NOAVOID_SING     (-0x1014)	/* EX3578 a-- */
+#define KRNX_WARN_SING          (-0x1015)       /* EX3578-6 a */
 
 #define KRNX_E_ASERROR          (-0x1020)
 #define KRNX_E_NOROBOT          (-0x1021)
@@ -139,6 +146,7 @@ extern "C"
 #define KRNX_E_BUFEMPTY         (-0x2013)
 #define KRNX_E_BUFNO            (-0x2014)
 #define KRNX_E_BUFDATANUM       (-0x2015)
+#define KRNX_E_SHMEM_OPEN       (-0x2016)
 
 #define KRNX_E_RT_INTERNAL      (-0x2100)
 #define KRNX_E_RT_CONNECT       (-0x2101)
@@ -146,11 +154,17 @@ extern "C"
 #define KRNX_E_RT_NOTCONNECT    (-0x2103)
 #define KRNX_E_RT_SEND          (-0x2104)
 #define KRNX_E_RT_CYCLIC        (-0x2105)
+#define KRNX_E_RT_SW_ON         (-0x2106)       /* FX03195 a */
+#define KRNX_E_RT_NOTSUPPORTED  (-0x2107)
+#define KRNX_E_RT_COMP_NOT_CLEARED (-0x2108)
+#define KRNX_E_RT_SYNCIO_NEED_POSDATA (-0x2109)
 
 #define KRNX_E_PCASALREADYRUNNING (-0x2200)     /* Dcon-plus6 */
 #define KRNX_E_TOOMANYPROC      (-0x2201)       /* Dcon-plus6 */
 #define KRNX_E_INVALIDFILENAME  (-0x2202)       /* Dcon-plus6 */
 #define KRNX_E_ILLCONTNO        (-0x2203)       /* Dcon-plus16 */
+
+#define KRNX_E_MAXNICNO         (-0x2300)
 
 #define KRNX_E_UNDEF            (-0xFFFF)
 
@@ -167,9 +181,21 @@ extern "C"
 #define KRNX_CYC_KIND_XYZOAT             (0x0200)   /* 変換位置/速度(現在値/指令値) [rad, mm, rad/s or mm/s][rad/s or mm/s] */
 #define KRNX_CYC_KIND_SIG_EXTERNAL       (0x0400)   /* 外部出力/入力信号 */
 #define KRNX_CYC_KIND_SIG_INTERNAL       (0x0800)   /* 内部信号 */
-#define KRNX_CYC_KIND_SIZE               (12)       /* 種類数 */
+#define KRNX_CYC_KIND_ROBOT_STATUS       (0x1000)   /* ロボット状態 */
+#define KRNX_CYC_KIND_SIZE               (13)       /* 種類数 */
 #define KRNX_CYC_KIND_LEGACY             (KRNX_CYC_KIND_ANGLE|KRNX_CYC_KIND_ANGLE_REF|KRNX_CYC_KIND_CURRENT|KRNX_CYC_KIND_ERROR)
 #define KRNX_CYC_KIND_SUPPORTED          ((1<<KRNX_CYC_KIND_SIZE)-1)
+
+/* RTサイクリック制御データ種類 */
+#define KRNX_CYC_KRNX2AS_KIND_ANGLE_RELATIVE      (0x0001)   /* 各軸位置(相対値) [rad or mm] */
+#define KRNX_CYC_KRNX2AS_KIND_SIG_EXTERNAL_OUTPUT (0x0002)   /* 外部出力信号 */
+#define KRNX_CYC_KRNX2AS_KIND_SIG_EXTERNAL_INPUT  (0x0004)   /* 外部入力信号 */
+#define KRNX_CYC_KRNX2AS_KIND_SIG_INTERNAL        (0x0008)   /* 内部信号 */
+#define KRNX_CYC_KRNX2AS_KIND_SIZE                (4)        /* 種類数*/
+#define KRNX_CYC_KRNX2AS_KIND_LEGACY              (KRNX_CYC_KRNX2AS_KIND_ANGLE_RELATIVE)
+#define KRNX_CYC_KRNX2AS_KIND_SUPPORTED           ((1<<KRNX_CYC_KRNX2AS_KIND_SIZE)-1 )
+
+extern short KRNX_SYSLOG_FLAG; /* 1: output debug message to syslog */
 
 typedef struct
 {
@@ -322,6 +348,42 @@ typedef struct TKrnxDebugInfoEnt
 }TKrnxDebugInfoEnt;
 /* ZZ -- */
 
+/* FX03496 a++ */
+typedef struct TKrnxErrorList
+{
+    int  error_num;
+    long error_code[KRNX_MAX_ERROR_LIST_SIZ];
+    char error_msg[KRNX_MAX_ERROR_LIST_SIZ][KRNX_MAX_ERROR_MSG_SIZ];
+} TKrnxErrorList;
+/* FX03496 a-- */
+
+#define	RT_IOCTL_CMD_NONE      0
+#define	RT_IOCTL_CMD_INS       1
+#define	RT_IOCTL_CMD_SYNC      2
+typedef struct TKrnxRtIoCtlDO
+{
+    unsigned short sync;
+    unsigned short command;
+    char    enable[DO_MAX_SIGNAL/8];
+    char    data[DO_MAX_SIGNAL/8];
+}TKrnxRtIoCtlDO;
+
+typedef struct TKrnxRtIoCtlDI
+{
+    unsigned short sync;
+    unsigned short command;
+    char    enable[DI_MAX_SIGNAL/8];
+    char    data[DI_MAX_SIGNAL/8];
+}TKrnxRtIoCtlDI;
+
+typedef struct TKrnxRtIoCtlInternal
+{
+    unsigned short sync;
+    unsigned short command;
+    char    enable[INTERNAL_MAX_SIGNAL/8];
+    char    data[INTERNAL_MAX_SIGNAL/8];
+}TKrnxRtIoCtlInternal;
+
 // C#(PC-AS)向け対策
 // C#ではデフォルト引数は使用できない
 // 必要あれば別のAPIを用意する
@@ -440,6 +502,7 @@ DECLSPEC_IMPORT int WINAPI krnx_GetIoInfo( int cont_no, TKrnxIoInfo *ioinfo );
 DECLSPEC_IMPORT int WINAPI krnx_GetCurIoInfo( int cont_no, TKrnxIoInfo *ioinfo );
 DECLSPEC_IMPORT int WINAPI krnx_GetProgramInfo( int cont_no, int robot_no, TKrnxProgramInfo *proginfo );
 DECLSPEC_IMPORT int WINAPI krnx_GetProgramInfo2( int cont_no, int robot_no, TKrnxProgramInfo *proginfo );
+DECLSPEC_IMPORT int WINAPI krnx_GetCurErrorList( int cont_no, TKrnxErrorList *errorlist ); /* FX03496 a */
 
 DECLSPEC_IMPORT int WINAPI krnx_BufferBusy( int cont_no, int buf_no );
 DECLSPEC_IMPORT int WINAPI krnx_BufferEmpty( int cont_no, int buf_no );
@@ -523,18 +586,39 @@ typedef struct
     float    xyzoat_vel_ref;                /* 変換速度値(指令値) [mm/s] */
 } TKrnxCurMotionDataEx;
 
+typedef struct
+{
+    short motor_lamp;                       /* モータランプ */
+    short cycle_lamp;                       /* サイクルランプ */
+    short repeat_lamp;                      /* リピートランプ */
+    short run_lamp;                         /* リピートランプ */
+    short trigger_lamp;                     /* トリガーランプ */
+    short teach_lock_lamp;                  /* ティーチロックランプ */
+    short emergency;                        /* 非常停止ランプ */
+    short rtc_active;                       /* RTCアクティブ状態 */
+    short rb_program_run;                   /* ロボットプログラム実行状態チェック */
+    short monitor_speed;                    /* モニタ速度[%] */
+    short check_speed;                      /* チェック速度[mm/sec] */
+    short enverr_warm;                      /* 偏差異常状態[軸ビット] */
+    char reserved[8];
+} TKrnxCurRobotStatus;
+
 DECLSPEC_IMPORT int WINAPI krnx_GetCurMotionData( int cont_no, int robot_no, TKrnxCurMotionData *md );
 DECLSPEC_IMPORT int WINAPI krnx_GetCurMotionDataEx( int cont_no, int robot_no, TKrnxCurMotionDataEx *md );
 DECLSPEC_IMPORT int WINAPI krnx_GetCurErrorLamp( int cont_no, int robot_no, int *error_lamp ); /* EX3390 a */
 DECLSPEC_IMPORT int WINAPI krnx_GetCurErrorInfo( int cont_no, int robot_no, int *error_code ); /* EX3390 a */
 DECLSPEC_IMPORT int WINAPI krnx_GetCurIoInfoEx( int cont_no, TKrnxIoInfoEx *ioinfo );
+DECLSPEC_IMPORT int WINAPI krnx_GetCurRobotStatus( int cont_no, int robot_no, TKrnxCurRobotStatus *status );
 DECLSPEC_IMPORT int WINAPI krnx_SetRtCyclicDataKind( int cont_no, unsigned short kind );
 DECLSPEC_IMPORT int WINAPI krnx_GetRtCyclicDataKind( int cont_no, unsigned short *krnx_kind, unsigned short *as_kind );
+DECLSPEC_IMPORT int WINAPI krnx_GetRtCyclicCtlKind( int cont_no, unsigned short *krnx_kind, unsigned short *as_kind );
 
 /* RTC */
 DECLSPEC_IMPORT int WINAPI krnx_SetRtcCompData( int cont_no, int robot_no, const float *comp, int *status, unsigned short seq_no );
 DECLSPEC_IMPORT int WINAPI krnx_PrimeRtcCompData( int cont_no, int robot_no, const float *comp, int *status ); /* EX3391 a */
+DECLSPEC_IMPORT int WINAPI krnx_PrimeRtIoData( int cont_no, TKrnxRtIoCtlDO *io_do, TKrnxRtIoCtlDI *io_di, TKrnxRtIoCtlInternal *internal ); /* EX3691 a */
 DECLSPEC_IMPORT int WINAPI krnx_SendRtcCompData( int cont_no, unsigned short seq_no ); /* EX3391 a */
+DECLSPEC_IMPORT int WINAPI krnx_SendRtCtlData( int cont_no, unsigned short seq_no, unsigned short kind ); /* EX3691 a */
 DECLSPEC_IMPORT int WINAPI krnx_SetRtcCompDataEx( int cont_no, int robot_no, const float *comp, int *status, unsigned long *count_in, unsigned long *count_out, unsigned short seq_no );
 DECLSPEC_IMPORT int WINAPI krnx_GetRtcCompData( int cont_no, int robot_no, float *comp );
 DECLSPEC_IMPORT int WINAPI krnx_GetRtcCompLimit( int cont_no, int robot_no, float *comp_limit );
