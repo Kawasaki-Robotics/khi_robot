@@ -54,6 +54,7 @@ roslaunch ***_moveit_config moveit_planning_execution.launch
  * rs013n
  * rs020n
  * rs025n
+ * rs030n
  * rs80n
 
 ## ノート
