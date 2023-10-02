@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: khi_rs_description
+    relative_path: urdf/rs030n.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/khi_rs030n.srdf
+  CONFIG:
+    author_name: RS030N
+    author_email: kurita_taisuke@khi.co.jp
+    generated_timestamp: 1693526009

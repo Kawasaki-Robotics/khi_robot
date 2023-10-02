@@ -12,6 +12,7 @@ if (CATKIN_ENABLE_TESTING)
   roslaunch_add_file_check(tests/roslaunch_test_rs013n.xml)
   roslaunch_add_file_check(tests/roslaunch_test_rs020n.xml)
   roslaunch_add_file_check(tests/roslaunch_test_rs025n.xml)
+  roslaunch_add_file_check(tests/roslaunch_test_rs030n.xml)
   roslaunch_add_file_check(tests/roslaunch_test_rs080n.xml)
 endif()
 
