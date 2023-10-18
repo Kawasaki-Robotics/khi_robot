@@ -14,6 +14,7 @@
     <moveit_core plugin="${prefix}/khi_rs013n_manipulator_moveit_ikfast_plugin_description.xml"/>
     <moveit_core plugin="${prefix}/khi_rs020n_manipulator_moveit_ikfast_plugin_description.xml"/>
     <moveit_core plugin="${prefix}/khi_rs025n_manipulator_moveit_ikfast_plugin_description.xml"/>
+    <moveit_core plugin="${prefix}/khi_rs030n_manipulator_moveit_ikfast_plugin_description.xml"/>
   </export>
   <build_depend>moveit_core</build_depend>
   <build_depend>liblapack-dev</build_depend>

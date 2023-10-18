@@ -13,6 +13,7 @@ Controllers with ”✓”  are available.
 |rs013n|||✓||✓||
 |rs020n|✓||✓||||
 |rs025n||||✓|||
+|rs030n||||✓|||
 |rs080n||✓||✓|||
 
 ### 1.2 Supported AS version

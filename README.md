@@ -54,6 +54,7 @@ Refer to [docs/ConnectingRealRobot.md](docs/ConnectingRealRobot.md)
  * rs013n
  * rs020n
  * rs025n
+ * rs030n
  * rs80n
 
 ## Notes
