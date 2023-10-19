@@ -11,9 +11,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - build: melodic_amd64
-            ROS_DISTRO_NAME : melodic
-            ARCH : amd64
+          # - build: melodic_amd64
+          #  ROS_DISTRO_NAME : melodic
+          #  ARCH : amd64
           # - build: melodic_armhf
           #   ROS_DISTRO_NAME : melodic
           #   ARCH : armhf
