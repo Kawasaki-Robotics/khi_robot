@@ -21,13 +21,13 @@
     <xacro:property name="dh_j5_j6_roty" value="${radians( 90)}"/>
 
     <!-- link mass [kg] -->
-    <xacro:property name="j0_mass" value="11"/>
+    <xacro:property name="j0_mass" value="9.059"/>
     <xacro:property name="j1_mass" value="8.188"/>
     <xacro:property name="j2_mass" value="6.826"/>
     <xacro:property name="j3_mass" value="5.236"/>
     <xacro:property name="j4_mass" value="5.066"/>
     <xacro:property name="j5_mass" value="1.625"/>
-    <xacro:property name="j6_mass" value="0.625"/>
+    <xacro:property name="j6_mass" value="0.0001"/>
 
     <!-- link lengths [m] -->
     <xacro:property name="j0_length" value="0.36"/>
