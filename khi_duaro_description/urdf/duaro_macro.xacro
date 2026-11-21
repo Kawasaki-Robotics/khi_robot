@@ -406,7 +406,7 @@
 
     <joint name="${prefix}upper_joint4" type="revolute">
       <axis xyz="0 0 1" rpy="0 0 0" />
-      <limit effort="100.0" lower="${J4_UPPER_lower_limit}" upper="${J4_UPPER_upper_limit}" velocity="${J3_velocity_limit}"/>
+      <limit effort="100.0" lower="${J4_UPPER_lower_limit}" upper="${J4_UPPER_upper_limit}" velocity="${J4_velocity_limit}"/>
       <origin xyz="0 0 -0.24"/>
       <parent link="${prefix}upper_link_j3"/>
       <child link="${prefix}upper_link_j4"/>
