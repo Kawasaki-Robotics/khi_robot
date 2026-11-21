@@ -8,6 +8,7 @@ catkin_package()
 if (CATKIN_ENABLE_TESTING)
   find_package(roslaunch REQUIRED)
   roslaunch_add_file_check(tests/roslaunch_test_duaro.xml)
+  catkin_add_nosetests(tests/test_duaro_joint_limits.py)
 endif()
 
 install(DIRECTORY config meshes urdf
